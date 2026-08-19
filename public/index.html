@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VGI+ · Valoración Geriátrica Integral</title>
+<link rel="stylesheet" href="/css/app.css">
+</head>
+<body>
+
+<!-- ═══════════════ Pantalla de acceso (usuario/contraseña) ═══════════════ -->
+<div class="gate" id="gate">
+  <div class="gate-card">
+    <div class="gate-top">
+      <div class="glogo" id="gate-logo"></div>
+      <div>
+        <h2>VGI+</h2>
+        <p>Valoración Geriátrica Integral · Hospital San Juan Grande</p>
+      </div>
+    </div>
+    <div class="gate-body">
+      <div class="gate-disc"><b>Herramienta de apoyo clínico.</b> No sustituye el juicio clínico del profesional responsable de la asistencia.</div>
+      <form id="login-form" autocomplete="on">
+        <div class="fg">
+          <label for="login-user">Usuario</label>
+          <input type="text" id="login-user" name="username" autocomplete="username" required>
+        </div>
+        <div class="fg">
+          <label for="login-pass">Contraseña</label>
+          <input type="password" id="login-pass" name="password" autocomplete="current-password" required>
+        </div>
+        <button type="submit" class="btn btn-p btn-big" style="width:100%">Entrar</button>
+        <div class="gate-err" id="login-err"></div>
+      </form>
+      <p class="help" style="margin-top:.9rem">Usa las mismas credenciales que te dio el administrador local de VGI+ (no son las de la red del hospital en esta versión).</p>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════ Aplicación (oculta hasta iniciar sesión) ═══════════════ -->
+<div id="appwrap" style="display:none">
+
+  <header class="hdr">
+    <div class="hdr-left">
+      <h1>VGI+</h1>
+      <p><em>Herramienta de apoyo clínico. No sustituye el juicio clínico del profesional responsable.</em></p>
+    </div>
+    <div class="hdr-right">
+      <span class="hdr-user" id="hdr-user"></span>
+      <button class="btn btn-d" id="btn-logout">Salir</button>
+      <!-- TODO: sustituir por el logo oficial de San Juan Grande cuando Bea lo facilite -->
+      <div class="logo" id="hdr-logo" title="Hospital San Juan Grande (placeholder)"></div>
+    </div>
+  </header>
+
+  <nav class="tabs" id="tabs">
+    <button class="tab on" data-tab="paciente">Paciente</button>
+    <button class="tab" data-tab="escalas">Escalas</button>
+    <button class="tab" data-tab="plan">Plan</button>
+    <button class="tab" data-tab="seguimiento">Seguimiento</button>
+    <button class="tab" data-tab="documentos">Documentos</button>
+  </nav>
+
+  <div class="patbar" id="patbar"></div>
+
+  <main class="wrap">
+    <section class="page on" id="pg-paciente"></section>
+    <section class="page" id="pg-escalas"></section>
+    <section class="page" id="pg-plan"></section>
+    <section class="page" id="pg-seguimiento"></section>
+    <section class="page" id="pg-documentos"></section>
+  </main>
+
+</div>
+
+<!-- Motor clínico compartido (servido por el backend desde shared/, ver CLAUDE.md) -->
+<script src="/shared/scales.js"></script>
+<script src="/shared/plan-engine.js"></script>
+
+<!-- Frontend -->
+<script src="/js/utils.js"></script>
+<script src="/js/api.js"></script>
+<script src="/js/auth.js"></script>
+<script src="/js/tab-paciente.js"></script>
+<script src="/js/tab-escalas.js"></script>
+<script src="/js/tab-plan.js"></script>
+<script src="/js/tab-seguimiento.js"></script>
+<script src="/js/tab-documentos.js"></script>
+<script src="/js/app.js"></script>
+</body>
+</html>

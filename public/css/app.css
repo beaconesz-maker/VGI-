@@ -1,0 +1,190 @@
+/*
+ * public/css/app.css — VGI+ (Hospital San Juan Grande)
+ *
+ * Paleta: fondo blanco, texto azul oscuro, pestañas azules, tomada del
+ * logotipo del hospital (regla de negocio 2 de docs/DOCUMENTO_MAESTRO.md).
+ * NOTA: --azul-oscuro y --azul son APROXIMADOS. Pendiente el hex exacto
+ * del logotipo oficial de San Juan Grande — sustituir aquí cuando Bea lo
+ * facilite (ver también el placeholder de logo en app.js).
+ *
+ * Patrones de UI (tarjetas .card, pestañas, opciones .opt tipo botón,
+ * escalas en acordeón) inspirados en docs/VGI_prototipo_generico_referencia.html,
+ * adaptados a esta arquitectura de datos (no es el mismo código).
+ */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --azul-oscuro: #0B3D63;
+  --azul: #1C6FB0;
+  --azul-claro: #E6F0F8;
+  --azul-media: #4A93C9;
+  --ink: #0B3D63;
+  --grey: #5b6472;
+  --greyl: #f4f6f8;
+  --bd: #d7e1ea;
+  --ok: #1a7a4b; --okb: #e3f4ea;
+  --warn: #9a6700; --warnb: #fcf3dd;
+  --alert: #b1402e; --alertb: #fbe6e1;
+  --sh: 0 1px 6px rgba(11,61,99,.10);
+}
+
+html { scroll-behavior: smooth; }
+body {
+  font-family: -apple-system, "Segoe UI", system-ui, sans-serif;
+  background: #ffffff;
+  color: var(--ink);
+  font-size: 15px;
+  line-height: 1.45;
+}
+
+/* ── Cabecera ── */
+.hdr {
+  background: #ffffff;
+  border-bottom: 2px solid var(--azul-claro);
+  padding: .8rem 1.1rem;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+  position: sticky; top: 0; z-index: 50;
+}
+.hdr-left h1 { font-size: 1.4rem; font-weight: 800; color: var(--azul-oscuro); letter-spacing: .01em; }
+.hdr-left p { font-size: .74rem; font-style: italic; color: var(--grey); margin-top: 2px; max-width: 46ch; }
+.hdr-right { display: flex; align-items: center; gap: .6rem; }
+.hdr-user { font-size: .78rem; color: var(--grey); white-space: nowrap; }
+.hdr .logo { width: 46px; height: 46px; flex-shrink: 0; }
+.hdr .logo svg { width: 100%; height: 100%; }
+
+/* ── Pestañas principales ── */
+.tabs { display: flex; gap: 2px; background: var(--azul-claro); position: sticky; top: 0; z-index: 40; border-bottom: 1px solid var(--bd); overflow-x: auto; }
+.tab { flex: 1 0 auto; padding: .7rem .6rem; text-align: center; font-size: .84rem; font-weight: 700; color: var(--azul-oscuro); background: none; border: none; border-bottom: 3px solid transparent; cursor: pointer; white-space: nowrap; min-width: 100px; font-family: inherit; }
+.tab:hover { background: #d7e8f5; }
+.tab.on { color: #fff; background: var(--azul); border-bottom-color: var(--azul-oscuro); }
+
+/* Barra de paciente activo, visible en todas las pestañas */
+.patbar { background: var(--azul-oscuro); color: #fff; font-size: .8rem; padding: .4rem 1.1rem; display: none; align-items: center; gap: .6rem; }
+.patbar.on { display: flex; }
+.patbar b { font-weight: 700; }
+.patbar .sep { opacity: .55; }
+
+.wrap { max-width: 980px; margin: 0 auto; padding: 1rem .9rem 3rem; }
+.page { display: none; }
+.page.on { display: block; animation: fadein .15s; }
+@keyframes fadein { from { opacity: 0; } to { opacity: 1; } }
+
+/* ── Tarjetas ── */
+.card { background: #fff; border: 1px solid var(--bd); border-radius: 12px; box-shadow: var(--sh); overflow: hidden; margin-bottom: 1rem; }
+.card-h { background: var(--azul-claro); color: var(--azul-oscuro); padding: .6rem 1rem; font-weight: 750; font-size: .88rem; display: flex; align-items: center; gap: .45rem; border-bottom: 1px solid var(--bd); }
+.card-h .b { margin-left: auto; font-weight: 500; font-size: .72rem; color: var(--grey); }
+.card-b { padding: 1rem; }
+
+/* ── Formularios ── */
+.fg { display: flex; flex-direction: column; gap: .25rem; margin-bottom: .7rem; }
+.fg label { font-size: .72rem; font-weight: 700; text-transform: uppercase; letter-spacing: .03em; color: var(--grey); }
+input[type=text], input[type=number], input[type=password], input[type=date], textarea, select {
+  border: 1.5px solid var(--bd); border-radius: 8px; padding: .5rem .65rem; font-size: .9rem; font-family: inherit; background: #fff; color: var(--ink); width: 100%;
+}
+input:focus, textarea:focus, select:focus { outline: none; border-color: var(--azul); box-shadow: 0 0 0 3px rgba(28,111,176,.15); }
+textarea { min-height: 70px; resize: vertical; }
+.grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: .6rem; }
+.grid3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: .6rem; }
+.span2 { grid-column: 1/-1; }
+@media (max-width: 640px) { .grid2, .grid3 { grid-template-columns: 1fr; } }
+
+.seg { display: inline-flex; border: 1.5px solid var(--bd); border-radius: 8px; overflow: hidden; }
+.seg button { border: none; background: #fff; padding: .45rem .9rem; font-size: .84rem; cursor: pointer; color: var(--grey); font-family: inherit; }
+.seg button.on { background: var(--azul); color: #fff; }
+
+/* ── Escalas: acordeón, ítems, opciones tipo botón ── */
+.dom { margin: 0 0 .5rem; font-size: .72rem; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; color: var(--azul); }
+.itm { padding: .6rem 0; border-bottom: 1px dashed #e5ebf1; }
+.itm:last-child { border-bottom: none; }
+.itm-q { font-size: .87rem; font-weight: 650; margin-bottom: .4rem; }
+.itm-q small { font-weight: 400; color: var(--grey); }
+.opts { display: flex; flex-wrap: wrap; gap: .35rem; }
+.opt { font-size: .81rem; border: 1.5px solid var(--bd); border-radius: 7px; padding: .35rem .65rem; cursor: pointer; background: #fff; font-family: inherit; color: var(--ink); }
+.opt:hover { border-color: var(--azul-media); }
+.opt.sel { background: var(--azul); color: #fff; border-color: var(--azul); }
+.opt .v { font-weight: 700; opacity: .7; margin-left: 4px; }
+.opt.sel .v { opacity: 1; }
+.imgitem { text-align: center; padding: .7rem 0; }
+.imgitem img { max-width: 260px; width: 100%; height: auto; border: 1px solid var(--bd); border-radius: 10px; background: #fff; }
+.imgitem .instr { font-size: .78rem; color: var(--grey); margin-top: .5rem; max-width: 46ch; margin-left: auto; margin-right: auto; line-height: 1.5; }
+
+.res { margin-top: .8rem; padding: .65rem .8rem; border-radius: 9px; font-size: .88rem; font-weight: 650; }
+.res-neutro { background: var(--greyl); color: var(--grey); }
+.res-ok { background: var(--okb); color: var(--ok); }
+.res-warn { background: var(--warnb); color: var(--warn); }
+.res-alert { background: var(--alertb); color: var(--alert); }
+.leg { font-size: .74rem; color: var(--grey); margin-top: .5rem; line-height: 1.5; }
+.note { background: var(--azul-claro); border: 1px solid #bcd6ea; border-radius: 8px; padding: .55rem .75rem; font-size: .78rem; color: #234e7d; margin-top: .5rem; line-height: 1.5; }
+
+.chk { display: flex; align-items: flex-start; gap: .5rem; padding: .3rem 0; font-size: .84rem; cursor: pointer; }
+.chk input { margin-top: 3px; }
+.gg { font-size: .74rem; font-weight: 750; color: var(--azul); margin: .6rem 0 .25rem; text-transform: uppercase; letter-spacing: .03em; }
+
+/* ── Botones ── */
+.btn { display: inline-flex; align-items: center; gap: .4rem; padding: .55rem 1.1rem; border-radius: 9px; border: none; font-size: .87rem; font-weight: 650; cursor: pointer; font-family: inherit; }
+.btn:active { filter: brightness(.94); }
+.btn:disabled { opacity: .5; cursor: not-allowed; }
+.btn-p { background: var(--azul); color: #fff; }
+.btn-p:hover { background: var(--azul-oscuro); }
+.btn-g { background: #fff; color: var(--azul); border: 1.5px solid var(--azul); }
+.btn-d { background: #fff; color: #888; border: 1.5px solid #ccc; font-size: .8rem; }
+.btn-danger { background: #fff; color: var(--alert); border: 1.5px solid var(--alert); }
+.btn-big { padding: .8rem 1.6rem; font-size: .95rem; }
+.btn-row { display: flex; gap: .5rem; flex-wrap: wrap; margin-top: .7rem; align-items: center; }
+
+.status { padding: .55rem .8rem; border-radius: 8px; font-size: .84rem; margin-top: .6rem; display: none; line-height: 1.5; }
+.status.ok { background: var(--okb); color: var(--ok); display: block; }
+.status.err { background: var(--alertb); color: var(--alert); display: block; }
+.status.info { background: var(--azul-claro); color: var(--azul-oscuro); display: block; }
+
+.empty { text-align: center; color: #9aa; padding: 2rem 1rem; font-size: .85rem; }
+.help { font-size: .76rem; color: #8a93a3; line-height: 1.5; }
+hr.dv { border: none; border-top: 1px solid var(--bd); margin: .9rem 0; }
+
+/* ── Búsqueda / lista de pacientes ── */
+.pat-list { display: flex; flex-direction: column; gap: .4rem; }
+.pat-row { display: flex; align-items: center; gap: .6rem; padding: .55rem .7rem; border: 1.5px solid var(--bd); border-radius: 9px; cursor: pointer; background: #fff; }
+.pat-row:hover { border-color: var(--azul-media); background: var(--azul-claro); }
+.pat-row .nm { font-weight: 650; font-size: .87rem; flex: 1; }
+.pat-row .meta { font-size: .73rem; color: var(--grey); }
+
+/* ── Clasificación / plan ── */
+.psec { background: var(--greyl); border: 1px solid var(--bd); border-radius: 10px; padding: .8rem .9rem; margin-bottom: .6rem; }
+.psec h3 { font-size: .84rem; font-weight: 800; color: var(--azul); border-bottom: 2px solid var(--azul-claro); padding-bottom: .3rem; margin-bottom: .5rem; }
+.psec ul { list-style: disc; padding-left: 1.25rem; }
+.psec li { font-size: .81rem; margin-bottom: .3rem; line-height: 1.5; }
+.pitem { font-size: .81rem; line-height: 1.5; margin-bottom: .25rem; }
+.psrc { font-size: .72rem; color: #8a93a3; font-style: italic; margin-top: .4rem; padding-top: .3rem; border-top: 1px solid #e3e3ea; }
+
+/* ── Validación de la hoja de ruta ── */
+.valbox { background: var(--azul-claro); border: 1px solid #bcd6ea; border-radius: 10px; padding: .8rem .95rem; margin: .6rem 0; }
+.valbox label { display: flex; align-items: flex-start; gap: .5rem; font-size: .85rem; font-weight: 650; color: var(--azul-oscuro); cursor: pointer; }
+.valbox input { width: auto; transform: scale(1.25); margin-top: .15rem; }
+.valbox .stamp { font-size: .74rem; color: var(--grey); margin-top: .45rem; }
+
+/* ── Chips de variables de seguimiento ── */
+.chips { display: flex; flex-wrap: wrap; gap: .35rem; margin: .5rem 0; }
+.chip { font-size: .78rem; padding: .32rem .65rem; border-radius: 18px; border: 1.5px solid var(--bd); background: #fff; cursor: pointer; color: var(--grey); font-family: inherit; }
+.chip.on { background: var(--azul); color: #fff; border-color: var(--azul); }
+.chart-wrap { border: 1px solid var(--bd); border-radius: 10px; padding: .6rem; background: #fff; overflow-x: auto; }
+table.snap { width: 100%; border-collapse: collapse; font-size: .8rem; }
+table.snap th, table.snap td { border: 1px solid var(--bd); padding: .4rem .55rem; text-align: center; }
+table.snap th { background: var(--azul-claro); color: var(--azul-oscuro); }
+table.snap tr.snap-row { cursor: pointer; }
+table.snap tr.snap-row:hover td { background: #f2f8fc; }
+
+/* ── Pantalla de acceso (login) ── */
+.gate { position: fixed; inset: 0; z-index: 9999; background: linear-gradient(135deg, var(--azul-oscuro), #062338); display: flex; align-items: center; justify-content: center; overflow-y: auto; padding: 1.2rem; }
+.gate-card { background: #fff; border-radius: 16px; max-width: 440px; width: 100%; box-shadow: 0 12px 40px rgba(0,0,0,.35); overflow: hidden; }
+.gate-top { background: var(--azul-oscuro); color: #fff; padding: 1.1rem 1.3rem; display: flex; align-items: center; gap: .8rem; }
+.gate-top .glogo { width: 44px; height: 44px; flex-shrink: 0; }
+.gate-top .glogo svg { width: 100%; height: 100%; }
+.gate-top h2 { font-size: 1.15rem; font-weight: 800; }
+.gate-top p { font-size: .72rem; opacity: .9; margin-top: 1px; }
+.gate-body { padding: 1.2rem 1.3rem; }
+.gate-disc { background: var(--alertb); border: 1px solid #e7b3a6; border-radius: 10px; padding: .65rem .85rem; font-size: .78rem; color: #8a2b1a; line-height: 1.5; margin-bottom: 1rem; }
+.gate-err { background: var(--alertb); border: 1px solid #e7b3a6; color: #8a2b1a; border-radius: 8px; padding: .55rem .8rem; font-size: .78rem; margin-top: .7rem; display: none; }
+.gate-err.on { display: block; }
