@@ -25,13 +25,23 @@ implementación interna de esos métodos.
   `rol`: `"clinico" | "admin"`. `passwordHash` con bcrypt (bcryptjs, sin
   dependencias nativas — importante para instalar en PCs de hospital sin
   entorno de compilación).
-- `data/patients.json` → `{id, nhc, nombre, fechaNacimiento (YYYY-MM-DD), localizacion ("U3"|"U4"|"U8"), createdAt, createdBy}`
-  `nhc` es único (índice lógico, comprobar duplicados en `create`).
+- `data/patients.json` → `{id, nhc, nombre, fechaNacimiento (YYYY-MM-DD), sexo ("H"|"M"), localizacion ("U3"|"U4"|"U8"), createdAt, createdBy}`
+  `nhc` es único (índice lógico, comprobar duplicados en `create`). `sexo`
+  no estaba en el encargo original pero lo necesita `shared/scales.js`
+  (Hand Grip) y `shared/plan-engine.js` (anemia, plan) como `contexto.sexo`
+  — añadido igual que ya lo tenía el prototipo de referencia.
 - `data/records.json` → una fila por administración de una escala:
   `{id, patientId, escalaId, fecha (YYYY-MM-DD, la que elige el usuario — regla de negocio 1), valores (lo que necesite cada escala, ver SCALES_CONTRACT), resultado {raw, label, cls, texto}, userId, userCodigo, createdAt}`.
   `resultado` **lo calcula siempre el servidor** llamando a
   `shared/scales.js` — nunca se confía en una puntuación que llegue ya
-  calculada desde el navegador.
+  calculada desde el navegador. El `contexto` que se le pasa a
+  `interpretar(escalaId, valores, contexto)` es
+  `{sexo: patient.sexo, edadAnios: edad calculada desde fechaNacimiento y
+  record.fecha}`. La escolaridad del MoCA (`contexto.escolaridadAnios`) no
+  hace falta pedirla aparte: si no se manda, `interpretarMoca` usa
+  `valores.escolaridadBaja` (booleano) como alternativa — pide ese campo en
+  el formulario de MoCA, igual que Pfeiffer ya trae su propio ítem de
+  escolaridad autocontenido.
 - `data/morfo.json` → peso/talla por paciente y fecha:
   `{id, patientId, fecha, peso, talla, userId, createdAt}`.
 - `data/clinical.json` → parámetros analíticos y clínicos por paciente y
@@ -58,9 +68,9 @@ POST   /api/auth/logout         → 204
 GET    /api/auth/me             → {user} | 401
 
 GET    /api/patients?q=         búsqueda por NHC o nombre → [patient]
-POST   /api/patients            {nhc, nombre, fechaNacimiento, localizacion} → patient
+POST   /api/patients            {nhc, nombre, fechaNacimiento, sexo, localizacion} → patient
 GET    /api/patients/:id        → patient
-PUT    /api/patients/:id        → patient
+PUT    /api/patients/:id        {nhc?, nombre?, fechaNacimiento?, sexo?, localizacion?} → patient
 
 GET    /api/scales              catálogo completo (dominios, escalas, ítems) tal cual lo expone shared/scales.js — el frontend NO hardcodea escalas, las pinta desde aquí
 GET    /api/patients/:id/records?escalaId=&from=&to=   → [record]  (para tabla de seguimiento y gráfica)
@@ -88,6 +98,34 @@ GET    /api/patients/:id/export/plan.pdf?fecha=
 GET    /api/export/aggregate.csv      datos agregados anonimizados (sin NHC ni nombre, solo id interno)
 GET    /api/export/aggregate.xlsx
 ```
+
+## Notas de implementación (server/, ajustes menores sobre este contrato)
+
+- **`sexo` en `POST /api/patients`**: la lista de campos del `POST` no
+  mencionaba `sexo` explícitamente (solo el modelo de datos lo hacía, más
+  arriba). Como `sexo` es obligatorio para que Hand Grip y el plan
+  (anemia, Charlson) funcionen bien, `POST` y `PUT /api/patients` lo
+  aceptan como campo del body igual que `localizacion` (opcional en el
+  body, pero recomendado rellenarlo desde el alta del paciente). Ver
+  `server/routes/patients.js`.
+- **`GET /api/patients/:id/clinical?fecha=`**: se implementa como "el
+  registro exacto de esa fecha (o `null` si no hay ninguno ese día
+  concreto)" cuando se pasa `fecha`, y "el más reciente de todos" cuando
+  no se pasa — pensado para rellenar el formulario de edición de un día
+  concreto. Es distinto del concepto "vigente a fecha X" (el más reciente
+  con `fecha <=`) que sí usan `GET /plan` y las exportaciones `.docx`
+  internamente (ver `server/lib/vigente.js`) — ese cálculo no se expone
+  como endpoint aparte porque no hacía falta para el frontend.
+- **`plan_validations`**: además de `{id, patientId, fecha, userId,
+  validatedAt}` se guarda también `userCodigo` (el `username`, igual que
+  en `records`), para poder mostrar "validado por Fulanito" sin tener que
+  resolver el `userId` contra `users` en cada exportación.
+- **Ítems con imagen (MMSE/MoCA)**: `docs/SCALES_CONTRACT.md` pide SVGs
+  propios en `public/assets/scales/*.svg`. El backend no necesita generar
+  ni interpretar esos SVG (son estáticos, servidos igual que el resto de
+  `public/`); esto es tarea del frontend, se deja anotado aquí solo para
+  que quien lea este contrato sepa que no falta nada por el lado de
+  `server/`.
 
 ## Errores
 
