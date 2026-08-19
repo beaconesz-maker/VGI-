@@ -1,0 +1,5 @@
+<svg viewBox="0 0 300 170" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Dos pentagonos entrelazados para copiar">
+  <rect x="0" y="0" width="300" height="170" fill="#ffffff"/>
+  <polygon points="115,35 160,70 143,128 87,128 70,70" fill="none" stroke="#1c2230" stroke-width="3.5" stroke-linejoin="round"/>
+  <polygon points="185,35 230,70 213,128 157,128 140,70" fill="none" stroke="#1c2230" stroke-width="3.5" stroke-linejoin="round"/>
+</svg>

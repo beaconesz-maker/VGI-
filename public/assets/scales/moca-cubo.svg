@@ -1,0 +1,11 @@
+<svg viewBox="0 0 220 200" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Cubo en perspectiva para copiar">
+  <rect x="0" y="0" width="220" height="200" fill="#ffffff"/>
+  <!-- cara frontal -->
+  <polygon points="45,70 145,70 145,170 45,170" fill="none" stroke="#1c2230" stroke-width="3.5" stroke-linejoin="round"/>
+  <!-- cara superior (desplazada en perspectiva) -->
+  <polygon points="45,70 85,30 185,30 145,70" fill="none" stroke="#1c2230" stroke-width="3.5" stroke-linejoin="round"/>
+  <!-- cara lateral derecha -->
+  <polygon points="145,70 185,30 185,130 145,170" fill="none" stroke="#1c2230" stroke-width="3.5" stroke-linejoin="round"/>
+  <!-- arista interior visible -->
+  <line x1="45" y1="70" x2="145" y2="70" stroke="#1c2230" stroke-width="3.5"/>
+</svg>

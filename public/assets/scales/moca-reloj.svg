@@ -1,0 +1,23 @@
+<svg viewBox="0 0 220 220" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Modelo de reloj en las 11 y 10 minutos">
+  <rect x="0" y="0" width="220" height="220" fill="#ffffff"/>
+  <circle cx="110" cy="110" r="90" fill="none" stroke="#1c2230" stroke-width="3.5"/>
+  <g font-family="sans-serif" font-size="16" font-weight="600" fill="#1c2230" text-anchor="middle" dominant-baseline="middle">
+    <text x="110" y="38">12</text>
+    <text x="146" y="48">1</text>
+    <text x="172" y="74">2</text>
+    <text x="182" y="110">3</text>
+    <text x="172" y="146">4</text>
+    <text x="146" y="172">5</text>
+    <text x="110" y="182">6</text>
+    <text x="74" y="172">7</text>
+    <text x="48" y="146">8</text>
+    <text x="38" y="110">9</text>
+    <text x="48" y="74">10</text>
+    <text x="74" y="48">11</text>
+  </g>
+  <!-- aguja horaria: apunta a las 11 (h=11, m=10) -->
+  <line x1="110" y1="110" x2="91" y2="69" stroke="#1c2230" stroke-width="5" stroke-linecap="round"/>
+  <!-- aguja de minutos: apunta a los 10 minutos (posicion del 2) -->
+  <line x1="110" y1="110" x2="166" y2="78" stroke="#1c2230" stroke-width="3.5" stroke-linecap="round"/>
+  <circle cx="110" cy="110" r="5" fill="#1c2230"/>
+</svg>

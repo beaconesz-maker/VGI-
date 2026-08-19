@@ -1,0 +1,17 @@
+<svg viewBox="0 0 300 220" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Trail making alterno numero letra: 1-A-2-B-3-C-4-D-5">
+  <rect x="0" y="0" width="300" height="220" fill="#ffffff"/>
+  <g stroke="#9B5FB0" stroke-width="2" stroke-dasharray="6 6" fill="none">
+    <polyline points="40,180 90,60 150,190 170,50 230,170 250,70 110,120 190,140 270,190"/>
+  </g>
+  <g font-family="sans-serif" font-size="16" font-weight="700" text-anchor="middle" dominant-baseline="middle">
+    <g><circle cx="40" cy="180" r="19" fill="#ffffff" stroke="#1c2230" stroke-width="3"/><text x="40" y="181" fill="#1c2230">1</text></g>
+    <g><circle cx="90" cy="60" r="19" fill="#ffffff" stroke="#1c2230" stroke-width="3"/><text x="90" y="61" fill="#1c2230">A</text></g>
+    <g><circle cx="150" cy="190" r="19" fill="#ffffff" stroke="#1c2230" stroke-width="3"/><text x="150" y="191" fill="#1c2230">2</text></g>
+    <g><circle cx="170" cy="50" r="19" fill="#ffffff" stroke="#1c2230" stroke-width="3"/><text x="170" y="51" fill="#1c2230">B</text></g>
+    <g><circle cx="230" cy="170" r="19" fill="#ffffff" stroke="#1c2230" stroke-width="3"/><text x="230" y="171" fill="#1c2230">3</text></g>
+    <g><circle cx="250" cy="70" r="19" fill="#ffffff" stroke="#1c2230" stroke-width="3"/><text x="250" y="71" fill="#1c2230">C</text></g>
+    <g><circle cx="110" cy="120" r="19" fill="#ffffff" stroke="#1c2230" stroke-width="3"/><text x="110" y="121" fill="#1c2230">4</text></g>
+    <g><circle cx="190" cy="140" r="19" fill="#ffffff" stroke="#1c2230" stroke-width="3"/><text x="190" y="141" fill="#1c2230">D</text></g>
+    <g><circle cx="270" cy="190" r="19" fill="#ffffff" stroke="#1c2230" stroke-width="3"/><text x="270" y="191" fill="#1c2230">5</text></g>
+  </g>
+</svg>
