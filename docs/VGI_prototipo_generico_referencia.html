@@ -1,0 +1,1258 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#7A4E9E">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="VGI+">
+<title>VGI+ · Valoración Geriátrica Integral</title>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --mv:#7A4E9E;--mvl:#efe7f5;--mvd:#5d3a7c;--mvm:#9B5FB0;--mva:#C49AD8;
+  --ink:#1c2230;--grey:#5b6472;--greyl:#f4f5f8;--bd:#dcdfe6;
+  --ok:#1a7a4b;--okb:#e3f4ea;--wn:#9a6700;--wnb:#fcf3dd;--al:#b1402e;--alb:#fbe6e1;
+  --blue:#2563ab;--bluel:#e7f0fb;
+  --sh:0 1px 6px rgba(70,40,100,.12);
+}
+html{scroll-behavior:smooth}
+body{font-family:-apple-system,"Segoe UI",system-ui,sans-serif;background:#f0ecf5;color:var(--ink);font-size:15px;line-height:1.45;-webkit-text-size-adjust:100%}
+.hdr{background:linear-gradient(135deg,var(--mv),var(--mvd));color:#fff;padding:calc(.6rem + env(safe-area-inset-top)) 1.1rem .6rem;display:flex;align-items:center;gap:.8rem;position:sticky;top:0;z-index:50;box-shadow:0 2px 10px rgba(0,0,0,.18)}
+.hdr .logo{width:42px;height:42px;border-radius:11px;background:#fff;display:flex;align-items:center;justify-content:center;flex-shrink:0;box-shadow:0 2px 6px rgba(0,0,0,.2)}
+.hdr .logo svg{width:38px;height:38px}
+.hdr h1{font-size:1.02rem;font-weight:750;letter-spacing:.01em}
+.hdr p{font-size:.71rem;opacity:.85;margin-top:1px}
+.hdr .lock{margin-left:auto;font-size:.66rem;background:#ffffff22;border:1px solid #ffffff33;border-radius:20px;padding:.22rem .6rem;white-space:nowrap}
+.tabs{display:flex;gap:2px;background:#fff;position:sticky;top:0;z-index:40;border-bottom:1px solid var(--bd);overflow-x:auto;-webkit-overflow-scrolling:touch}
+.tab{flex:1 0 auto;padding:.7rem .5rem;text-align:center;font-size:.78rem;font-weight:650;color:var(--grey);background:none;border:none;border-bottom:3px solid transparent;cursor:pointer;white-space:nowrap;min-width:80px}
+.tab.on{color:var(--mv);border-bottom-color:var(--mv);background:var(--mvl)}
+.tab .ic{display:block;font-size:1.05rem;margin-bottom:1px}
+.wrap{max-width:940px;margin:0 auto;padding:1rem .85rem calc(3rem + env(safe-area-inset-bottom))}
+.page{display:none}.page.on{display:block;animation:fadein .18s}
+@keyframes fadein{from{opacity:0;transform:translateY(4px)}to{opacity:1}}
+.card{background:#fff;border-radius:13px;box-shadow:var(--sh);overflow:hidden;margin-bottom:1rem}
+.card-h{background:var(--mvl);color:var(--mvd);padding:.6rem 1rem;font-weight:750;font-size:.85rem;display:flex;align-items:center;gap:.45rem;border-bottom:1px solid #e6dcf0}
+.card-h .b{margin-left:auto;font-weight:500;font-size:.7rem;color:var(--grey)}
+.card-b{padding:1rem}
+.fg{display:flex;flex-direction:column;gap:.25rem;margin-bottom:.7rem}
+.fg label{font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.03em;color:var(--grey)}
+input[type=text],input[type=number],textarea,select{border:1.5px solid var(--bd);border-radius:8px;padding:.5rem .65rem;font-size:.9rem;font-family:inherit;background:#fff;color:var(--ink);width:100%}
+input:focus,textarea:focus,select:focus{outline:none;border-color:var(--mv);box-shadow:0 0 0 3px rgba(122,78,158,.13)}
+input:disabled{background:#f1f1f4;color:#9aa}
+textarea{min-height:74px;resize:vertical;line-height:1.5}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:.6rem}
+.grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:.6rem}
+.span2{grid-column:1/-1}
+.seg{display:inline-flex;border:1.5px solid var(--bd);border-radius:8px;overflow:hidden}
+.seg button{border:none;background:#fff;padding:.45rem .8rem;font-size:.82rem;cursor:pointer;color:var(--grey);font-family:inherit}
+.seg button.on{background:var(--mv);color:#fff}
+.dom{margin:1.1rem 0 .5rem;font-size:.72rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--mv);border-bottom:2px solid var(--mvl);padding-bottom:.3rem}
+.esc{border:1px solid var(--bd);border-radius:11px;margin-bottom:.55rem;overflow:hidden;background:#fff}
+.esc-h{display:flex;align-items:center;gap:.6rem;padding:.65rem .85rem;cursor:pointer;user-select:none;background:#fbfafd}
+.esc-h:hover{background:#f5f0fa}
+.esc-h .nm{font-weight:650;font-size:.9rem;flex:1}
+.esc-h .nm small{font-weight:400;color:var(--grey);font-size:.74rem}
+.chev{color:var(--grey);transition:transform .15s;font-size:.7rem}
+.esc.open .chev{transform:rotate(90deg)}
+.bdg{font-size:.76rem;font-weight:750;padding:.13rem .6rem;border-radius:20px;white-space:nowrap}
+.bdg.na{background:var(--greyl);color:var(--grey)}
+.b-ok{background:var(--okb);color:var(--ok)}.b-warn{background:var(--wnb);color:var(--wn)}
+.b-alert{background:var(--alb);color:var(--al)}.b-neutro{background:var(--greyl);color:var(--grey)}
+.esc-b{display:none;padding:.3rem .85rem .8rem;border-top:1px solid var(--bd)}
+.esc.open .esc-b{display:block}
+.na-row{display:flex;align-items:center;gap:.4rem;font-size:.78rem;color:var(--grey);margin:.5rem 0 .2rem}
+.itm{padding:.5rem 0;border-bottom:1px dashed #ececf2}
+.itm:last-child{border-bottom:none}
+.itm-q{font-size:.84rem;font-weight:600;margin-bottom:.35rem}
+.itm-q small{font-weight:400;color:var(--grey)}
+.opts{display:flex;flex-wrap:wrap;gap:.3rem}
+.opt{font-size:.79rem;border:1.5px solid var(--bd);border-radius:7px;padding:.32rem .6rem;cursor:pointer;background:#fff}
+.opt:hover{border-color:var(--mvm)}
+.opt.sel{background:var(--mv);color:#fff;border-color:var(--mv)}
+.opt .v{font-weight:700;opacity:.75;margin-left:3px}.opt.sel .v{opacity:1}
+.num{width:90px}
+.step{display:inline-flex;align-items:center;gap:.5rem}
+.step button{width:30px;height:30px;border:1.5px solid var(--bd);background:#fff;border-radius:7px;font-size:1.05rem;cursor:pointer;color:var(--mv)}
+.step .val{min-width:24px;text-align:center;font-weight:700}
+.res{margin-top:.55rem;padding:.5rem .7rem;border-radius:8px;font-size:.82rem}
+.leg{font-size:.73rem;color:var(--grey);margin-top:.45rem;line-height:1.5}
+.gg{font-size:.74rem;font-weight:700;color:var(--mv);margin:.55rem 0 .2rem}
+.chk{display:flex;align-items:flex-start;gap:.5rem;padding:.3rem 0;font-size:.82rem;cursor:pointer}
+.chk input{margin-top:3px}
+.note{background:var(--bluel);border:1px solid #bcd6f3;border-radius:8px;padding:.5rem .7rem;font-size:.76rem;color:#234e7d;margin-top:.5rem;line-height:1.5}
+.btn{display:inline-flex;align-items:center;gap:.4rem;padding:.55rem 1.1rem;border-radius:9px;border:none;font-size:.86rem;font-weight:650;cursor:pointer;font-family:inherit;transition:filter .15s}
+.btn:active{filter:brightness(.94)}
+.btn-p{background:var(--mv);color:#fff}.btn-g{background:#fff;color:var(--mv);border:1.5px solid var(--mv)}
+.btn-d{background:#fff;color:#888;border:1.5px solid #ccc;font-size:.8rem}
+.btn-big{padding:.8rem 1.6rem;font-size:.95rem}
+.btn-row{display:flex;gap:.5rem;flex-wrap:wrap;margin-top:.7rem;align-items:center}
+.status{padding:.5rem .8rem;border-radius:8px;font-size:.82rem;margin-top:.6rem;display:none;line-height:1.5}
+.status.ok{background:var(--okb);color:var(--ok);display:block}
+.status.err{background:var(--alb);color:var(--al);display:block}
+.status.info{background:var(--bluel);color:var(--blue);display:block}
+.psec{background:var(--greyl);border:1px solid var(--bd);border-radius:10px;padding:.8rem .9rem;margin-bottom:.6rem}
+.psec h3{font-size:.82rem;font-weight:800;color:var(--mv);border-bottom:2px solid var(--mvl);padding-bottom:.3rem;margin-bottom:.5rem;display:flex;gap:.35rem;align-items:center}
+.psec ul{list-style:disc;padding-left:1.25rem}
+.psec li{font-size:.79rem;margin-bottom:.3rem;line-height:1.5}
+.pitem{font-size:.79rem;line-height:1.5;margin-bottom:.25rem}
+.tag{display:inline-block;font-size:.66rem;font-weight:700;padding:.1rem .4rem;border-radius:5px;margin-right:.3rem}
+.tag-f{background:#dbeafe;color:#1e40af}.tag-n{background:#fef3c7;color:#92400e}.tag-c{background:#f3e8ff;color:#6b21a8}.tag-x{background:#e3f4ea;color:#1a7a4b}
+.psrc{font-size:.7rem;color:#8a93a3;font-style:italic;margin-top:.4rem;padding-top:.3rem;border-top:1px solid #e3e3ea}
+.empty{text-align:center;color:#aab;padding:2rem 1rem;font-size:.85rem}
+.pat-list{display:flex;flex-direction:column;gap:.4rem}
+.pat-row{display:flex;align-items:center;gap:.6rem;padding:.55rem .7rem;border:1.5px solid var(--bd);border-radius:9px;cursor:pointer;background:#fff}
+.pat-row:hover{border-color:var(--mvm);background:var(--mvl)}
+.pat-row.on{border-color:var(--mv);background:var(--mvl)}
+.pat-row .nm{font-weight:650;font-size:.86rem;flex:1}
+.pat-row .meta{font-size:.72rem;color:var(--grey)}
+.chips{display:flex;flex-wrap:wrap;gap:.35rem;margin:.5rem 0}
+.chip{font-size:.76rem;padding:.3rem .6rem;border-radius:18px;border:1.5px solid var(--bd);background:#fff;cursor:pointer;color:var(--grey)}
+.chip.on{background:var(--mv);color:#fff;border-color:var(--mv)}
+.chart-wrap{border:1px solid var(--bd);border-radius:10px;padding:.6rem;background:#fff;overflow-x:auto}
+table.snap{width:100%;border-collapse:collapse;font-size:.75rem}
+table.snap th,table.snap td{border:1px solid var(--bd);padding:.35rem .5rem;text-align:center}
+table.snap th{background:var(--mvl);color:var(--mvd)}
+table.snap td.lab{text-align:left;font-weight:600;background:#fafafd}
+.priv{background:var(--wnb);border:1px solid #f0d98a;border-radius:9px;padding:.55rem .85rem;font-size:.75rem;color:#6b5320;margin-top:.7rem;line-height:1.5}
+.help{font-size:.75rem;color:#8a93a3;margin-top:.3rem;line-height:1.45}
+hr.dv{border:none;border-top:1px solid var(--bd);margin:.9rem 0}
+@media(max-width:620px){.grid2,.grid3{grid-template-columns:1fr}.hdr .lock{display:none}}
+/* ── Barra de aviso legal permanente ── */
+.disc-bar{background:#fff8e6;border-bottom:1px solid #f0d98a;color:#6b5320;font-size:.74rem;line-height:1.4;padding:.5rem 1rem;text-align:center}
+.disc-bar b{color:#8a5a00}
+/* ── Botón bloquear ── */
+.hdr .lockbtn{margin-left:.5rem;font-size:.66rem;background:#ffffff22;border:1px solid #ffffff55;color:#fff;border-radius:20px;padding:.22rem .6rem;white-space:nowrap;cursor:pointer;font-weight:650}
+.hdr .lockbtn:hover{background:#ffffff33}
+/* ── Estados de validación analítica ── */
+.fg.lab-warn input{border-color:#e0a800;background:#fffdf3}
+.fg.lab-block input{border-color:var(--al);background:#fdeeeb}
+.lab-msg{font-size:.7rem;line-height:1.35;margin-top:.25rem;padding:.3rem .5rem;border-radius:6px}
+.lab-msg.warn{background:var(--wnb);border:1px solid #f0d98a;color:#6b5320}
+.lab-msg.block{background:var(--alb);border:1px solid #e7b3a6;color:#8a2b1a}
+.lab-msg .cfm{display:flex;align-items:center;gap:.35rem;margin-top:.35rem;font-weight:650;cursor:pointer}
+.lab-msg .cfm input{width:auto;transform:scale(1.15)}
+.gate-lab-alert{background:var(--alb);border:1px solid #e7b3a6;color:#8a2b1a;border-radius:9px;padding:.6rem .85rem;font-size:.78rem;font-weight:600;margin-bottom:.8rem}
+/* ── Validación de la hoja de ruta ── */
+.valbox{background:var(--mvl);border:1px solid #d9c6e8;border-radius:10px;padding:.75rem .9rem;margin:.6rem 0}
+.valbox label{display:flex;align-items:flex-start;gap:.5rem;font-size:.82rem;font-weight:650;color:var(--mvd);cursor:pointer;line-height:1.4}
+.valbox input{width:auto;transform:scale(1.25);margin-top:.15rem}
+.valbox .stamp{font-size:.72rem;color:var(--grey);margin-top:.4rem}
+/* ── Gate de entrada (aviso legal + contraseña) ── */
+.gate{position:fixed;inset:0;z-index:9999;background:linear-gradient(135deg,#5d3a7c,#3c2452);display:flex;align-items:flex-start;justify-content:center;overflow-y:auto;padding:calc(1rem + env(safe-area-inset-top)) 1rem 2rem}
+.gate-card{background:#fff;border-radius:16px;max-width:560px;width:100%;margin:auto;box-shadow:0 12px 40px rgba(0,0,0,.35);overflow:hidden}
+.gate-top{background:linear-gradient(135deg,var(--mv),var(--mvd));color:#fff;padding:1.1rem 1.3rem;display:flex;align-items:center;gap:.8rem}
+.gate-top .glogo{width:44px;height:44px;border-radius:11px;background:#fff;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.gate-top .glogo svg{width:38px;height:38px}
+.gate-top h2{font-size:1.05rem;font-weight:750}
+.gate-top p{font-size:.72rem;opacity:.9;margin-top:1px}
+.gate-body{padding:1.2rem 1.3rem}
+.gate-disc{background:var(--alb);border:1px solid #e7b3a6;border-radius:10px;padding:.7rem .9rem;font-size:.8rem;color:#8a2b1a;line-height:1.5;margin-bottom:1rem}
+.gate-disc b{display:block;margin-bottom:.2rem}
+.gate-sec{font-size:.72rem;font-weight:750;text-transform:uppercase;letter-spacing:.03em;color:var(--grey);margin:1rem 0 .4rem}
+.gate-tc{border:1px solid var(--bd);border-radius:9px;padding:.7rem .85rem;font-size:.76rem;color:var(--grey);line-height:1.55;max-height:180px;overflow-y:auto;background:var(--greyl)}
+.gate-tc h4{font-size:.78rem;color:var(--ink);margin:.6rem 0 .25rem}
+.gate-tc h4:first-child{margin-top:0}
+.gate-toggle{background:none;border:none;color:var(--mv);font-weight:650;font-size:.78rem;cursor:pointer;padding:.3rem 0;text-decoration:underline}
+.gate-field{margin-bottom:.7rem}
+.gate-field label{display:block;font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.03em;color:var(--grey);margin-bottom:.25rem}
+.gate-field input[type=password]{width:100%}
+.gate-hint{font-size:.72rem;color:#8a93a3;margin-top:.25rem;line-height:1.4}
+.gate-chk{display:flex;align-items:flex-start;gap:.5rem;font-size:.82rem;font-weight:600;color:var(--ink);cursor:pointer;margin:.9rem 0;line-height:1.4}
+.gate-chk input{width:auto;transform:scale(1.3);margin-top:.15rem}
+.gate-btn{width:100%;background:var(--mv);color:#fff;border:none;border-radius:10px;padding:.8rem;font-size:.92rem;font-weight:750;cursor:pointer}
+.gate-btn:hover{background:var(--mvd)}
+.gate-btn:disabled{opacity:.5;cursor:not-allowed}
+.gate-err{background:var(--alb);border:1px solid #e7b3a6;color:#8a2b1a;border-radius:8px;padding:.55rem .8rem;font-size:.78rem;margin-top:.7rem;display:none}
+.gate-err.on{display:block}
+.gate-warn-nocrypto{background:var(--wnb);border:1px solid #f0d98a;color:#6b5320;border-radius:8px;padding:.55rem .8rem;font-size:.76rem;margin-bottom:.8rem;display:none}
+/* ── Manual embebido ── */
+.manual h3{color:var(--mvd);font-size:.95rem;margin:1.1rem 0 .4rem;padding-bottom:.25rem;border-bottom:1px solid #e6dcf0}
+.manual h3:first-child{margin-top:0}
+.manual p{font-size:.85rem;margin-bottom:.55rem;line-height:1.55}
+.manual ul{margin:.3rem 0 .7rem 1.2rem}
+.manual li{font-size:.85rem;margin-bottom:.3rem;line-height:1.5}
+.manual .step{font-weight:700;color:var(--mv)}
+</style>
+</head>
+<body>
+<header class="hdr">
+  <div class="logo" id="hdr-logo"></div>
+  <div>
+    <h1>VGI+ · Valoración Geriátrica Integral</h1>
+    <p>Herramienta de apoyo clínico · Uso local</p>
+  </div>
+  <div class="lock">🔒 100 % local · sin servidor</div>
+  <button class="lockbtn" id="btn-lock" title="Bloquear y volver a la pantalla de acceso">🔓 Bloquear</button>
+</header>
+<div class="disc-bar" id="disc-bar"><b>Herramienta de apoyo a la decisión clínica.</b> No sustituye el juicio clínico del médico responsable, que toma y firma toda decisión asistencial.</div>
+<nav class="tabs" id="tabs">
+  <button class="tab on" data-pg="paciente"><span class="ic">👤</span>Paciente</button>
+  <button class="tab" data-pg="escalas"><span class="ic">📋</span>Escalas</button>
+  <button class="tab" data-pg="plan"><span class="ic">🩺</span>Plan</button>
+  <button class="tab" data-pg="seguimiento"><span class="ic">📈</span>Seguimiento</button>
+  <button class="tab" data-pg="docs"><span class="ic">📄</span>Documentos</button>
+  <button class="tab" data-pg="manual"><span class="ic">📖</span>Manual</button>
+</nav>
+<div class="wrap">
+  <section class="page on" id="pg-paciente"></section>
+  <section class="page" id="pg-escalas"></section>
+  <section class="page" id="pg-plan"></section>
+  <section class="page" id="pg-seguimiento"></section>
+  <section class="page" id="pg-docs"></section>
+  <section class="page" id="pg-manual"></section>
+</div>
+<script>
+const $=id=>document.getElementById(id);
+const el=(t,c,h)=>{const e=document.createElement(t);if(c)e.className=c;if(h!=null)e.innerHTML=h;return e;};
+const LOGO=`<svg viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg"><g fill="none" stroke="#9B5FB0" stroke-width="40" stroke-linecap="round" stroke-linejoin="round"><path d="M64 172 L106 358 L148 172"/><path d="M286 234 A52 52 0 1 0 286 296"/><path d="M286 296 L286 266"/><path d="M356 172 L356 358"/></g><g stroke="#C49AD8" stroke-width="36" stroke-linecap="round"><path d="M434 230 L434 302"/><path d="M398 266 L466 266"/></g></svg>`;
+$('hdr-logo').innerHTML=LOGO;
+const APP={pac:{},scores:{},clin:{},ss:{},_built:{},_plan:null,_planLive:false,
+  _labState:{},_labConfirmVal:{},_labConfirmAt:{},_planValidatedAt:null};
+
+/* ── DATOS DE ESCALAS ── */
+const DATA={
+funcional:[
+ {id:"barthel",nom:"Barthel",sub:"ABVD",tipo:"suma",unidad:"/100",
+  cortes:[[20,"dependencia total","b-alert"],[36,"dependencia grave","b-alert"],[56,"dependencia moderada","b-warn"],[96,"dependencia leve","b-warn"],[101,"independencia","b-ok"]],
+  items:[
+   {q:"Comer",o:[["Incapaz",0],["Ayuda",5],["Independiente",10]]},
+   {q:"Trasladarse silla-cama",o:[["Incapaz",0],["Ayuda importante",5],["Algo de ayuda",10],["Independiente",15]]},
+   {q:"Aseo personal",o:[["Ayuda",0],["Independiente",5]]},
+   {q:"Uso del retrete",o:[["Dependiente",0],["Ayuda",5],["Independiente",10]]},
+   {q:"Bañarse / ducharse",o:[["Dependiente",0],["Independiente",5]]},
+   {q:"Desplazarse",o:[["Inmóvil",0],["Silla 50 m",5],["Anda con ayuda",10],["Independiente ≥50 m",15]]},
+   {q:"Subir escaleras",o:[["Incapaz",0],["Con ayuda",5],["Independiente",10]]},
+   {q:"Vestirse",o:[["Dependiente",0],["Ayuda ~mitad",5],["Independiente",10]]},
+   {q:"Control de heces",o:[["Incontinente",0],["Ocasional",5],["Continente",10]]},
+   {q:"Control de orina",o:[["Incontinente",0],["Ocasional",5],["Continente",10]]}]},
+ {id:"lawton",nom:"Lawton-Brody",sub:"AIVD",tipo:"suma",unidad:"/8",nota:"En varones puede valorarse /5.",
+  cortes:[[2,"dependencia total","b-alert"],[4,"dependencia grave","b-alert"],[6,"dependencia moderada","b-warn"],[8,"dependencia ligera","b-warn"],[9,"independiente","b-ok"]],
+  items:[
+   {q:"Uso del teléfono",o:[["Iniciativa propia",1],["Marca conocidos",1],["Solo contesta",1],["No capaz",0]]},
+   {q:"Hacer compras",o:[["Independiente",1],["Solo pequeñas",0],["Acompañado",0],["Incapaz",0]]},
+   {q:"Preparación comida",o:[["Organiza y sirve",1],["Si le dan ingredientes",0],["Calienta",0],["Le preparan",0]]},
+   {q:"Cuidado de la casa",o:[["Solo/ayuda ocasional",1],["Tareas ligeras",1],["Sin limpieza adecuada",1],["Ayuda en todas",1],["No participa",0]]},
+   {q:"Lavado de ropa",o:[["Toda su ropa",1],["Pequeñas prendas",1],["Lo hace otro",0]]},
+   {q:"Uso de transporte",o:[["Solo/conduce",1],["Solo taxi",1],["Público acompañado",1],["Taxi con ayuda",0],["No viaja",0]]},
+   {q:"Responsabilidad medicación",o:[["A su hora y dosis",1],["Si se la preparan",0],["No capaz",0]]},
+   {q:"Asuntos económicos",o:[["Solo",1],["Diario sí, grandes no",1],["Incapaz",0]]}]},
+ {id:"katz",nom:"Katz",sub:"ABVD (dependencias)",tipo:"suma",unidad:"/6",
+  cortes:[[1,"independiente","b-ok"],[3,"dependencia leve","b-warn"],[5,"dependencia moderada","b-warn"],[7,"dependencia grave","b-alert"]],
+  nota:"Número de ABVD dependientes (0 = independiente en las 6).",
+  items:[
+   {q:"Baño",o:[["Independiente",0],["Dependiente",1]]},
+   {q:"Vestido",o:[["Independiente",0],["Dependiente",1]]},
+   {q:"Uso del retrete",o:[["Independiente",0],["Dependiente",1]]},
+   {q:"Movilidad / transferencia",o:[["Independiente",0],["Dependiente",1]]},
+   {q:"Continencia",o:[["Continente",0],["Incontinente",1]]},
+   {q:"Alimentación",o:[["Independiente",0],["Dependiente",1]]}]}
+],
+comorbilidad:[
+ {id:"charlson",nom:"Charlson",sub:"comorbilidad",tipo:"charlson"},
+ {id:"cirsg",nom:"CIRS-G",sub:"carga de enfermedad",tipo:"cirsg"}
+],
+fragilidad:[
+ {id:"frail",nom:"FRAIL",sub:"cribado",tipo:"suma",unidad:"/5",
+  cortes:[[1,"robusto","b-ok"],[3,"prefrágil","b-warn"],[6,"frágil","b-alert"]],
+  items:[
+   {q:"Fatigue",sub:"¿Cansado la mayor parte del tiempo?",o:[["No",0],["Sí",1]]},
+   {q:"Resistance",sub:"¿Incapaz de subir un piso?",o:[["No",0],["Sí",1]]},
+   {q:"Aerobic",sub:"¿Incapaz de caminar una manzana?",o:[["No",0],["Sí",1]]},
+   {q:"Illnesses",sub:"¿Más de 5 enfermedades?",o:[["No",0],["Sí",1]]},
+   {q:"Loss of weight",sub:"¿>5% peso en 6 meses?",o:[["No",0],["Sí",1]]}]},
+ {id:"fried",nom:"Fenotipo de Fried",sub:"fragilidad física",tipo:"suma",unidad:"/5",
+  cortes:[[1,"robusto","b-ok"],[3,"prefrágil","b-warn"],[6,"frágil","b-alert"]],
+  nota:"Debilidad: usar Hand Grip. Lentitud: usar velocidad de marcha.",
+  items:[
+   {q:"Pérdida de peso",sub:"involuntaria >4,5 kg o >5% en 1 año",o:[["No",0],["Sí",1]]},
+   {q:"Agotamiento",sub:"autoinforme (CES-D)",o:[["No",0],["Sí",1]]},
+   {q:"Debilidad",sub:"prensión baja (<27 kg ♂ / <16 kg ♀)",o:[["No",0],["Sí",1]]},
+   {q:"Lentitud de la marcha",sub:"velocidad reducida (≤0,8 m/s)",o:[["No",0],["Sí",1]]},
+   {q:"Baja actividad física",o:[["No",0],["Sí",1]]}]},
+ {id:"cfs",nom:"Clinical Frailty Scale",sub:"CFS 1-9",tipo:"cfs"},
+ {id:"frailvig",nom:"Índice Frágil-VIG (IF-VIG)",sub:"índice 0-1",tipo:"frailvig"}
+],
+funcionales:[
+ {id:"gait",nom:"Velocidad de la marcha",sub:"m/s",tipo:"gait"},
+ {id:"grip",nom:"Fuerza de prensión (Hand Grip)",sub:"kg",tipo:"grip"},
+ {id:"tug",nom:"TUG (Timed Up and Go)",sub:"s",tipo:"tug"},
+ {id:"sppb",nom:"SPPB",sub:"rendimiento físico",tipo:"suma",unidad:"/12",
+  nota:"SPPB ≤8: fragilidad / mayor riesgo de discapacidad. Define pasaporte VIVIFRAIL.",
+  cortes:[[4,"limitación grave","b-alert"],[7,"limitación moderada","b-warn"],[10,"limitación leve","b-warn"],[13,"sin limitación","b-ok"]],
+  items:[
+   {q:"Equilibrio",sub:"pies juntos + semitándem + tándem",o:[["0",0],["1",1],["2",2],["3",3],["4",4]]},
+   {q:"Velocidad marcha 4 m",sub:">8,70s=1 · 6,21-8,70=2 · 4,82-6,20=3 · <4,82=4 · incapaz=0",o:[["0",0],["1",1],["2",2],["3",3],["4",4]]},
+   {q:"Levantarse silla ×5",sub:">60s=0 · 16,7-59,9=1 · 13,7-16,69=2 · 11,2-13,69=3 · <11,19=4",o:[["0",0],["1",1],["2",2],["3",3],["4",4]]}]}
+],
+nutricional:[
+ {id:"mna",nom:"MNA",sub:"Mini Nutritional Assessment",tipo:"mna"},
+ {id:"glim",nom:"GLIM",sub:"criterios de desnutrición",tipo:"glim"},
+ {id:"sarcf",nom:"SARC-F",sub:"cribado de sarcopenia",tipo:"suma",unidad:"/10",
+  cortes:[[4,"cribado negativo","b-ok"],[11,"sarcopenia probable","b-alert"]],
+  nota:"≥4: confirmar con dinamometría / velocidad de la marcha (EWGSOP2).",
+  items:[
+   {q:"Fuerza",sub:"cargar 4,5 kg",o:[["Ninguna",0],["Alguna",1],["Mucha/incapaz",2]]},
+   {q:"Ayuda para caminar",sub:"cruzar un cuarto",o:[["Ninguna",0],["Alguna",1],["Mucha/incapaz",2]]},
+   {q:"Levantarse de silla",o:[["Ninguna",0],["Alguna",1],["Incapaz sin ayuda",2]]},
+   {q:"Subir escaleras",sub:"10 escalones",o:[["Ninguna",0],["Alguna",1],["Mucha/incapaz",2]]},
+   {q:"Caídas último año",o:[["Ninguna",0],["1-3",1],["≥4",2]]}]}
+],
+cognitivo:[
+ {id:"mmse",nom:"Mini-Mental (MMSE / MEC)",sub:"cognición",tipo:"mmse"},
+ {id:"pfeiffer",nom:"Pfeiffer (SPMSQ)",sub:"cognición",tipo:"pfeiffer"},
+ {id:"reloj",nom:"Test del Reloj (CDT)",sub:"función ejecutiva · Shulman",tipo:"reloj"}
+]
+};
+const DOMS=[["funcional","Funcional"],["comorbilidad","Comorbilidad"],["fragilidad","Fragilidad"],["funcionales","Pruebas funcionales"],["nutricional","Nutrición y sarcopenia"],["cognitivo","Cognición"]];
+const ALLSC=[];Object.values(DATA).forEach(a=>a.forEach(s=>ALLSC.push(s)));
+const SCBYID={};ALLSC.forEach(s=>SCBYID[s.id]=s);
+
+/* ── UTILIDADES ── */
+function corte(cortes,s){for(const[lim,lab,cls]of cortes)if(s<lim)return[lab,cls];return cortes[cortes.length-1].slice(1);}
+function store(id,o){APP.scores[id]=Object.assign({present:false},o);}
+function RAW(id){return APP.scores[id]&&APP.scores[id].present?APP.scores[id].raw:null;}
+function domOf(id){for(const[k,a]of Object.entries(DATA))if(a.some(s=>s.id===id))return k;}
+function pacEdad(){const f=APP.pac.fnac;if(!f)return null;const m=f.match(/(\d{1,2})\D(\d{1,2})\D(\d{4})/);if(!m)return null;const b=new Date(+m[3],+m[2]-1,+m[1]);return Math.floor((Date.now()-b)/3.15576e10);}
+function showStatus(id,msg,type){const e=$(id);if(e){e.className='status '+type;e.textContent=msg;}}
+function resBox(){const r=el('div','res b-neutro','Sin valorar');r.dataset.role='res';return r;}
+function dl(blob,fn){const u=URL.createObjectURL(blob);const a=document.createElement('a');a.href=u;a.download=fn;document.body.appendChild(a);a.click();a.remove();URL.revokeObjectURL(u);}
+function fnameBase(){return((APP.pac.nombre||'Paciente').split(/[\s,]/)[0]||'Paciente')+'_'+new Date().toISOString().slice(0,10).replace(/-/g,'');}
+function setBR(bdg,res,bT,sT,cls){if(bdg){bdg.textContent=bT;bdg.className='bdg '+cls;}if(res){res.textContent=sT;res.className='res '+cls;}}
+
+/* ── CONSTRUCCIÓN DE ESCALAS ── */
+function buildEscalasPage(){
+  const root=$('pg-escalas');root.innerHTML='';
+  DOMS.forEach(([key,tit])=>{root.appendChild(el('div','dom',tit));DATA[key].forEach(esc=>root.appendChild(buildEsc(esc)));});
+}
+function buildEsc(esc){
+  APP._built[esc.id]={na:false,def:esc,sel:{},num:null,idx:null,cfs:null,glim:{},mmse:{ot:0,oe:0,fij:0,ac:0,rd:0,len:0},mna:{},edu:0,cirs:{},charl:{},imgReloj:null,rendered:false};
+  store(esc.id,{});
+  const wrap=el('div','esc');
+  const h=el('div','esc-h');
+  h.innerHTML=`<span class="chev">▶</span><span class="nm">${esc.nom} <small>· ${esc.sub||''}</small></span>`;
+  const bdg=el('span','bdg b-neutro','—');h.appendChild(bdg);
+  const body=el('div','esc-b');
+  const nar=el('label','na-row');nar.innerHTML='<input type="checkbox"> No realizada / no procede';
+  nar.querySelector('input').addEventListener('change',e=>{APP._built[esc.id].na=e.target.checked;upd(esc.id);});
+  body.appendChild(nar);
+  const cnt=el('div');body.appendChild(cnt);
+  wrap.appendChild(h);wrap.appendChild(body);
+  h.addEventListener('click',()=>{wrap.classList.toggle('open');if(!APP._built[esc.id].rendered){APP._built[esc.id].rendered=true;renderCnt(esc,cnt);}});
+  APP._built[esc.id].bdg=bdg;APP._built[esc.id].cnt=cnt;
+  return wrap;
+}
+function renderCnt(esc,c){
+  ({suma:rSuma,tug:rTug,gait:rGait,grip:rGrip,reloj:rReloj,frailvig:rFrailvig,
+    cfs:rCfs,charlson:rCharlson,cirsg:rCirsg,mmse:rMmse,pfeiffer:rPfeiffer,
+    glim:rGlim,mna:rMna}[esc.tipo])(esc,c);
+}
+
+/* ── FUNCIONES DE RENDER ── */
+function rSuma(esc,c){
+  esc.items.forEach((it,idx)=>{
+    const row=el('div','itm');
+    row.appendChild(el('div','itm-q',it.q+(it.sub?` <small>· ${it.sub}</small>`:'')));
+    const opts=el('div','opts');
+    it.o.forEach(([lab,val])=>{
+      const o=el('div','opt',`${lab}<span class="v">${val}</span>`);
+      o.addEventListener('click',()=>{APP._built[esc.id].sel[idx]=val;opts.querySelectorAll('.opt').forEach(x=>x.classList.remove('sel'));o.classList.add('sel');upd(esc.id);});
+      opts.appendChild(o);
+    });
+    row.appendChild(opts);c.appendChild(row);
+  });
+  if(esc.nota)c.appendChild(el('div','leg',esc.nota));
+  c.appendChild(resBox());
+}
+function rTug(esc,c){
+  const row=el('div','itm');row.innerHTML='<div class="itm-q">Tiempo (s) <small>· levantarse, 3 m, girar, sentarse</small></div>';
+  const inp=el('input','num');inp.type='number';inp.min='0';inp.step='0.1';
+  inp.addEventListener('input',()=>{APP._built[esc.id].num=inp.value===''?null:parseFloat(inp.value);upd(esc.id);});
+  row.appendChild(inp);c.appendChild(row);
+  c.appendChild(el('div','leg','<10 s normal · 10-20 s movilidad reducida · ≥13,5 s riesgo aumentado · >20 s alto riesgo de caídas'));
+  c.appendChild(resBox());
+}
+function rGait(esc,c){
+  const row=el('div','itm');row.innerHTML='<div class="itm-q">Velocidad (m/s) <small>· marcha habitual 4-6 m</small></div>';
+  const inp=el('input','num');inp.type='number';inp.min='0';inp.step='0.01';
+  inp.addEventListener('input',()=>{APP._built[esc.id].num=inp.value===''?null:parseFloat(inp.value);upd(esc.id);});
+  row.appendChild(inp);c.appendChild(row);
+  c.appendChild(el('div','leg','≤0,8 m/s: lentitud (criterio sarcopenia grave/fragilidad, EWGSOP2) · 0,8-1,0 m/s intermedio · >1,0 m/s normal'));
+  c.appendChild(resBox());
+}
+function rGrip(esc,c){
+  const row=el('div','itm');row.innerHTML='<div class="itm-q">Fuerza máxima (kg) <small>· mejor de 3 intentos, mano dominante</small></div>';
+  const inp=el('input','num');inp.type='number';inp.min='0';inp.step='0.1';
+  inp.addEventListener('input',()=>{APP._built[esc.id].num=inp.value===''?null:parseFloat(inp.value);upd(esc.id);});
+  row.appendChild(inp);c.appendChild(row);
+  c.appendChild(el('div','leg','Fuerza baja (EWGSOP2): <27 kg en hombres · <16 kg en mujeres (tomado del sexo introducido en Paciente)'));
+  c.appendChild(resBox());
+}
+function rReloj(esc,c){
+  const st=APP._built[esc.id];
+  c.appendChild(el('div','itm-q','Puntuación de Shulman (0-5)'));
+  const opts=el('div','opts');
+  [[5,'5 — Normal'],[4,'4 — Errores leves de espaciado'],[3,'3 — Errores moderados / números incorrectos'],[2,'2 — Solo 2 cuadrantes correctos'],[1,'1 — Sin semejanza con reloj'],[0,'0 — Sin intento o irreconocible']].forEach(([n,lab])=>{
+    const o=el('div','opt',lab);
+    o.addEventListener('click',()=>{st.num=n;opts.querySelectorAll('.opt').forEach(x=>x.classList.remove('sel'));o.classList.add('sel');upd(esc.id);});
+    opts.appendChild(o);
+  });
+  c.appendChild(opts);
+  c.appendChild(el('div','leg','≥4 normal · ≤3 alteración significativa de función ejecutiva y visuoespacial. Especialmente sensible a disfunción frontal-parietal. Complementario al MMSE/Pfeiffer. Shulman KI et al. Int Psychogeriatr. 2006;18(2):281-294.'));
+  const upRow=el('div','itm');
+  upRow.innerHTML='<div class="itm-q" style="margin-top:8px">Imagen del dibujo <small>· opcional · queda solo en este dispositivo</small></div>';
+  const inp=document.createElement('input');inp.type='file';inp.accept='image/*';inp.style.cssText='margin-top:6px;font-size:.8rem;width:100%';
+  const prev=el('div');
+  inp.addEventListener('change',()=>{
+    const f=inp.files[0];if(!f)return;
+    const reader=new FileReader();
+    reader.onload=e=>{st.imgReloj=e.target.result;prev.innerHTML=`<img src="${e.target.result}" style="max-width:100%;max-height:240px;border-radius:9px;border:1px solid #ddd;margin-top:6px;display:block">`;};
+    reader.readAsDataURL(f);
+  });
+  upRow.appendChild(inp);upRow.appendChild(prev);
+  c.appendChild(upRow);
+  c.appendChild(resBox());
+}
+function rFrailvig(esc,c){
+  const row=el('div','itm');row.innerHTML='<div class="itm-q">Índice IF-VIG (0,00 – 1,00) <small>· resultado del instrumento validado</small></div>';
+  const inp=el('input','num');inp.type='number';inp.min='0';inp.max='1';inp.step='0.01';
+  inp.addEventListener('input',()=>{APP._built[esc.id].idx=inp.value===''?null:parseFloat(inp.value);upd(esc.id);});
+  row.appendChild(inp);c.appendChild(row);
+  c.appendChild(el('div','leg','<0,20 sin fragilidad · 0,20-0,35 leve · 0,36-0,50 moderada · >0,50 avanzada'));
+  c.appendChild(el('div','note','El IF-VIG debe cumplimentarse con el cuestionario validado de 25 déficits (Torné/Amblàs 2021, PMID 34068227). Esta app registra e interpreta el índice resultante; no sustituye al instrumento.'));
+  c.appendChild(resBox());
+}
+function rCfs(esc,c){
+  const st=APP._built[esc.id];
+  const opts=el('div','opts');
+  [[1,'1 · Muy en forma'],[2,'2 · En forma'],[3,'3 · Controlado'],[4,'4 · Vulnerable'],[5,'5 · Fragilidad leve'],[6,'6 · Fragilidad moderada'],[7,'7 · Fragilidad grave'],[8,'8 · Fragilidad muy grave'],[9,'9 · Enfermo terminal']].forEach(([n,lab])=>{
+    const o=el('div','opt',lab);
+    o.addEventListener('click',()=>{st.cfs=n;opts.querySelectorAll('.opt').forEach(x=>x.classList.remove('sel'));o.classList.add('sel');upd(esc.id);});
+    opts.appendChild(o);
+  });
+  c.appendChild(el('div','itm-q','Nivel CFS'));c.appendChild(opts);
+  c.appendChild(el('div','leg','1-3 robusto · 4 vulnerable · 5-6 fragilidad leve-moderada · 7-9 fragilidad grave (Rockwood CMAJ 2005)'));
+  c.appendChild(resBox());
+}
+const CHARL=[['im','Infarto de miocardio',1],['icc','Insuficiencia cardíaca',1],['evp','Enf. vascular periférica',1],['acv','Enf. cerebrovascular',1],['dem','Demencia',1],['epoc','EPOC / enf. pulmonar crónica',1],['tc','Enf. del tejido conectivo',1],['ulc','Úlcera péptica',1],['hep','Hepatopatía leve',1],['dm','Diabetes sin lesión orgánica',1],['hemi','Hemiplejía',2],['erc','ERC moderada-grave',2],['dmo','Diabetes con lesión orgánica',2],['tumor','Tumor sólido (sin metástasis)',2],['leuc','Leucemia',2],['linf','Linfoma',2],['hepg','Hepatopatía moderada-grave',3],['meta','Tumor sólido metastásico',6],['sida','SIDA',6]];
+function rCharlson(esc,c){
+  const st=APP._built[esc.id];st.charl={};
+  c.appendChild(el('div','gg','Comorbilidades presentes'));
+  CHARL.forEach(([k,lab,w])=>{
+    st.charl[k]=false;
+    const l=el('label','chk');l.innerHTML=`<input type="checkbox"><span>${lab} <small>(${w} pto${w>1?'s':''})</small></span>`;
+    l.querySelector('input').addEventListener('change',e=>{st.charl[k]=e.target.checked;upd(esc.id);});
+    c.appendChild(l);
+  });
+  c.appendChild(el('div','leg','Se añade ajuste por edad (+1/década desde los 50 años) tomado de la pestaña Paciente.'));
+  c.appendChild(resBox());
+}
+const CIRS_S=['Cardíaco','Vascular / HTA','Hematopoyético','Respiratorio','Oftalmo-ORL','GI superior','GI inferior','Hepatopancreático','Renal','Genitourinario','Musculoesquelético / piel','Neurológico','Endocrino-metabólico / mama','Psiquiátrico-conductual'];
+function rCirsg(esc,c){
+  const st=APP._built[esc.id];st.cirs={};
+  c.appendChild(el('div','leg','0 ninguno · 1 leve · 2 moderado · 3 grave · 4 muy grave/incapacitante'));
+  CIRS_S.forEach((sis,i)=>{
+    st.cirs[i]=0;
+    const row=el('div','itm');row.appendChild(el('div','itm-q',sis));
+    const step=el('div','step');const mn=el('button',null,'−'),vl=el('span','val','0'),pl=el('button',null,'+');
+    const sv=v=>{v=Math.max(0,Math.min(4,v));st.cirs[i]=v;vl.textContent=v;upd(esc.id);};
+    mn.onclick=()=>sv(st.cirs[i]-1);pl.onclick=()=>sv(st.cirs[i]+1);
+    step.append(mn,vl,pl);row.appendChild(step);c.appendChild(row);
+  });
+  c.appendChild(resBox());
+}
+function rMmse(esc,c){
+  [['ot','Orientación temporal',5],['oe','Orientación espacial',5],['fij','Fijación',3],['ac','Atención-cálculo',5],['rd','Recuerdo diferido',3],['len','Lenguaje',9]].forEach(([k,lab,mx])=>{
+    const row=el('div','itm');row.appendChild(el('div','itm-q',`${lab} <small>· máx ${mx}</small>`));
+    const step=el('div','step');const mn=el('button',null,'−'),vl=el('span','val','0'),pl=el('button',null,'+');
+    const sv=v=>{v=Math.max(0,Math.min(mx,v));APP._built[esc.id].mmse[k]=v;vl.textContent=v;upd(esc.id);};
+    mn.onclick=()=>sv(APP._built[esc.id].mmse[k]-1);pl.onclick=()=>sv(APP._built[esc.id].mmse[k]+1);
+    step.append(mn,vl,pl);row.appendChild(step);c.appendChild(row);
+  });
+  c.appendChild(el('div','leg','≥27 normal · 25-26 dudoso · 13-24 deterioro · ≤12 demencia'));
+  c.appendChild(resBox());
+}
+function rPfeiffer(esc,c){
+  const qs=['¿Fecha de hoy?','¿Día de la semana?','¿Lugar?','¿Teléfono o dirección?','¿Cuántos años tiene?','¿Dónde nació?','¿Nombre del presidente?','¿Presidente anterior?','¿Apellido materno?','Restar de 3 en 3 desde 20'];
+  const edu=el('div');edu.style.margin='4px 0 6px';edu.innerHTML='Escolaridad: <select style="width:auto"><option value="0">Media</option><option value="1">Baja (+1 error permitido)</option><option value="-1">Alta (−1 error)</option></select>';
+  APP._built[esc.id].edu=0;
+  edu.querySelector('select').addEventListener('change',e=>{APP._built[esc.id].edu=parseInt(e.target.value);upd(esc.id);});
+  c.appendChild(edu);
+  qs.forEach((q,idx)=>{
+    APP._built[esc.id].sel[idx]=0;
+    const row=el('div','itm');row.appendChild(el('div','itm-q',`${idx+1}. ${q}`));
+    const opts=el('div','opts');
+    [['Correcto',0],['Error',1]].forEach(([lab,val])=>{
+      const o=el('div','opt',lab);if(val===0)o.classList.add('sel');
+      o.addEventListener('click',()=>{APP._built[esc.id].sel[idx]=val;opts.querySelectorAll('.opt').forEach(x=>x.classList.remove('sel'));o.classList.add('sel');upd(esc.id);});
+      opts.appendChild(o);
+    });
+    row.appendChild(opts);c.appendChild(row);
+  });
+  c.appendChild(el('div','leg','ERRORES: 0-2 normal · 3-4 leve · 5-7 moderado · 8-10 severo (±1 por escolaridad)'));
+  c.appendChild(resBox());
+}
+function rGlim(esc,c){
+  const st=APP._built[esc.id];st.glim={};
+  [['fpeso','Pérdida de peso (>5% en 6 m o >10% en >6 m)'],['fimc','IMC bajo (<20 si <70 a; <22 si ≥70 a)'],['fmasa','↓ masa muscular (técnica validada)']].forEach(([k,lab],i)=>{
+    if(i===0)c.appendChild(el('div','gg','Criterios fenotípicos (≥1)'));
+    st.glim[k]=false;const l=el('label','chk');l.innerHTML=`<input type="checkbox"><span>${lab}</span>`;
+    l.querySelector('input').addEventListener('change',e=>{st.glim[k]=e.target.checked;upd(esc.id);});c.appendChild(l);
+  });
+  [['eing','↓ ingesta/asimilación (≤50% >1 sem o enf. GI crónica)'],['einf','Carga inflamatoria (lesión aguda o enf. crónica)']].forEach(([k,lab],i)=>{
+    if(i===0)c.appendChild(el('div','gg','Criterios etiológicos (≥1)'));
+    st.glim[k]=false;const l=el('label','chk');l.innerHTML=`<input type="checkbox"><span>${lab}</span>`;
+    l.querySelector('input').addEventListener('change',e=>{st.glim[k]=e.target.checked;upd(esc.id);});c.appendChild(l);
+  });
+  c.appendChild(el('div','leg','Diagnóstico GLIM: ≥1 criterio fenotípico + ≥1 etiológico'));
+  c.appendChild(resBox());
+}
+function rMna(esc,c){
+  const crib=[['A','Apetito 3 m',[['Mucho menos',0],['Menos',1],['Igual',2]]],['B','Pérdida peso <3 m',[['>3 kg',0],['No sabe',1],['1-3 kg',2],['Sin pérdida',3]]],['C','Movilidad',[['Cama-sillón',0],['Interior',1],['Sale',2]]],['D','Estrés/enf. aguda',[['Sí',0],['No',2]]],['E','Neuropsicológico',[['Demencia/depr. grave',0],['Demencia leve',1],['Sin problemas',2]]],['F','IMC',[['<19',0],['19-<21',1],['21-<23',2],['≥23',3]]]];
+  const ev=[['G','¿Vive independiente?',[['No',0],['Sí',1]]],['H','¿>3 fármacos/día?',[['Sí',0],['No',1]]],['I','¿Úlceras?',[['Sí',0],['No',1]]],['J','Comidas/día',[['1',0],['2',1],['3',2]]],['K','Proteicos',[['0-1',0],['2',0.5],['3',1]]],['L','¿Fruta/verdura ≥2?',[['No',0],['Sí',1]]],['M','Líquidos',[['<3v',0],['3-5v',0.5],['>5v',1]]],['N','Alimentarse',[['Ayuda',0],['Con dificultad',1],['Solo',2]]],['O','Autopercepción',[['Malnutr. grave',0],['No sabe',1],['Sin problemas',2]]],['P','Salud vs edad',[['Peor',0],['No sabe',0.5],['Igual',1],['Mejor',2]]],['Q','CB (cm)',[['<21',0],['21-22',0.5],['>22',1]]],['R','CP (cm)',[['<31',0],['≥31',1]]]];
+  const st=APP._built[esc.id];st.mna={};
+  const mk=(arr,tit)=>{c.appendChild(el('div','gg',tit));arr.forEach(([k,q,opts])=>{st.mna[k]=null;const row=el('div','itm');row.appendChild(el('div','itm-q',`${k}. ${q}`));const od=el('div','opts');opts.forEach(([lab,val])=>{const o=el('div','opt',`${lab}<span class="v">${val}</span>`);o.addEventListener('click',()=>{st.mna[k]=val;od.querySelectorAll('.opt').forEach(x=>x.classList.remove('sel'));o.classList.add('sel');upd(esc.id);});od.appendChild(o);});row.appendChild(od);c.appendChild(row);});};
+  mk(crib,'Cribado A-F · /14');mk(ev,'Evaluación G-R · /16 (si cribado ≤11)');
+  c.appendChild(resBox());
+}
+
+/* ── FUNCIÓN DE ACTUALIZACIÓN ── */
+function upd(id){
+  const st=APP._built[id],esc=st.def,bdg=st.bdg,res=st.cnt?st.cnt.querySelector('[data-role=res]'):null;
+  if(st.na){setBR(bdg,res,'No realizada','No realizada','b-neutro');store(id,{present:false});return;}
+  let sT,bT,cls,raw=null,label='';
+  if(esc.tipo==='suma'){
+    const vals=Object.values(st.sel);if(!vals.length)return;
+    const s=vals.reduce((a,b)=>a+b,0),done=vals.length===esc.items.length;
+    [label,cls]=corte(esc.cortes,s);raw=s;
+    bT=`${s}${esc.unidad}`;sT=`${s}${esc.unidad} — ${label}`+(done?'':' (incompleto)');
+  }else if(esc.tipo==='tug'){
+    if(st.num==null)return;const t=st.num;label=t<10?'normal':t<13.5?'movilidad reducida':t<=20?'riesgo aumentado':'alto riesgo caídas';cls=t<10?'b-ok':t<13.5?'b-warn':'b-alert';raw=t;bT=`${t} s`;sT=`${t} s — ${label}`;
+  }else if(esc.tipo==='gait'){
+    if(st.num==null)return;const v=st.num;label=v>1?'normal':v>0.8?'intermedia':'lentitud (≤0,8 m/s)';cls=v>1?'b-ok':v>0.8?'b-warn':'b-alert';raw=v;bT=`${v} m/s`;sT=`${v} m/s — ${label}`;
+  }else if(esc.tipo==='grip'){
+    if(st.num==null)return;const g=st.num,sx=APP.pac.sexo,cut=sx==='M'?16:27,baja=g<cut;label=sx?`${baja?'fuerza baja':'normal'} (corte ${cut} kg)`:'(introduzca sexo en Paciente)';cls=sx?(baja?'b-alert':'b-ok'):'b-neutro';raw=g;bT=`${g} kg`;sT=`${g} kg — ${label}`;
+  }else if(esc.tipo==='reloj'){
+    if(st.num==null)return;const n=st.num;label=n>=4?'normal':n===3?'alteración leve':n===2?'alteración moderada':n===1?'alteración grave':'irreconocible';cls=n>=4?'b-ok':n>=3?'b-warn':'b-alert';raw=n;bT=`${n}/5`;sT=`Test del Reloj ${n}/5 — ${label}`;
+  }else if(esc.tipo==='frailvig'){
+    if(st.idx==null)return;const x=st.idx;label=x<0.2?'sin fragilidad':x<=0.35?'fragilidad leve':x<=0.5?'fragilidad moderada':'fragilidad avanzada';cls=x<0.2?'b-ok':x<=0.5?'b-warn':'b-alert';raw=x;bT=x.toFixed(2);sT=`IF-VIG ${x.toFixed(2)} — ${label}`;
+  }else if(esc.tipo==='cfs'){
+    if(st.cfs==null)return;const n=st.cfs;label=n<=3?'robusto':n===4?'vulnerable':n<=6?'fragilidad leve-moderada':'fragilidad grave';cls=n<=3?'b-ok':n===4?'b-warn':n<=6?'b-warn':'b-alert';raw=n;bT=`CFS ${n}`;sT=`CFS ${n} — ${label}`;
+  }else if(esc.tipo==='charlson'){
+    let s=0;CHARL.forEach(([k,,w])=>{if(st.charl[k])s+=w;});const edad=pacEdad();let ap=0;if(edad!=null&&edad>=50)ap=Math.min(5,Math.floor((edad-40)/10));const tot=s+ap;label=tot<=1?'bajo riesgo':tot<=3?'moderado':tot<=5?'alto':'muy alto';cls=tot<=1?'b-ok':tot<=3?'b-warn':'b-alert';raw=tot;bT=`${tot} ptos`;sT=`Charlson ${tot} ptos (comorbilidad ${s} + edad ${ap}) — riesgo ${label}`;
+  }else if(esc.tipo==='cirsg'){
+    const v=Object.values(st.cirs);const tot=v.reduce((a,b)=>a+b,0);const endo=v.filter(x=>x>0).length;const is=endo?(tot/endo).toFixed(2):0;const n3=v.filter(x=>x>=3).length,n4=v.filter(x=>x===4).length;raw=tot;label=`total ${tot} · ${endo} categorías · IS ${is} · grado≥3: ${n3}`;cls=n4>0||n3>=2?'b-alert':n3===1?'b-warn':'b-ok';bT=`${tot}`;sT=label;
+  }else if(esc.tipo==='mmse'){
+    const s=Object.values(st.mmse).reduce((a,b)=>a+b,0);label=s>=27?'normal':s>=25?'dudoso':s>=13?'deterioro':'demencia';cls=s>=27?'b-ok':s>=25?'b-warn':s>=13?'b-warn':'b-alert';raw=s;bT=`${s}/30`;sT=`${s}/30 — ${label}`;
+  }else if(esc.tipo==='pfeiffer'){
+    const e=Object.values(st.sel).reduce((a,b)=>a+b,0);const eff=e-st.edu;label=eff<=2?'normal':eff<=4?'leve':eff<=7?'moderado':'severo';cls=eff<=2?'b-ok':eff<=4?'b-warn':'b-alert';raw=e;bT=`${e} err`;sT=`${e} errores — ${label}`;
+  }else if(esc.tipo==='glim'){
+    const g=st.glim,fen=g.fpeso||g.fimc||g.fmasa,eti=g.eing||g.einf,ok=fen&&eti;if(!fen&&!eti)return;cls=ok?'b-alert':'b-ok';raw=ok?1:0;label=ok?'cumple desnutrición':'no cumple';bT=ok?'Desnutrición':'No cumple';sT=ok?'CUMPLE (fenotípico + etiológico)':'No cumple criterios';
+  }else if(esc.tipo==='mna'){
+    const m=st.mna,ck=['A','B','C','D','E','F'],ev2=['G','H','I','J','K','L','M','N','O','P','Q','R'];const sub=ks=>ks.reduce((a,k)=>a+(m[k]==null?0:m[k]),0);const cS=sub(ck);const cCat=cS>=12?'normal':cS>=8?'riesgo':'malnutrición';const eAny=ev2.some(k=>m[k]!=null);
+    if(eAny){const tot=cS+sub(ev2);const tCat=tot>=24?'normal':tot>=17?'riesgo':'malnutrición';cls=tCat==='normal'?'b-ok':tCat==='riesgo'?'b-warn':'b-alert';raw=tot;bT=`${tot}/30`;label=tCat;sT=`Cribado ${cS}/14 · Total ${tot}/30 (${tCat})`;}
+    else{cls=cCat==='normal'?'b-ok':cCat==='riesgo'?'b-warn':'b-alert';raw=cS;bT=`${cS}/14`;label=cCat;sT=`Cribado ${cS}/14 (${cCat})`;}
+  }
+  setBR(bdg,res,bT,sT,cls);store(id,{present:true,raw,label,cls,txt:sT});
+  if(APP._planLive)buildPlanPreview();
+}
+
+/* ── PÁGINA PACIENTE ── */
+const PAC_TXT=[['hc-alergias','Alergias'],['hc-apers','Antecedentes personales'],['hc-afam','Antecedentes familiares'],['tratamiento','Tratamiento habitual'],['lab','Pruebas de laboratorio'],['social','Valoración social'],['espirit','Espiritualidad y preferencias personales']];
+function buildPacientePage(){
+  const r=$('pg-paciente');r.innerHTML='';
+  const c1=el('div','card');c1.innerHTML=`<div class="card-h">👤 Datos del paciente</div><div class="card-b"><div class="grid2">
+   <div class="fg span2"><label>Nombre completo</label><input type="text" id="pac-nombre" placeholder="Apellidos, Nombre"></div>
+   <div class="fg"><label>Fecha de nacimiento</label><input type="text" id="pac-fnac" placeholder="DD/MM/AAAA"></div>
+   <div class="fg"><label>Sexo</label><div class="seg" id="pac-sexo"><button data-v="H">Hombre</button><button data-v="M">Mujer</button></div></div>
+   <div class="fg"><label>N.º Historia (NHC)</label><input type="text" id="pac-nhc"></div>
+   <div class="fg"><label>Médico responsable</label><input type="text" id="pac-medico"></div>
+   <div class="fg"><label>Peso (kg)</label><input type="number" id="pac-peso" step="0.1"></div>
+   <div class="fg"><label>Talla (cm)</label><input type="number" id="pac-talla" step="0.1"></div>
+   <div class="fg"><label>Caídas en el último año</label><input type="number" id="pac-caidas" min="0"></div>
+   <div class="fg"><label>Fecha de evaluación</label><input type="text" id="pac-fecha" placeholder="DD/MM/AAAA"></div>
+  </div></div>`;
+  r.appendChild(c1);
+  const c2=el('div','card');let h2='<div class="card-h">📝 Historia clínica y valoración</div><div class="card-b">';
+  PAC_TXT.forEach(([id,lab])=>{h2+=`<div class="fg"><label>${lab}</label><textarea id="${id}"></textarea></div>`;});
+  h2+='</div>';c2.innerHTML=h2;r.appendChild(c2);
+  ['pac-nombre','pac-fnac','pac-nhc','pac-medico','pac-fecha'].forEach(id=>{const el2=$(id);if(el2)el2.addEventListener('input',e=>APP.pac[id.replace('pac-','')]=e.target.value);});
+  ['pac-peso','pac-talla','pac-caidas'].forEach(id=>{const el2=$(id);if(el2)el2.addEventListener('input',e=>APP.pac[id.replace('pac-','')]=e.target.value===''?null:parseFloat(e.target.value));});
+  PAC_TXT.forEach(([id])=>{const el2=$(id);if(el2)el2.addEventListener('input',e=>APP.pac[id]=e.target.value);});
+  $('pac-sexo').querySelectorAll('button').forEach(b=>b.addEventListener('click',()=>{APP.pac.sexo=b.dataset.v;$('pac-sexo').querySelectorAll('button').forEach(x=>x.classList.remove('on'));b.classList.add('on');if(APP._built.grip&&APP._built.grip.rendered)upd('grip');}));
+  $('pac-fecha').value=new Date().toLocaleDateString('es-ES');APP.pac.fecha=$('pac-fecha').value;
+}
+
+/* ── PÁGINA PLAN ── */
+const SS=[
+ ['stopp_frid','STOPP — fármacos que aumentan riesgo de caídas (benzodiacepinas, neurolépticos, vasodilatadores, hipnóticos-Z) en paciente con caídas recurrentes','stop'],
+ ['stopp_bzd','STOPP — benzodiacepinas ≥4 semanas (sedación, caídas, confusión)','stop'],
+ ['stopp_neuro','STOPP — antipsicóticos como hipnótico o en SCPD sin indicación clara','stop'],
+ ['stopp_antihta','STOPP — duplicidad de antihipertensivos / hipotensión ortostática sintomática','stop'],
+ ['stopp_aines','STOPP — AINE de forma prolongada (riesgo HDA, ERC, HTA, IC)','stop'],
+ ['stopp_ppi','STOPP — IBP a dosis plena >8 semanas sin indicación de mantenimiento','stop'],
+ ['stopp_anticol','STOPP — fármacos anticolinérgicos en deterioro cognitivo o demencia','stop'],
+ ['stopp_sulfo','STOPP — sulfonilureas de acción prolongada (glibenclamida) en diabetes','stop'],
+ ['stopp_opioide','STOPP — opioides sin laxante pautado (riesgo de estreñimiento)','stop'],
+ ['stopp_duplic','STOPP — duplicidad terapéutica de una misma clase farmacológica','stop'],
+ ['start_anticoag','START — anticoagulación en FA crónica sin contraindicación','start'],
+ ['start_estatina','START — estatina en enfermedad cardiovascular establecida','start'],
+ ['start_iecaical','START — IECA/ARA-II en insuficiencia cardíaca o tras IAM','start'],
+ ['start_vitd','START — vitamina D en paciente institucionalizado o con caídas/osteoporosis','start'],
+ ['start_calcio','START — calcio + vitamina D / antirresortivo en osteoporosis documentada','start'],
+ ['start_laxante','START — laxante en paciente con opioides crónicos','start'],
+ ['start_vacuna','START — vacunación antigripal anual y antineumocócica','start'],
+ ['start_isrs','START — ISRS en depresión moderada-grave persistente','start']];
+
+/* ── VALIDACIÓN DE VALORES ANALÍTICOS ──
+   Dos niveles POR ANALITO. Edita libremente los números aquí:
+     block[min,max] = ROJO, BLOQUEA. Valores fisiológicamente imposibles
+                      (casi siempre un error de tecleo). Obligan a confirmar.
+     warn [min,max] = AMARILLO, no bloquea. Valores clínicamente inusuales
+                      pero posibles; solo piden una segunda mirada.
+   Para convertir un aviso en bloqueo, mueve el número del array 'warn' al 'block'. */
+const LABLIM={
+ 'cl-hb':   {label:'Hb (g/dL)',        block:[2,20],     warn:[8,18]},
+ 'cl-vcm':  {label:'VCM (fL)',         block:[20,200],   warn:[70,110]},
+ 'cl-fer':  {label:'Ferritina (ng/mL)',block:[0,40000],  warn:[5,1000]},
+ 'cl-ist':  {label:'IST/TSAT (%)',     block:[0,100],    warn:[5,90]},
+ 'cl-b12':  {label:'Vit. B12 (pg/mL)', block:[0,20000],  warn:[50,1500]},
+ 'cl-fol':  {label:'Ác. fólico (ng/mL)',block:[0,100],   warn:[1,22]},
+ 'cl-egfr': {label:'eGFR',             block:[0,200],    warn:[8,100]},
+ 'cl-vitd': {label:'25-OH-D (ng/mL)',  block:[0,200],    warn:[10,60]},
+ 'cl-hba1c':{label:'HbA1c (%)',        block:[2,20],     warn:[4,15]}
+};
+function validateLab(id){
+  const lim=LABLIM[id],inp=$(id);if(!lim||!inp)return;
+  const fg=inp.closest('.fg');if(!fg)return;
+  const v=inp.value===''?null:parseFloat(inp.value);
+  let msg=fg.querySelector('.lab-msg');
+  fg.classList.remove('lab-warn','lab-block');
+  if(v==null||isNaN(v)){APP._labState[id]='ok';if(msg)msg.remove();buildPlanPreview&&APP._planLive&&buildPlanPreview();return;}
+  let state='ok';
+  if(v<lim.block[0]||v>lim.block[1])state='block';
+  else if(v<lim.warn[0]||v>lim.warn[1])state='warn';
+  APP._labState[id]=state;
+  if(state==='ok'){if(msg)msg.remove();}
+  else{
+    if(!msg){msg=document.createElement('div');fg.appendChild(msg);}
+    if(state==='warn'){
+      fg.classList.add('lab-warn');
+      msg.className='lab-msg warn';
+      msg.innerHTML=`⚠️ Valor clínicamente inusual para ${lim.label}. Verifique que es correcto.`;
+    }else{
+      fg.classList.add('lab-block');
+      const confirmed=(APP._labConfirmVal[id]===v);
+      msg.className='lab-msg block';
+      msg.innerHTML=`⛔ Valor fuera del rango fisiológicamente posible para ${lim.label}. Revise la cifra: casi siempre es un error de tecleo.`+
+        `<label class="cfm"><input type="checkbox" ${confirmed?'checked':''}> Confirmo que este valor es correcto</label>`;
+      const cb=msg.querySelector('input');
+      cb.addEventListener('change',e=>{
+        if(e.target.checked){APP._labConfirmVal[id]=v;APP._labConfirmAt[id]=new Date();}
+        else{APP._labConfirmVal[id]=null;APP._labConfirmAt[id]=null;}
+        buildPlanPreview();
+      });
+    }
+  }
+  APP._planLive&&buildPlanPreview();
+}
+/* ¿Hay algún valor imposible sin confirmar? Bloquea la generación de documentos. */
+function labGateOK(){
+  return !Object.keys(LABLIM).some(id=>{
+    const inp=$(id);if(!inp||inp.value==='')return false;
+    const v=parseFloat(inp.value);const lim=LABLIM[id];
+    const blocked=(v<lim.block[0]||v>lim.block[1]);
+    return blocked&&APP._labConfirmVal[id]!==v;
+  });
+}
+function labBlockedList(){
+  return Object.keys(LABLIM).filter(id=>{
+    const inp=$(id);if(!inp||inp.value==='')return false;
+    const v=parseFloat(inp.value);const lim=LABLIM[id];
+    const blocked=(v<lim.block[0]||v>lim.block[1]);
+    return blocked&&APP._labConfirmVal[id]!==v;
+  }).map(id=>LABLIM[id].label);
+}
+
+function buildPlanPage(){
+  const r=$('pg-plan');r.innerHTML='';
+  const c1=el('div','card');c1.innerHTML=`<div class="card-h">🧪 Datos complementarios para el plan</div><div class="card-b">
+   <div class="gg">Anemia / hematimetría</div>
+   <div class="grid3">
+    <div class="fg"><label>Hb (g/dL)</label><input type="number" id="cl-hb" step="0.1"></div>
+    <div class="fg"><label>VCM (fL)</label><input type="number" id="cl-vcm" step="0.1"></div>
+    <div class="fg"><label>Ferritina (ng/mL)</label><input type="number" id="cl-fer" step="1"></div>
+    <div class="fg"><label>IST / TSAT (%)</label><input type="number" id="cl-ist" step="1"></div>
+    <div class="fg"><label>Vit. B12 (pg/mL)</label><input type="number" id="cl-b12" step="1"></div>
+    <div class="fg"><label>Ác. fólico (ng/mL)</label><input type="number" id="cl-fol" step="0.1"></div>
+    <div class="fg"><label>eGFR (mL/min/1,73)</label><input type="number" id="cl-egfr" step="1"></div>
+   </div>
+   <label class="chk"><input type="checkbox" id="cl-inflam"><span>Proceso inflamatorio / enfermedad crónica activa</span></label>
+   <label class="chk"><input type="checkbox" id="cl-card"><span>Enfermedad cardiovascular (umbral transfusional 8 g/dL)</span></label>
+   <label class="chk"><input type="checkbox" id="cl-preop"><span>Cirugía electiva con riesgo de sangrado — activar módulo optimización preoperatoria (RICA/PBM)</span></label>
+   <hr class="dv">
+   <div class="gg">Vitamina D y control glucémico</div>
+   <div class="grid3">
+    <div class="fg"><label>25-OH-vitamina D (ng/mL)</label><input type="number" id="cl-vitd" step="0.1"></div>
+    <div class="fg"><label>HbA1c (%)</label><input type="number" id="cl-hba1c" step="0.1"></div>
+    <div class="fg"><label>Categoría funcional (ADA)</label><select id="cl-cat"><option value="">— automática</option><option value="healthy">Sano / buena función</option><option value="complex">Complejo / intermedio</option><option value="poor">Muy complejo / mala salud</option></select></div>
+   </div>
+   <label class="chk"><input type="checkbox" id="cl-dm"><span>Diabetes en tratamiento activo</span></label>
+   <label class="chk"><input type="checkbox" id="cl-sulin"><span>Tratamiento con insulina o sulfonilureas (riesgo de hipoglucemia)</span></label>
+  </div>`;
+  r.appendChild(c1);
+  const c2=el('div','card');
+  let h='<div class="card-h">💊 Revisión de medicación — STOPP/START v3<span class="b">marque lo aplicable</span></div><div class="card-b">';
+  h+='<div class="gg">STOPP — considerar retirar o revisar</div>';
+  SS.filter(s=>s[2]==='stop').forEach(([k,lab])=>{h+=`<label class="chk"><input type="checkbox" data-ss="${k}"><span>${lab.replace('STOPP — ','')}</span></label>`;});
+  h+='<div class="gg">START — considerar iniciar</div>';
+  SS.filter(s=>s[2]==='start').forEach(([k,lab])=>{h+=`<label class="chk"><input type="checkbox" data-ss="${k}"><span>${lab.replace('START — ','')}</span></label>`;});
+  h+='<div class="note">Subconjunto representativo de los 190 criterios STOPP/START v3. Requiere juicio clínico individualizado (O\'Mahony et al. Eur Geriatr Med 2023;14:625-632).</div></div>';
+  c2.innerHTML=h;r.appendChild(c2);
+  const c3=el('div','card');c3.innerHTML='<div class="card-h">📄 Vista previa del plan</div><div class="card-b" id="plan-prev"><div class="empty">Introduce datos de escalas y parámetros clínicos para ver el plan</div></div>';
+  r.appendChild(c3);
+  const bn=(id,key)=>{const e=$(id);if(e)e.addEventListener('input',ev=>{APP.clin[key]=ev.target.value===''?null:parseFloat(ev.target.value);validateLab(id);});};
+  bn('cl-hb','hb');bn('cl-vcm','vcm');bn('cl-fer','fer');bn('cl-ist','ist');bn('cl-b12','b12');bn('cl-fol','fol');bn('cl-egfr','egfr');bn('cl-vitd','vitd');bn('cl-hba1c','hba1c');
+  ['cl-inflam','cl-card','cl-dm','cl-sulin','cl-preop'].forEach(id=>{const e=$(id);if(e)e.addEventListener('change',ev=>{APP.clin[id.replace('cl-','')]=ev.target.checked;buildPlanPreview();});});
+  const cat=$('cl-cat');if(cat)cat.addEventListener('change',e=>{APP.clin.cat=e.target.value;buildPlanPreview();});
+  c2.querySelectorAll('[data-ss]').forEach(cb=>cb.addEventListener('change',e=>{APP.ss[e.target.dataset.ss]=e.target.checked;buildPlanPreview();}));
+  APP._planLive=true;buildPlanPreview();
+}
+
+function adaCat(){
+  if(APP.clin.cat)return APP.clin.cat;
+  const b=RAW('barthel'),mm=RAW('mmse'),pf=RAW('pfeiffer'),cfs=RAW('cfs'),vig=RAW('frailvig'),katz=RAW('katz');
+  const poor=(mm!=null&&mm<=12)||(pf!=null&&pf>=8)||(b!=null&&b<=35)||(cfs!=null&&cfs>=7)||(vig!=null&&vig>0.5)||(katz!=null&&katz>=5);
+  if(poor)return'poor';
+  const complex=(mm!=null&&mm<=24)||(pf!=null&&pf>=3)||(b!=null&&b<=90)||(katz!=null&&katz>=2)||(cfs!=null&&cfs>=5)||(vig!=null&&vig>0.2)||(RAW('frail')!=null&&RAW('frail')>=3);
+  return complex?'complex':'healthy';
+}
+
+function buildPlan(){
+  const rec={};const cl={f:[],n:[],c:[],x:[]};
+  ALLSC.forEach(s=>{if(APP.scores[s.id]&&APP.scores[s.id].present){
+    const dk=domOf(s.id);const dom=({funcional:'f',funcionales:'f',comorbilidad:'x',fragilidad:'f',nutricional:'n',cognitivo:'c'})[dk]||'f';
+    cl[dom].push({nom:s.nom,val:APP.scores[s.id].txt});}});
+
+  /* EJE 1 — VIVIFRAIL */
+  if(RAW('sppb')!=null){const v=RAW('sppb');let P,E;if(v<=3){P='A';E='discapacidad';}else if(v<=6){P='B';E='fragilidad';}else if(v<=9){P='C';E='prefragilidad';}else{P='D';E='robusto';}
+    let plus=false,pr=[];if(P!=='A'&&P!=='D'){if(RAW('tug')!=null&&RAW('tug')>=13.5){plus=true;pr.push('TUG ≥13,5 s');}if(RAW('sarcf')!=null&&RAW('sarcf')>=4){plus=true;pr.push('SARC-F ≥4');}if(RAW('gait')!=null&&RAW('gait')<=0.8){plus=true;pr.push('marcha ≤0,8 m/s');}}
+    const PL=P+(plus?'+':'');
+    rec.ejercicio={t:'Ejercicio físico multicomponente (VIVIFRAIL)',l:[
+      `SPPB ${v}/12 → Pasaporte VIVIFRAIL ${PL} (${E}).`+(plus?` Variante "+" por: ${pr.join(', ')}.`:''),
+      'Componentes: fuerza y potencia de MMII, equilibrio y coordinación, reentrenamiento de la marcha, flexibilidad y resistencia aeróbica.',
+      'Dosis: 30-45 min, 3 días/semana, intensidad baja-moderada progresiva, mínimo 8 semanas.',
+      `Consultar rueda de ejercicios VIVIFRAIL ${PL} en vivifrail.com. Reevaluar SPPB al finalizar para reasignar pasaporte.`],
+      f:'Ministerio de Sanidad 2022 (consenso VIVIFRAIL); vivifrail.com'};}
+
+  /* EJE 2 — NUTRICIÓN */
+  const glimSi=RAW('glim')===1;const mnaRiesgo=APP.scores.mna&&APP.scores.mna.present&&APP.scores.mna.label&&APP.scores.mna.label!=='normal';
+  if(APP.scores.mna&&APP.scores.mna.present||APP.scores.glim&&APP.scores.glim.present){
+    let l;if(glimSi||mnaRiesgo){
+      l=['Desnutrición / riesgo nutricional confirmado: plan nutricional intensificado.',
+       'Aporte proteico 1,2-1,5 g/kg/día (ajustar en ERC grave sin diálisis).',
+       'Suplementos nutricionales orales si la dieta no cubre requerimientos: ≥400 kcal/día y ≥30 g proteína/día durante ≥1 mes con revisión mensual.',
+       'Energía ≈30 kcal/kg/día. Intervención multimodal: apoyo en comidas, enriquecimiento de texturas, consejo dietético individualizado. Priorizar siempre la vía oral.',
+       'Tratar causas reversibles de baja ingesta: dolor, polifarmacia, salud bucodental, estreñimiento, depresión.',
+       'Combinar con ejercicio multicomponente para preservar masa y función muscular.',
+       'Hidratación adecuada: ≈1,6 L/día (mujeres) / ≈2,0 L/día (hombres).'];
+    }else{l=['Estado nutricional adecuado. Mantener ≈30 kcal/kg/día y ≥1,0-1,2 g/kg/día de proteína. Evitar dietas restrictivas no justificadas. Mantener cribado nutricional periódico.'];}
+    rec.nutricion={t:'Nutrición (ESPEN)',l,f:'Volkert D et al. ESPEN 2019 (PMID 30005900); ESPEN 2022 (PMID 35306388); PROT-AGE 2013 (PMID 23867520)'};}
+
+  /* EJE 3 — CAÍDAS */
+  const cN=APP.pac.caidas;const rCaidas=(RAW('sppb')!=null&&RAW('sppb')<=8)||(RAW('frail')!=null&&RAW('frail')>=3)||(RAW('sarcf')!=null&&RAW('sarcf')>=4)||(RAW('tug')!=null&&RAW('tug')>=13.5)||(RAW('gait')!=null&&RAW('gait')<=0.8)||(cN!=null&&cN>=1)||(RAW('cfs')!=null&&RAW('cfs')>=5);
+  if(rCaidas){const fc=[];if(cN!=null&&cN>0)fc.push(`${cN} caída(s) en el último año`);if(RAW('frail')!=null&&RAW('frail')>=3)fc.push('fragilidad (FRAIL)');if(RAW('sppb')!=null&&RAW('sppb')<=8)fc.push(`SPPB ${RAW('sppb')}/12`);if(RAW('tug')!=null&&RAW('tug')>=13.5)fc.push(`TUG ${RAW('tug')} s`);if(RAW('gait')!=null&&RAW('gait')<=0.8)fc.push(`marcha ${RAW('gait')} m/s`);
+    rec.caidas={t:'Prevención de caídas (NICE NG249)',l:[
+      `Riesgo elevado de caídas${fc.length?' por: '+fc.join(', '):''}. Ofrecer valoración multifactorial si ha caído en el último año con ≥1 criterio (fragilidad, ≥2 caídas, lesión que precisó atención, pérdida de conciencia o incapacidad para levantarse).`,
+      'Valoración multifactorial: TA en decúbito y bipedestación (hipotensión ortostática), cognición y ánimo, calzado y pie, marcha-equilibrio-fuerza, visión, audición, continencia, mareo/vértigo, riesgo de osteoporosis y enfermedades crónicas.',
+      'Revisión estructurada de la medicación: retirar o ajustar psicofármacos y otros fármacos de riesgo (ver módulo STOPP/START).',
+      'Programa de ejercicio progresivo centrado en equilibrio, coordinación, fuerza y potencia, alineado con el Pasaporte VIVIFRAIL asignado.',
+      'Evaluación de riesgos del entorno domiciliario o residencial con herramienta validada; preferiblemente por terapeuta ocupacional.',
+      'Vitamina D para salud ósea y muscular según niveles (ver módulo). Valorar TCC del miedo a caer si persiste tras el programa de ejercicio.'],
+      f:'NICE NG249, 2025; Neilson J et al. BMJ 2026;392:s223. doi:10.1136/bmj.s223'};}
+
+  /* EJE 4 — DETERIORO COGNITIVO */
+  const cogPos=(RAW('pfeiffer')!=null&&RAW('pfeiffer')>=3)||(RAW('mmse')!=null&&RAW('mmse')<=24)||(RAW('reloj')!=null&&RAW('reloj')<=3);
+  if(cogPos){const gr=RAW('mmse')!=null?(RAW('mmse')>=21?'leve':RAW('mmse')>=10?'moderado':'grave'):null;
+    rec.demencia={t:'Estudio del deterioro cognitivo (NICE NG97)',l:[
+      `Cribado cognitivo positivo`+(RAW('mmse')!=null?` (MMSE ${RAW('mmse')}/30)`:'')+( RAW('pfeiffer')!=null?` · Pfeiffer ${RAW('pfeiffer')} errores`:'')+( RAW('reloj')!=null&&RAW('reloj')<=3?` · Test del Reloj ${RAW('reloj')}/5`:'')+`. Indicado estudio diagnóstico completo.`,
+      'Anamnesis estructurada con informante fiable: cronología, repercusión funcional en ABVD y AIVD, síntomas conductuales y psicológicos (SCPD).',
+      'Neuroimagen estructural (TC o RM preferible) para apoyar diagnóstico y excluir causas estructurales.',
+      'Analítica de causas reversibles: hemograma, VSG/PCR, glucosa/HbA1c, función renal y hepática, iones (calcio), TSH, vitamina B12 y ácido fólico.',
+      `Filiar subtipo de demencia. Derivar a unidad de memoria / geriatría / neurología. Si demencia establecida: valorar IACE${gr?` (estadio ${gr})`:''} y memantina en fases moderada-grave, junto a medidas no farmacológicas y apoyo al cuidador.`],
+      f:'NICE NG97, 2018; Shulman KI et al. Int Psychogeriatr 2006;18:281-294'};}
+
+  /* EJE 5 — ANEMIA */
+  const hb=APP.clin.hb;
+  if(hb!=null){const sx=APP.pac.sexo,lim=sx==='M'?12:13,anem=hb<lim,sev=hb<8?'grave':hb<11?'moderada':'leve';
+    const fer=APP.clin.fer,ist=APP.clin.ist,inflam=APP.clin.inflam,egfr=APP.clin.egfr,preop=APP.clin.preop;
+    const ferrop=(fer!=null&&(fer<30||(inflam&&fer<100)))||(ist!=null&&ist<20);
+    const l=[];
+    if(preop){
+      l.push(`OPTIMIZACIÓN PREOPERATORIA (Vía RICA / PBM): objetivo Hb >13 g/dL en ambos sexos antes de cirugía electiva con riesgo de sangrado. Hb actual ${hb} g/dL.`);
+      if(anem||ferrop){
+        if(ferrop)l.push('Ferropenia presente: hierro oral de 1.ª línea si hay ≥6 semanas hasta la cirugía. Hierro IV si tiempo insuficiente, intolerancia oral, malabsorción o necesidad de corrección rápida. Reevaluar Hb a las 4 semanas.');
+        else l.push('Anemia no ferropénica (Hb 10-13 g/dL): considerar agentes estimulantes de eritropoyesis (rHuEPO) en cirugía con riesgo de sangrado moderado-alto.');
+        l.push('No programar cirugía electiva con riesgo de sangrado hasta completar diagnóstico y tratamiento de la anemia.');
+      }else{l.push('Hb dentro del objetivo preoperatorio (>13 g/dL). Continuar con protocolo PBM/ERAS institucional.');}
+      l.push('Descartar y corregir déficits de B12 y folato. Criterios transfusionales restrictivos intra/postoperatorios: Hb <7-8 g/dL (AABB 2023).');
+      l.push('Ácido tranexámico en cirugía mayor con sangrado esperado (nivel de evidencia 1A, Moral V 2024).');
+    }else if(anem){
+      l.push(`Anemia ${sev} (Hb ${hb} g/dL; umbral OMS ${lim} g/dL).`+(APP.clin.vcm?` VCM ${APP.clin.vcm} fL.`:''));
+      if(ferrop)l.push('Patrón ferropénico: hierro oral ~100 mg Fe elemento preferiblemente en días alternos. Hierro IV si intolerancia oral, malabsorción, EII, ERC o corrección urgente. Reevaluar Hb a las 4 semanas.');
+      if(APP.clin.b12!=null&&APP.clin.b12<200)l.push('Déficit de vitamina B12: reponer cianocobalamina y estudiar causa.');
+      if(APP.clin.fol!=null&&APP.clin.fol<3)l.push('Déficit de folato: reponer ácido fólico.');
+      if(egfr!=null&&egfr<60)l.push('Anemia en ERC: corregir primero la ferropenia. Valorar AEE (eritropoyetina) si Hb <10 g/dL persistente; objetivo Hb 10-12 g/dL (no superar 12 g/dL).');
+      l.push(`Transfusión restrictiva: umbral Hb <7 g/dL (o <8 g/dL si enfermedad cardiovascular o cirugía ortopédica). Decisión individualizada según síntomas (AABB 2023).`);
+    }else{l.push(`Sin anemia (Hb ${hb} g/dL ≥ umbral ${lim} g/dL).`);}
+    rec.anemia={t:'Anemia'+(preop?' — optimización preoperatoria (RICA/PBM)':''),l,f:'OMS; Camaschella C. NEJM 2015 (PMID 25946282); Carson JL et al. AABB 2023 (PMID 37824153); Moral V et al. Rev Esp Anestesiol 2024 (PMID 38670490); Muñoz M et al. Rev Clin Esp 2024 (PMID 38423382)'};}
+
+  /* EJE 6 — VITAMINA D */
+  if(APP.clin.vitd!=null){const vd=APP.clin.vitd;let cat,l;
+    if(vd<20){cat='deficiencia';l=['Deficiencia (<20 ng/mL): colecalciferol en carga (p. ej. 50.000 UI/semana 6-8 semanas o equivalente diario) y mantenimiento posterior 1.500-2.000 UI/día.'];}
+    else if(vd<30){cat='insuficiencia';l=['Insuficiencia (20-29 ng/mL): suplementar 1.000-2.000 UI/día y recontrolar a los 3-4 meses.'];}
+    else{cat='suficiencia';l=['Niveles suficientes (≥30 ng/mL): mantenimiento según riesgo. En ≥75 años o institucionalizados: ≈800-1.000 UI/día para salud ósea y muscular.'];}
+    l.push('Asegurar aporte adecuado de calcio. Recontrolar 25-OH-D a los 3-4 meses. En mayores de 75 años se sugiere suplementación empírica de mantenimiento (Endocrine Society 2024).');
+    rec.vitd={t:`Vitamina D — ${cat} (25-OH-D ${vd} ng/mL)`,l,f:'Holick MF et al. Endocrine Society 2011 (PMID 21646368); Demay MB et al. 2024 (PMID 38828931)'};}
+
+  /* EJE 7 — GLUCEMIA */
+  if(APP.clin.dm||APP.clin.hba1c!=null){const cat=adaCat();const a1c=APP.clin.hba1c;
+    const obj={healthy:'<7,0-7,5 %',complex:'<8,0 %',poor:'evitar hipoglucemia e hiperglucemia sintomática (no depender de HbA1c)'}[cat];
+    const catT={healthy:'sano / buena función cognitiva y funcional',complex:'complejo / intermedio',poor:'muy complejo / mala salud'}[cat];
+    const l=[`Categoría funcional ADA 2026: ${catT}. Objetivo HbA1c: ${obj}.`+(a1c!=null?` HbA1c actual: ${a1c} %.`:'')];
+    if(cat==='poor')l.push('Priorizar evitar hipoglucemia y simplificar/desintensificar el plan terapéutico. Glucemia en ayunas aceptable: 100-180 mg/dL.');
+    if(APP.clin.sulin)l.push('Insulina/sulfonilureas: alto riesgo de hipoglucemia. Preferir fármacos de bajo riesgo (metformina si eGFR≥30, iDPP4, iSGLT2, arGLP1 según indicación) y simplificar pautas complejas.');
+    l.push('Priorizar fármacos con beneficio CV/renal demostrado cuando esté indicado. Revisar eGFR para dosificación correcta.');
+    rec.glucemia={t:'Control glucémico individualizado (ADA 2026)',l,f:'ADA. Diabetes Care 2026;49(Suppl.1):S277-S296. doi:10.2337/dc26-S013'};}
+
+  /* EJE 8 — STOPP/START */
+  const ssOn=SS.filter(s=>APP.ss[s[0]]);
+  if(ssOn.length){rec.stopstart={t:'Optimización de la medicación (STOPP/START v3)',l:ssOn.map(([,lab])=>lab),f:"O'Mahony D et al. Eur Geriatr Med 2023;14:625-632. doi:10.1007/s41999-023-00777-y"};}
+
+  return{cl,rec};
+}
+
+function buildPlanPreview(){
+  const pb=$('plan-prev');if(!pb)return;
+  const{cl,rec}=buildPlan();APP._plan={cl,rec};
+  const any=Object.keys(rec).length||[...cl.f,...cl.n,...cl.c,...cl.x].length;
+  const gate=labGateOK()?'':`<div class="gate-lab-alert">⛔ Hay valores analíticos imposibles sin confirmar (${labBlockedList().join(', ')}). Revísalos y confírmalos en «Datos complementarios» para poder validar la hoja de ruta y generar documentos.</div>`;
+  if(!any){pb.innerHTML=gate+'<div class="empty">Introduce datos de escalas y parámetros clínicos para ver el plan</div>';return;}
+  let h=gate;
+  if([...cl.f,...cl.x,...cl.n,...cl.c].length){h+='<div class="psec"><h3>📊 Clasificación de resultados</h3>';
+    [['f','tag-f'],['x','tag-x'],['n','tag-n'],['c','tag-c']].forEach(([k,tg])=>cl[k].forEach(s=>{h+=`<div class="pitem"><span class="tag ${tg}">${s.nom}</span>${s.val}</div>`;}));h+='</div>';}
+  const ic={ejercicio:'🏃',nutricion:'🥗',caidas:'⚕️',demencia:'🧠',anemia:'🩸',vitd:'☀️',glucemia:'🍬',stopstart:'💊'};
+  ['ejercicio','nutricion','caidas','demencia','anemia','vitd','glucemia','stopstart'].forEach(k=>{const rv=rec[k];if(!rv)return;
+    h+=`<div class="psec"><h3>${ic[k]} ${rv.t}</h3><ul>`;rv.l.forEach(x=>h+=`<li>${x}</li>`);h+=`</ul><div class="psrc">Fuente: ${rv.f}</div></div>`;});
+  pb.innerHTML=h;
+}
+
+/* ── SEGUIMIENTO ── */
+const LSKEY='vgiplus_v1';
+const TRACK=[['barthel','Barthel'],['lawton','Lawton'],['katz','Katz dep'],['charlson','Charlson'],['cirsg','CIRS-G'],['frail','FRAIL'],['fried','Fried'],['cfs','CFS'],['frailvig','IF-VIG'],['reloj','T.Reloj'],['gait','Marcha m/s'],['grip','Grip kg'],['tug','TUG s'],['sppb','SPPB'],['sarcf','SARC-F'],['mna','MNA'],['mmse','MMSE'],['pfeiffer','Pfeiffer'],['hb','Hb'],['vitd','25-OH-D'],['hba1c','HbA1c'],['peso','Peso']];
+/* La BD vive descifrada en memoria (DBCACHE) tras el desbloqueo.
+   loadDB/saveDB siguen siendo síncronas; la escritura cifrada a
+   localStorage se hace en segundo plano (persistDB, más abajo). */
+function loadDB(){return DBCACHE;}
+function saveDB(db){DBCACHE=db;persistDB();}
+function snapshot(){const s={fecha:APP.pac.fecha||new Date().toLocaleDateString('es-ES'),vals:{}};
+  TRACK.forEach(([k])=>{if(['hb','vitd','hba1c'].includes(k))s.vals[k]=APP.clin[k]??null;else if(k==='peso')s.vals[k]=APP.pac.peso??null;else s.vals[k]=RAW(k);});return s;}
+function patKey(){return(APP.pac.nhc||APP.pac.nombre||'sin-id').trim().replace(/\s+/g,'_');}
+function saveSnap(){const db=loadDB();const k=patKey();if(!db[k])db[k]={nombre:APP.pac.nombre||k,nhc:APP.pac.nhc||'',snaps:[]};db[k].snaps.push(snapshot());saveDB(db);buildSeguimientoPage();showStatus('seg-status',`✅ Evaluación guardada (${db[k].snaps.length} en total).`,'ok');}
+let SEG_PAT=null,SEG_VAR='barthel';
+function buildSeguimientoPage(){
+  const r=$('pg-seguimiento');r.innerHTML='';
+  const c1=el('div','card');c1.innerHTML=`<div class="card-h">📈 Seguimiento longitudinal<span class="b">datos en este dispositivo</span></div><div class="card-b">
+   <div class="btn-row"><button class="btn btn-p" id="seg-save">💾 Guardar evaluación actual</button><button class="btn btn-d" id="seg-del">🗑 Borrar paciente seleccionado</button></div>
+   <div id="seg-status" class="status"></div>
+   <div class="priv">🔒 Los datos se almacenan exclusivamente en el almacenamiento local del navegador de este equipo. No se envían a ningún servidor. Exporta copias de seguridad si cambias de dispositivo o navegador.</div></div>`;
+  r.appendChild(c1);
+  const db=loadDB();const keys=Object.keys(db);
+  const c2=el('div','card');let h='<div class="card-h">🗂 Pacientes guardados</div><div class="card-b"><div class="pat-list">';
+  if(!keys.length)h+='<div class="empty">Aún no hay pacientes guardados. Rellena la pestaña Paciente y pulsa Guardar evaluación.</div>';
+  keys.forEach(k=>{h+=`<div class="pat-row${k===SEG_PAT?' on':''}" data-k="${k}"><div class="nm">${db[k].nombre||k}</div><div class="meta">${db[k].snaps.length} evaluación(es) · ${db[k].nhc||'sin NHC'}</div></div>`;});
+  h+='</div></div>';c2.innerHTML=h;r.appendChild(c2);
+  c2.querySelectorAll('.pat-row').forEach(row=>row.addEventListener('click',()=>{SEG_PAT=row.dataset.k;buildSeguimientoPage();}));
+  $('seg-save').onclick=saveSnap;
+  $('seg-del').onclick=()=>{if(!SEG_PAT){showStatus('seg-status','Selecciona primero un paciente.','err');return;}if(confirm('¿Borrar este paciente y todo su seguimiento? Esta acción no se puede deshacer.')){const d=loadDB();delete d[SEG_PAT];saveDB(d);SEG_PAT=null;buildSeguimientoPage();}};
+  if(SEG_PAT&&db[SEG_PAT]){
+    const pat=db[SEG_PAT];
+    const c3=el('div','card');let hh=`<div class="card-h">📉 Evolución — ${pat.nombre}</div><div class="card-b"><div class="chips">`;
+    TRACK.forEach(([k,lab])=>{hh+=`<span class="chip${k===SEG_VAR?' on':''}" data-v="${k}">${lab}</span>`;});
+    hh+='</div><div class="chart-wrap" id="seg-chart"></div><hr class="dv"><div style="overflow-x:auto">'+snapTable(pat)+'</div></div>';
+    c3.innerHTML=hh;r.appendChild(c3);
+    c3.querySelectorAll('.chip').forEach(ch=>ch.addEventListener('click',()=>{SEG_VAR=ch.dataset.v;buildSeguimientoPage();}));
+    const ch=$('seg-chart');if(ch)ch.innerHTML=chartSVG(pat,SEG_VAR);
+  }
+}
+function snapTable(p){
+  let h='<table class="snap"><tr><th>Parámetro</th>';p.snaps.forEach(s=>h+=`<th>${s.fecha}</th>`);h+='</tr>';
+  TRACK.forEach(([k,lab])=>{h+=`<tr><td class="lab">${lab}</td>`;p.snaps.forEach(s=>{const v=s.vals[k];h+=`<td>${v==null?'·':v}</td>`;});h+='</tr>';});
+  return h+'</table>';
+}
+function chartSVG(p,key){
+  const pts=p.snaps.map((s,i)=>({i,fecha:s.fecha,v:s.vals[key]})).filter(o=>o.v!=null&&!isNaN(+o.v));
+  if(!pts.length)return'<div class="empty">Sin datos registrados para este parámetro</div>';
+  const W=Math.max(380,p.snaps.length*90),H=240,pad=42;
+  const vals=pts.map(o=>+o.v);let mn=Math.min(...vals),mx=Math.max(...vals);if(mn===mx){mn-=1;mx+=1;}
+  const X=i=>pad+(p.snaps.length<=1?(W-2*pad)/2:(i/(p.snaps.length-1))*(W-2*pad));
+  const Y=v=>H-pad-((v-mn)/(mx-mn))*(H-2*pad);
+  let g=`<svg viewBox="0 0 ${W} ${H}" width="${W}" height="${H}" font-family="sans-serif" style="min-width:${W}px">`;
+  g+=`<line x1="${pad}" y1="${H-pad}" x2="${W-pad}" y2="${H-pad}" stroke="#ccc"/><line x1="${pad}" y1="${pad}" x2="${pad}" y2="${H-pad}" stroke="#ccc"/>`;
+  [0,0.5,1].forEach(t=>{const v=mn+t*(mx-mn),y=Y(v);g+=`<line x1="${pad}" y1="${y}" x2="${W-pad}" y2="${y}" stroke="#eee"/><text x="4" y="${y+4}" font-size="10" fill="#999">${(+v.toFixed(1))}</text>`;});
+  let d='';pts.forEach((o,j)=>{const x=X(o.i),y=Y(+o.v);d+=(j?'L':'M')+x+' '+y+' ';});
+  g+=`<path d="${d}" fill="none" stroke="#7A4E9E" stroke-width="2.5" stroke-linejoin="round"/>`;
+  pts.forEach(o=>{const x=X(o.i),y=Y(+o.v);g+=`<circle cx="${x}" cy="${y}" r="5" fill="#7A4E9E"/><text x="${x}" y="${y-9}" font-size="10" fill="#5d3a7c" text-anchor="middle">${o.v}</text>`;});
+  p.snaps.forEach((s,i)=>{g+=`<text x="${X(i)}" y="${H-8}" font-size="9" fill="#999" text-anchor="middle">${s.fecha}</text>`;});
+  return g+'</svg>';
+}
+
+/* ── DOCUMENTOS ── */
+function buildDocsPage(){
+  const r=$('pg-docs');r.innerHTML=`<div class="card"><div class="card-h">📄 Generar documentos Word</div><div class="card-b">
+   <p class="help">Los documentos se generan en tu dispositivo, sin conexión a internet, y se descargan en formato .docx editable en Word.</p>
+   <div class="valbox">
+     <label><input type="checkbox" id="plan-validate"> He revisado y <b>valido esta hoja de ruta</b> (plan de recomendaciones y medidas). Asumo la responsabilidad clínica de las medidas propuestas para este paciente.</label>
+     <div class="stamp" id="plan-stamp">Sin validar. El plan de recomendaciones no puede generarse hasta que valides la hoja de ruta.</div>
+   </div>
+   <div class="btn-row">
+    <button class="btn btn-p btn-big" id="doc-vgi">⬇️ Informe VGI completo</button>
+    <button class="btn btn-g btn-big" id="doc-plan">⬇️ Plan de recomendaciones</button>
+   </div>
+   <div id="docs-status" class="status"></div>
+   <div class="priv">🔒 Ningún dato del paciente sale del dispositivo. Todo el procesamiento ocurre en el navegador.</div></div></div>`;
+  const vchk=$('plan-validate'),vst=$('plan-stamp');
+  vchk.addEventListener('change',e=>{
+    if(e.target.checked){APP._planValidatedAt=new Date();vst.textContent='✅ Hoja de ruta validada el '+fmtStamp(APP._planValidatedAt)+'.';}
+    else{APP._planValidatedAt=null;vst.textContent='Sin validar. El plan de recomendaciones no puede generarse hasta que valides la hoja de ruta.';}
+  });
+  $('doc-vgi').onclick=genVGIDoc;$('doc-plan').onclick=genPlanDoc;
+}
+function fmtStamp(d){return d.toLocaleDateString('es-ES')+' a las '+d.toLocaleTimeString('es-ES',{hour:'2-digit',minute:'2-digit'});}
+
+/* ── OOXML / DOCX ── */
+const CRC_TBL=(()=>{const t=new Uint32Array(256);for(let i=0;i<256;i++){let c=i;for(let j=0;j<8;j++)c=c&1?0xEDB88320^(c>>>1):c>>>1;t[i]=c;}return t;})();
+function crc32(b){let c=0xFFFFFFFF;for(let i=0;i<b.length;i++)c=(c>>>8)^CRC_TBL[(c^b[i])&0xFF];return(c^0xFFFFFFFF)>>>0;}
+function buildZip(files){
+  const enc=new TextEncoder();const toB=d=>typeof d==='string'?enc.encode(d):d;
+  const locals=[],central=[];let off=0;
+  for(const{name,data}of files){const nb=enc.encode(name),db=toB(data),crc=crc32(db),sz=db.length;
+    const lh=new Uint8Array(30+nb.length),lv=new DataView(lh.buffer);
+    lv.setUint32(0,0x04034b50,true);lv.setUint16(4,20,true);lv.setUint16(6,0x0800,true);lv.setUint16(12,0x4A50,true);
+    lv.setUint32(14,crc,true);lv.setUint32(18,sz,true);lv.setUint32(22,sz,true);lv.setUint16(26,nb.length,true);lh.set(nb,30);
+    const cd=new Uint8Array(46+nb.length),cv=new DataView(cd.buffer);
+    cv.setUint32(0,0x02014b50,true);cv.setUint16(4,20,true);cv.setUint16(6,20,true);cv.setUint16(8,0x0800,true);cv.setUint16(14,0x4A50,true);
+    cv.setUint32(16,crc,true);cv.setUint32(20,sz,true);cv.setUint32(24,sz,true);cv.setUint16(28,nb.length,true);cv.setUint32(42,off,true);cd.set(nb,46);
+    locals.push(lh,db);central.push(cd);off+=30+nb.length+sz;}
+  const cdOff=off,cdSz=central.reduce((s,e)=>s+e.length,0);
+  const eo=new Uint8Array(22),ev=new DataView(eo.buffer);
+  ev.setUint32(0,0x06054b50,true);ev.setUint16(8,files.length,true);ev.setUint16(10,files.length,true);ev.setUint32(12,cdSz,true);ev.setUint32(16,cdOff,true);
+  const all=[...locals,...central,eo],tot=all.reduce((s,p)=>s+p.length,0),out=new Uint8Array(tot);let pos=0;
+  for(const p of all){out.set(p,pos);pos+=p.length;}return out;
+}
+const WF='Calibri',WC='0E5A4E',WM='7A4E9E',WG='555555',WL='CCCCCC',WSZ=22;
+function xesc(s){return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+function xrpr(b,i,col,sz){let r='<w:rPr>';if(b)r+='<w:b/><w:bCs/>';if(i)r+='<w:i/><w:iCs/>';if(col)r+=`<w:color w:val="${col}"/>`;r+=`<w:sz w:val="${sz||WSZ}"/><w:szCs w:val="${sz||WSZ}"/><w:rFonts w:ascii="${WF}" w:hAnsi="${WF}" w:cs="${WF}"/>`;return r+'</w:rPr>';}
+function xppr(o){o=o||{};let r='<w:pPr>';if(o.bdrB||o.bdrT){r+='<w:pBdr>';if(o.bdrT)r+=`<w:top w:val="single" w:sz="8" w:space="4" w:color="${o.bc||WL}"/>`;if(o.bdrB)r+=`<w:bottom w:val="single" w:sz="12" w:space="2" w:color="${o.bc||WC}"/>`;r+='</w:pBdr>';}
+  let sp='';if(o.sb!=null)sp+=` w:before="${o.sb}"`;if(o.sa!=null)sp+=` w:after="${o.sa}"`;if(sp)r+=`<w:spacing${sp}/>`;
+  let ind='';if(o.li!=null)ind+=` w:left="${o.li}"`;if(o.hi!=null)ind+=` w:hanging="${o.hi}"`;if(ind)r+=`<w:ind${ind}/>`;
+  if(o.jc)r+=`<w:jc w:val="${o.jc}"/>`;r+=`<w:rPr><w:rFonts w:ascii="${WF}" w:hAnsi="${WF}"/><w:sz w:val="${WSZ}"/></w:rPr>`;return r+'</w:pPr>';}
+const xP=(pp,runs)=>`<w:p>${xppr(pp)}${runs}</w:p>`;
+const xT=(t,b,i,col,sz)=>`<w:r>${xrpr(b,i,col,sz)}<w:t xml:space="preserve">${xesc(t)}</w:t></w:r>`;
+const xTitle=t=>xP({jc:'center',sb:300,sa:80},xT(t,true,false,WM,28));
+const xSub=t=>xP({jc:'center',sa:160},xT(t,false,true,WG,20));
+const xLabel=(l,v)=>xP({sa:50,sb:40},xT(l,true,false,'',WSZ)+(v?xT(' '+v,false,false,'',WSZ):''));
+const xSect=t=>xP({sb:240,sa:80,bdrB:true,bc:WC},xT(t,true,false,WC,24));
+const xBody=t=>xP({sa:60},xT(t,false,false,'',WSZ));
+const xBul0=t=>xP({sa:40,sb:20,li:540,hi:280},xT('•  '+t,false,false,'',WSZ));
+const xBul1=t=>xP({sa:30,sb:15,li:900,hi:280},xT('–  '+t,false,false,'',WSZ));
+const xSubH=t=>xP({sa:40,sb:120},xT(t,true,false,'',WSZ));
+const xSrc=t=>xP({sa:70},xT('Fuente: '+t,false,true,WG,18));
+const xRef=(n,t)=>xP({sa:30},xT(`${n}. ${t}`,false,false,'',18));
+const xLegal=t=>xP({sa:60,sb:200,bdrT:true,bc:WL},xT(t,false,true,WG,16));
+const xValid=t=>xP({sa:60,sb:180,bdrT:true,bc:WM},xT('✓ '+t,true,false,WM,18));
+const xKV=(l,v)=>xP({sa:30,sb:15,li:540,hi:280},xT('–  ',false,false,'',WSZ)+xT(l+': ',true,false,'',WSZ)+xT(v||'—',false,false,'',WSZ));
+
+function finalizeDocx(body){
+  const W='xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main"';
+  const R='xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships"';
+  const REL='xmlns="http://schemas.openxmlformats.org/package/2006/relationships"';
+  const TYP='xmlns="http://schemas.openxmlformats.org/package/2006/content-types"';
+  const PI='<?xml version="1.0" encoding="UTF-8" standalone="yes"?>';
+  const rf=id=>`http://schemas.openxmlformats.org/officeDocument/2006/relationships/${id}`;
+  const ct=`${PI}<Types ${TYP}><Default Extension="rels" ContentType="application/vnd.openxmlformats-package.relationships+xml"/><Default Extension="xml" ContentType="application/xml"/><Override PartName="/word/document.xml" ContentType="application/vnd.openxmlformats-officedocument.wordprocessingml.document.main+xml"/><Override PartName="/word/settings.xml" ContentType="application/vnd.openxmlformats-officedocument.wordprocessingml.settings+xml"/><Override PartName="/word/header1.xml" ContentType="application/vnd.openxmlformats-officedocument.wordprocessingml.header+xml"/><Override PartName="/word/footer1.xml" ContentType="application/vnd.openxmlformats-officedocument.wordprocessingml.footer+xml"/></Types>`;
+  const rr=`${PI}<Relationships ${REL}><Relationship Id="rId1" Type="${rf('officeDocument')}" Target="word/document.xml"/></Relationships>`;
+  const dr=`${PI}<Relationships ${REL}><Relationship Id="rId1" Type="${rf('settings')}" Target="settings.xml"/><Relationship Id="rId2" Type="${rf('header')}" Target="header1.xml"/><Relationship Id="rId3" Type="${rf('footer')}" Target="footer1.xml"/></Relationships>`;
+  const st=`${PI}<w:settings ${W}><w:defaultTabStop w:val="720"/></w:settings>`;
+  const hdr=`${PI}<w:hdr ${W} ${R}><w:p><w:pPr><w:spacing w:before="0" w:after="0"/><w:pBdr><w:bottom w:val="single" w:sz="12" w:space="2" w:color="${WC}"/></w:pBdr></w:pPr><w:r><w:rPr><w:b/><w:color w:val="${WM}"/><w:sz w:val="22"/><w:rFonts w:ascii="${WF}" w:hAnsi="${WF}"/></w:rPr><w:t>VGI+ · Valoración Geriátrica Integral</w:t></w:r></w:p><w:p><w:pPr><w:spacing w:before="0" w:after="40"/></w:pPr><w:r><w:rPr><w:i/><w:color w:val="${WG}"/><w:sz w:val="18"/><w:rFonts w:ascii="${WF}" w:hAnsi="${WF}"/></w:rPr><w:t>Herramienta de apoyo clínico · Uso local</w:t></w:r></w:p></w:hdr>`;
+  const ftr=`${PI}<w:ftr ${W} ${R}><w:p><w:pPr><w:jc w:val="center"/><w:pBdr><w:top w:val="single" w:sz="6" w:space="2" w:color="${WL}"/></w:pBdr><w:spacing w:after="20"/></w:pPr><w:r><w:rPr><w:i/><w:color w:val="${WG}"/><w:sz w:val="14"/><w:rFonts w:ascii="${WF}" w:hAnsi="${WF}"/></w:rPr><w:t xml:space="preserve">Herramienta de apoyo a la decisión clínica. No sustituye el juicio clínico del médico responsable, que toma y firma toda decisión asistencial.</w:t></w:r></w:p><w:p><w:pPr><w:jc w:val="center"/></w:pPr><w:r><w:rPr><w:color w:val="${WG}"/><w:sz w:val="16"/><w:rFonts w:ascii="${WF}" w:hAnsi="${WF}"/></w:rPr><w:t xml:space="preserve">Página </w:t></w:r><w:r><w:rPr><w:color w:val="${WG}"/><w:sz w:val="16"/></w:rPr><w:fldChar w:fldCharType="begin"/></w:r><w:r><w:rPr><w:color w:val="${WG}"/><w:sz w:val="16"/></w:rPr><w:instrText xml:space="preserve"> PAGE </w:instrText></w:r><w:r><w:rPr><w:color w:val="${WG}"/><w:sz w:val="16"/></w:rPr><w:fldChar w:fldCharType="end"/></w:r></w:p></w:ftr>`;
+  const doc=`${PI}<w:document ${W} ${R} xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="w14"><w:body>${body.join('')}<w:sectPr><w:headerReference w:type="default" r:id="rId2"/><w:footerReference w:type="default" r:id="rId3"/><w:pgSz w:w="11906" w:h="16838"/><w:pgMar w:top="1417" w:right="1701" w:bottom="1417" w:left="1701" w:header="708" w:footer="708"/></w:sectPr></w:body></w:document>`;
+  const zip=buildZip([{name:'[Content_Types].xml',data:ct},{name:'_rels/.rels',data:rr},{name:'word/document.xml',data:doc},{name:'word/_rels/document.xml.rels',data:dr},{name:'word/settings.xml',data:st},{name:'word/header1.xml',data:hdr},{name:'word/footer1.xml',data:ftr}]);
+  return new Blob([zip],{type:'application/vnd.openxmlformats-officedocument.wordprocessingml.document'});
+}
+
+const REFS={
+ barthel:'Mahoney FI, Barthel DW. Functional evaluation: the Barthel Index. Md State Med J. 1965;14:61-65.',
+ lawton:'Lawton MP, Brody EM. Assessment of older people: ADL/IADL. Gerontologist. 1969;9:179-186.',
+ katz:'Katz S, et al. Studies of illness in the aged. The Index of ADL. JAMA. 1963;185:914-919. doi:10.1001/jama.1963.03060120024016.',
+ charlson:'Charlson ME, et al. A new method of classifying prognostic comorbidity. J Chronic Dis. 1987;40:373-383. doi:10.1016/0021-9681(87)90171-8.',
+ cirsg:'Miller MD, et al. Rating chronic medical illness burden: the CIRS(G). Psychiatry Res. 1992;41:237-248. doi:10.1016/0165-1781(92)90005-n.',
+ frail:'Morley JE, et al. A simple frailty questionnaire (FRAIL). J Nutr Health Aging. 2012;16:601-608.',
+ fried:'Fried LP, et al. Frailty in older adults: evidence for a phenotype. J Gerontol A. 2001;56:M146-156. doi:10.1093/gerona/56.3.m146.',
+ cfs:'Rockwood K, et al. A global clinical measure of fitness and frailty. CMAJ. 2005;173:489-495. doi:10.1503/cmaj.050051.',
+ frailvig:'Torné A, Amblàs-Novellas J, et al. Reliability, validity and feasibility of the Frail-VIG index. Int J Environ Res Public Health. 2021;18:5187. doi:10.3390/ijerph18105187.',
+ reloj:'Shulman KI, et al. IPA survey of brief cognitive screening instruments. Int Psychogeriatr. 2006;18(2):281-294. doi:10.1017/S1041610205002693.',
+ sarcf:'Malmstrom TK, Morley JE. SARC-F: a simple questionnaire to rapidly diagnose sarcopenia. J Am Med Dir Assoc. 2013;14:531-532.',
+ ewgsop2:'Cruz-Jentoft AJ, et al. Sarcopenia: revised European consensus (EWGSOP2). Age Ageing. 2019;48:16-31.',
+ glim:'Cederholm T, et al. GLIM criteria for the diagnosis of malnutrition. Clin Nutr. 2019;38:1-9.',
+ mmse:'Folstein MF, et al. Mini-mental state. J Psychiatr Res. 1975;12:189-198.',
+ mec:'Lobo A, et al. Revalidación del Mini-Examen Cognoscitivo. Med Clin (Barc). 1999;112:767-774.',
+ pfeiffer:'Pfeiffer E. SPMSQ. J Am Geriatr Soc. 1975;23:433-441.',
+ espen19:'Volkert D, et al. ESPEN guideline on clinical nutrition in geriatrics. Clin Nutr. 2019;38:10-47. doi:10.1016/j.clnu.2018.05.024.',
+ espen22:'Volkert D, et al. ESPEN practical guideline: nutrition in geriatrics. Clin Nutr. 2022;41:958-989.',
+ protage:'Bauer J, et al. (PROT-AGE). Optimal dietary protein intake in older people. J Am Med Dir Assoc. 2013;14:542-559.',
+ vivifrail:'Ministerio de Sanidad. Consenso prevención de fragilidad y caídas en el SNS (VIVIFRAIL). 2022.',
+ ng249:'NICE. Falls: assessment and prevention (NG249). 2025.',
+ nicebmj:'Neilson J, et al. Assessment and prevention of falls — updated NICE guidance. BMJ. 2026;392:s223. doi:10.1136/bmj.s223.',
+ ng97:'NICE. Dementia: assessment, management and support (NG97). 2018.',
+ camaschella:'Camaschella C. Iron-deficiency anemia. N Engl J Med. 2015;372:1832-1843. doi:10.1056/NEJMra1401038.',
+ aabb:'Carson JL, et al. Red blood cell transfusion: 2023 AABB international guidelines. JAMA. 2023;330:1892-1902. doi:10.1001/jama.2023.12914.',
+ moral24:'Moral V, Abad Motos A, Jericó C, et al. Management of peri-surgical anemia in elective surgery. Rev Esp Anestesiol Reanim. 2024;71(6):454-465. doi:10.1016/j.redare.2024.04.015.',
+ munoz24:'Muñoz M, Aragón S, et al. Executive summary of the consensus document on perioperative anemia in Spain. Rev Clin Esp. 2024;224(4):225-232. doi:10.1016/j.rceng.2024.02.012.',
+ vitd11:'Holick MF, et al. Evaluation, treatment and prevention of vitamin D deficiency: Endocrine Society guideline. J Clin Endocrinol Metab. 2011;96:1911-1930. doi:10.1210/jc.2011-0385.',
+ vitd24:'Demay MB, et al. Vitamin D for the prevention of disease: Endocrine Society guideline. J Clin Endocrinol Metab. 2024;109:1907-1947. doi:10.1210/clinem/dgae290.',
+ ada26:'ADA Professional Practice Committee. Older Adults: Standards of Care in Diabetes 2026. Diabetes Care. 2026;49(Suppl.1):S277-S296. doi:10.2337/dc26-S013.',
+ stopstart3:"O'Mahony D, et al. STOPP/START criteria version 3. Eur Geriatr Med. 2023;14:625-632. doi:10.1007/s41999-023-00777-y."
+};
+function planRefs(){
+  const{rec,cl}=APP._plan||buildPlan();const ks=[];const add=(...a)=>a.forEach(k=>{if(!ks.includes(k))ks.push(k);});
+  cl.f.concat(cl.x,cl.n,cl.c).forEach(s=>{const sc=ALLSC.find(x=>x.nom===s.nom);if(sc&&REFS[sc.id])add(sc.id);});
+  if(cl.f.some(s=>/SARC-F|marcha|prensión/i.test(s.nom)))add('ewgsop2','sarcf');
+  if(rec.ejercicio)add('vivifrail');if(rec.nutricion)add('espen19','espen22','protage');
+  if(rec.caidas)add('ng249','nicebmj');if(rec.demencia)add('ng97','reloj');
+  if(rec.anemia){add('camaschella','aabb');if(APP.clin.preop)add('moral24','munoz24');}
+  if(rec.vitd)add('vitd11','vitd24');if(rec.glucemia)add('ada26');if(rec.stopstart)add('stopstart3');
+  return ks.map(k=>REFS[k]).filter(Boolean);
+}
+
+function genVGIDoc(){
+  try{
+    if(!labGateOK()){showStatus('docs-status','⛔ Corrige y confirma los valores analíticos imposibles ('+labBlockedList().join(', ')+') antes de generar el informe.','err');return;}
+    const b=[];b.push(xTitle('VALORACIÓN GERIÁTRICA INTEGRAL'));b.push(xSub('Informe de evaluación · VGI+'));
+    b.push(xLabel('Paciente:',APP.pac.nombre));if(APP.pac.nhc)b.push(xLabel('N.º historia:',APP.pac.nhc));
+    b.push(xLabel('Fecha de nacimiento:',APP.pac.fnac));b.push(xLabel('Sexo:',APP.pac.sexo==='M'?'Mujer':APP.pac.sexo==='H'?'Hombre':''));
+    b.push(xLabel('Fecha de evaluación:',APP.pac.fecha));if(APP.pac.medico)b.push(xLabel('Médico responsable:',APP.pac.medico));
+    b.push(xSect('Historia clínica'));
+    const tx=id=>APP.pac[id]||'';
+    [['hc-alergias','Alergias'],['hc-apers','Antecedentes personales'],['hc-afam','Antecedentes familiares'],['tratamiento','Tratamiento habitual'],['lab','Pruebas de laboratorio']].forEach(([id,lab])=>{if(tx(id))b.push(xKV(lab,tx(id)));});
+    if(APP.pac.peso||APP.pac.talla)b.push(xKV('Peso / talla',`${APP.pac.peso??'—'} kg · ${APP.pac.talla??'—'} cm`));
+    if(APP.pac.caidas!=null)b.push(xKV('Caídas en el último año',String(APP.pac.caidas)));
+    b.push(xSect('Escalas e índices de la VGI'));
+    DOMS.forEach(([key,tit])=>{const sc=DATA[key].filter(s=>APP.scores[s.id]&&APP.scores[s.id].present);if(sc.length){b.push(xBul0(tit+':'));sc.forEach(s=>b.push(xBul1(`${s.nom}: ${APP.scores[s.id].txt}`)));}});
+    if(tx('social')||tx('espirit')){b.push(xSect('Valoración social y preferencias'));if(tx('social'))b.push(xKV('Valoración social',tx('social')));if(tx('espirit'))b.push(xKV('Espiritualidad y preferencias',tx('espirit')));}
+    b.push(xLegal('Informe de Valoración Geriátrica Integral generado con VGI+. Documento de apoyo clínico; la interpretación y las decisiones corresponden al facultativo responsable.'));
+    dl(finalizeDocx(b),'VGI_'+fnameBase()+'.docx');showStatus('docs-status','✅ Informe VGI descargado correctamente.','ok');
+  }catch(e){showStatus('docs-status','❌ Error: '+e.message,'err');}
+}
+function genPlanDoc(){
+  try{
+    if(!labGateOK()){showStatus('docs-status','⛔ Corrige y confirma los valores analíticos imposibles ('+labBlockedList().join(', ')+') antes de generar el plan.','err');return;}
+    if(!APP._planValidatedAt){showStatus('docs-status','⛔ Debes validar la hoja de ruta: marca la casilla de validación de esta página antes de generar el plan.','err');return;}
+    const{cl,rec}=buildPlan();APP._plan={cl,rec};
+    const refs=planRefs();
+    const b=[];b.push(xTitle('PLAN DE RECOMENDACIONES Y MEDIDAS'));b.push(xSub('Basado en la Valoración Geriátrica Integral · VGI+'));
+    b.push(xLabel('Paciente:',APP.pac.nombre));if(APP.pac.nhc)b.push(xLabel('N.º historia:',APP.pac.nhc));
+    b.push(xLabel('Fecha de nacimiento:',APP.pac.fnac));b.push(xLabel('Fecha de evaluación:',APP.pac.fecha));if(APP.pac.medico)b.push(xLabel('Médico responsable:',APP.pac.medico));
+    if([...cl.f,...cl.x,...cl.n,...cl.c].length){
+      b.push(xSect('Clasificación de resultados'));
+      [['f','Funcional / pruebas funcionales'],['x','Comorbilidad'],['n','Nutrición y sarcopenia'],['c','Cognición']].forEach(([k,tit])=>{if(cl[k].length){b.push(xBul0(tit+':'));cl[k].forEach(s=>b.push(xBul1(`${s.nom}: ${s.val}`)));}});
+    }
+    if(Object.keys(rec).length){
+      b.push(xSect('Recomendaciones y medidas'));
+      ['ejercicio','nutricion','caidas','demencia','anemia','vitd','glucemia','stopstart'].forEach(k=>{const rv=rec[k];if(!rv)return;b.push(xSubH(rv.t));rv.l.forEach(x=>b.push(xBul1(x)));if(rv.f)b.push(xSrc(rv.f));});
+    }
+    if(refs.length){b.push(xSect('Referencias'));refs.forEach((t,i)=>b.push(xRef(i+1,t)));}
+    b.push(xValid('Hoja de ruta revisada y validada por el médico responsable'+(APP.pac.medico?' ('+APP.pac.medico+')':'')+' el '+fmtStamp(APP._planValidatedAt)+'.'));
+    b.push(xLegal('Documento de apoyo a la decisión clínica generado a partir de la VGI. Las recomendaciones se anclan en guías de práctica clínica vigentes; la indicación y prescripción finales corresponden al facultativo responsable.'));
+    dl(finalizeDocx(b),'Plan_'+fnameBase()+'.docx');showStatus('docs-status','✅ Plan de recomendaciones descargado correctamente.','ok');
+  }catch(e){showStatus('docs-status','❌ Error: '+e.message,'err');}
+}
+
+/* ── NAVEGACIÓN E INICIO ── */
+function showPage(pg){
+  document.querySelectorAll('.tab').forEach(t=>t.classList.toggle('on',t.dataset.pg===pg));
+  document.querySelectorAll('.page').forEach(p=>p.classList.toggle('on',p.id==='pg-'+pg));
+  if(pg==='plan')buildPlanPreview();
+  if(pg==='seguimiento')buildSeguimientoPage();
+}
+$('tabs').querySelectorAll('.tab').forEach(t=>t.addEventListener('click',()=>showPage(t.dataset.pg)));
+function initApp(){
+  buildPacientePage();
+  buildEscalasPage();
+  buildPlanPage();
+  buildSeguimientoPage();
+  buildDocsPage();
+  buildManualPage();
+}
+
+/* ══════════════════════════════════════════════════════════════
+   CIFRADO DE DATOS PERSISTENTES  (Web Crypto API · AES-GCM 256 +
+   PBKDF2). Sin dependencias externas; funciona 100 % offline.
+   Los datos de seguimiento se guardan cifrados en localStorage y
+   solo se descifran en memoria tras introducir la contraseña.
+   ══════════════════════════════════════════════════════════════ */
+const ENCKEY='vgiplus_enc_v1';
+const CRYPTO_OK=!!(window.crypto&&window.crypto.subtle&&window.crypto.getRandomValues);
+let CRYPTO_KEY=null,ENC_SALT=null,PLAINFALLBACK=false;
+function b64(bytes){bytes=new Uint8Array(bytes);let s='';const CH=0x8000;for(let i=0;i<bytes.length;i+=CH)s+=String.fromCharCode.apply(null,bytes.subarray(i,i+CH));return btoa(s);}
+function ub64(str){const bin=atob(str),u=new Uint8Array(bin.length);for(let i=0;i<bin.length;i++)u[i]=bin.charCodeAt(i);return u;}
+async function deriveKey(pass,salt){
+  const base=await crypto.subtle.importKey('raw',new TextEncoder().encode(pass),'PBKDF2',false,['deriveKey']);
+  return crypto.subtle.deriveKey({name:'PBKDF2',salt,iterations:250000,hash:'SHA-256'},base,{name:'AES-GCM',length:256},false,['encrypt','decrypt']);
+}
+let _persisting=false,_persistAgain=false;
+async function persistDB(){
+  if(PLAINFALLBACK||!CRYPTO_KEY){try{localStorage.setItem(LSKEY,JSON.stringify(DBCACHE));}catch(e){alert('Error al guardar: '+e.message);}return;}
+  if(_persisting){_persistAgain=true;return;}
+  _persisting=true;
+  try{
+    const iv=crypto.getRandomValues(new Uint8Array(12));
+    const pt=new TextEncoder().encode(JSON.stringify(DBCACHE));
+    const ct=await crypto.subtle.encrypt({name:'AES-GCM',iv},CRYPTO_KEY,pt);
+    localStorage.setItem(ENCKEY,JSON.stringify({v:1,salt:b64(ENC_SALT),iv:b64(iv),ct:b64(new Uint8Array(ct))}));
+  }catch(e){alert('Error al guardar cifrado: '+e.message);}
+  _persisting=false;
+  if(_persistAgain){_persistAgain=false;persistDB();}
+}
+async function setupOrUnlock(pass,confirmPass){
+  if(!CRYPTO_OK){PLAINFALLBACK=true;const lg=localStorage.getItem(LSKEY);try{DBCACHE=lg?(JSON.parse(lg)||{}):{};}catch(e){DBCACHE={};}return{ok:true};}
+  const raw=localStorage.getItem(ENCKEY);
+  if(raw){
+    let blob;try{blob=JSON.parse(raw);}catch(e){return{ok:false,msg:'El almacén cifrado está dañado.'};}
+    const salt=ub64(blob.salt),iv=ub64(blob.iv),ct=ub64(blob.ct);
+    const key=await deriveKey(pass,salt);
+    let pt;try{pt=await crypto.subtle.decrypt({name:'AES-GCM',iv},key,ct);}catch(e){return{ok:false,msg:'Contraseña incorrecta.'};}
+    try{DBCACHE=JSON.parse(new TextDecoder().decode(new Uint8Array(pt)));}catch(e){DBCACHE={};}
+    CRYPTO_KEY=key;ENC_SALT=salt;return{ok:true};
+  }else{
+    if(pass.length<6)return{ok:false,msg:'La contraseña debe tener al menos 6 caracteres.'};
+    if(pass!==confirmPass)return{ok:false,msg:'Las dos contraseñas no coinciden.'};
+    const salt=crypto.getRandomValues(new Uint8Array(16));
+    const key=await deriveKey(pass,salt);CRYPTO_KEY=key;ENC_SALT=salt;
+    const lg=localStorage.getItem(LSKEY);try{DBCACHE=lg?(JSON.parse(lg)||{}):{};}catch(e){DBCACHE={};}
+    await persistDB();
+    if(lg)localStorage.removeItem(LSKEY);
+    return{ok:true};
+  }
+}
+
+/* ── TEXTOS: términos/condiciones y manual (reutilizados en gate y pestaña) ── */
+const TERMS_HTML=`
+ <h4>1. Naturaleza de la herramienta</h4>
+ <p>VGI+ es una herramienta de <b>apoyo a la decisión clínica</b> destinada a profesionales sanitarios. Automatiza el cálculo de escalas de valoración geriátrica y propone recomendaciones ancladas en guías de práctica clínica. <b>No emite diagnósticos ni sustituye el juicio clínico</b> del facultativo, que es el único responsable de las decisiones asistenciales.</p>
+ <h4>2. Uso profesional</h4>
+ <p>El uso queda reservado a personal sanitario cualificado. Las escalas y recomendaciones requieren interpretación individualizada según el contexto de cada paciente.</p>
+ <h4>3. Responsabilidad</h4>
+ <p>Toda indicación, prescripción o medida derivada del uso de la herramienta es responsabilidad del médico que la adopta y firma. Los autores no asumen responsabilidad por decisiones clínicas tomadas a partir de sus resultados.</p>
+ <h4>4. Datos y privacidad</h4>
+ <p>La aplicación funciona íntegramente en tu dispositivo, sin conexión a servidores. Los datos de seguimiento se guardan <b>cifrados</b> en el almacenamiento local de este navegador y solo se descifran con tu contraseña. Eres responsable de la seguridad del equipo, de la custodia de la contraseña y del cumplimiento del RGPD respecto a los datos que introduzcas.</p>
+ <h4>5. Sin garantías</h4>
+ <p>La herramienta se ofrece «tal cual», sin garantía de exactitud, disponibilidad o adecuación a un fin concreto. Verifica siempre los resultados críticos.</p>
+ <h4>6. Aceptación por sesión</h4>
+ <p>La aceptación de estas condiciones se solicita al iniciar cada sesión.</p>`;
+const MANUAL_HTML=`
+ <h3>¿Qué es VGI+ y qué no es?</h3>
+ <p>Es una herramienta de <span class="step">apoyo</span> para realizar y documentar la Valoración Geriátrica Integral: puntúa escalas, integra parámetros analíticos, genera un plan de recomendaciones y permite el seguimiento longitudinal. <b>No diagnostica ni sustituye tu juicio clínico.</b></p>
+ <h3>Privacidad y cifrado</h3>
+ <p>Todo ocurre en tu dispositivo, sin internet. Los datos de seguimiento se guardan <b>cifrados</b> (AES-256) en este navegador y solo se abren con la contraseña que creas.</p>
+ <ul>
+  <li><b>La contraseña no se puede recuperar.</b> Si la olvidas, no habrá forma de descifrar los datos guardados. Anótala en lugar seguro.</li>
+  <li>El botón <b>Bloquear</b> (arriba a la derecha) cierra la sesión y vuelve a pedir la contraseña: útil en equipos compartidos.</li>
+  <li>Trabaja preferiblemente con un <b>código de paciente</b> en lugar de nombre y apellidos.</li>
+ </ul>
+ <h3>Flujo de trabajo</h3>
+ <ul>
+  <li><span class="step">Paciente</span> — datos identificativos e historia.</li>
+  <li><span class="step">Escalas</span> — cumplimenta las escalas autopuntuables.</li>
+  <li><span class="step">Plan</span> — introduce los parámetros analíticos y revisa el plan generado.</li>
+  <li><span class="step">Seguimiento</span> — guarda evaluaciones y observa la evolución en gráficas.</li>
+  <li><span class="step">Documentos</span> — valida y descarga el informe VGI y el plan en Word.</li>
+ </ul>
+ <h3>Control de valores analíticos</h3>
+ <p>Al introducir analíticas, la app avisa de dos formas:</p>
+ <ul>
+  <li><b>Amarillo</b> — valor clínicamente inusual pero posible. Solo pide una segunda mirada; no bloquea.</li>
+  <li><b>Rojo</b> — valor fisiológicamente imposible (casi siempre un error de tecleo). <b>Bloquea</b> la generación de documentos hasta que corrijas la cifra o marques «Confirmo que este valor es correcto».</li>
+ </ul>
+ <h3>Validación de la hoja de ruta</h3>
+ <p>Antes de generar el plan de recomendaciones debes marcar la casilla de <b>validación</b> en la pestaña Documentos. La app registra la <b>fecha y hora</b> de esa validación y la imprime en el documento, dejando constancia de que tú, como médico responsable, has revisado y asumido las medidas.</p>
+ <h3>Copias de seguridad</h3>
+ <p>Los datos viven solo en este navegador y equipo. Si cambias de dispositivo o borras los datos del navegador, se pierden. Guarda copias descargando los documentos Word de cada evaluación.</p>
+ <h3>Limitaciones</h3>
+ <ul>
+  <li>Las recomendaciones son orientativas y requieren adaptación individual.</li>
+  <li>Verifica siempre los valores y resultados críticos.</li>
+  <li>Ante cualquier duda, prevalece la valoración clínica presencial.</li>
+ </ul>`;
+function buildManualPage(){
+  const r=$('pg-manual');if(!r)return;
+  const c=el('div','card');
+  c.innerHTML='<div class="card-h">📖 Manual de usuario</div><div class="card-b manual">'+MANUAL_HTML+
+   '<hr class="dv"><h3>Términos y condiciones</h3>'+TERMS_HTML+'</div>';
+  r.innerHTML='';r.appendChild(c);
+}
+
+/* ── PANTALLA DE ACCESO (aviso legal + aceptación + contraseña) ── */
+function buildGate(){
+  const returning=CRYPTO_OK&&!!localStorage.getItem(ENCKEY);
+  const cryptoWarn=!CRYPTO_OK?'<div class="gate-warn-nocrypto" style="display:block">⚠️ Este navegador no permite cifrado en este contexto: los datos de seguimiento se guardarán <b>sin cifrar</b> en este equipo. Para cifrarlos, abre la app en un navegador actualizado (Chrome, Edge, Safari o Firefox).</div>':'';
+  let passSection='';
+  if(CRYPTO_OK){
+    passSection=returning
+     ?'<div class="gate-sec">Desbloqueo de datos</div><div class="gate-field"><label>Contraseña</label><input type="password" id="gate-pass" autocomplete="current-password" placeholder="Tu contraseña"><div class="gate-hint">Introduce la contraseña con la que cifraste los datos en este equipo.</div></div>'
+     :'<div class="gate-sec">Crear contraseña de cifrado</div><div class="gate-field"><label>Crear contraseña</label><input type="password" id="gate-pass" autocomplete="new-password" placeholder="Mínimo 6 caracteres"></div><div class="gate-field"><label>Repetir contraseña</label><input type="password" id="gate-pass2" autocomplete="new-password" placeholder="Repite la contraseña"><div class="gate-hint">⚠️ Esta contraseña cifra los datos de seguimiento en este equipo. <b>No se guarda en ningún sitio y no se puede recuperar:</b> si la olvidas, perderás el acceso a los datos ya guardados. Anótala en lugar seguro.'+(localStorage.getItem(LSKEY)?' Los datos existentes se cifrarán al entrar.':'')+'</div></div>';
+  }
+  const g=document.createElement('div');g.className='gate';g.id='gate';
+  g.innerHTML=`<div class="gate-card">
+    <div class="gate-top"><div class="glogo">${LOGO}</div><div><h2>VGI+ · Valoración Geriátrica Integral</h2><p>Herramienta de apoyo clínico · Uso local</p></div></div>
+    <div class="gate-body">
+      <div class="gate-disc"><b>Aviso legal</b>Herramienta de apoyo a la decisión clínica. No sustituye el juicio clínico del médico responsable, que toma y firma toda decisión asistencial.</div>
+      ${cryptoWarn}
+      <div class="gate-sec">Términos y condiciones · Manual</div>
+      <div class="gate-tc">${TERMS_HTML}</div>
+      <button class="gate-toggle" id="gate-manual-toggle">▸ Ver resumen de uso (manual)</button>
+      <div class="gate-tc manual" id="gate-manual" style="display:none;margin-top:.4rem">${MANUAL_HTML}</div>
+      ${passSection}
+      <label class="gate-chk"><input type="checkbox" id="gate-accept"> He leído y acepto los términos y condiciones y el aviso legal.</label>
+      <button class="gate-btn" id="gate-btn">Entrar${CRYPTO_OK?' y desbloquear':''}</button>
+      <div class="gate-err" id="gate-err"></div>
+    </div></div>`;
+  document.body.appendChild(g);
+  const mt=$('gate-manual-toggle'),mv=$('gate-manual');
+  mt.addEventListener('click',()=>{const vis=mv.style.display!=='none';mv.style.display=vis?'none':'block';mt.textContent=(vis?'▸':'▾')+' '+(vis?'Ver':'Ocultar')+' resumen de uso (manual)';});
+  const submit=()=>gateSubmit(returning);
+  $('gate-btn').addEventListener('click',submit);
+  ['gate-pass','gate-pass2'].forEach(id=>{const e=$(id);if(e)e.addEventListener('keydown',ev=>{if(ev.key==='Enter')submit();});});
+}
+function showGateErr(m){const e=$('gate-err');if(e){e.textContent=m;e.classList.add('on');}}
+async function gateSubmit(){
+  const e=$('gate-err');if(e)e.classList.remove('on');
+  if(!$('gate-accept').checked){showGateErr('Debes leer y aceptar los términos y condiciones para continuar.');return;}
+  const p1=$('gate-pass')?$('gate-pass').value:'';
+  const p2=$('gate-pass2')?$('gate-pass2').value:'';
+  const returning=CRYPTO_OK&&!!localStorage.getItem(ENCKEY);
+  if(CRYPTO_OK&&!p1){showGateErr(returning?'Introduce tu contraseña.':'Crea una contraseña.');return;}
+  const btn=$('gate-btn');btn.disabled=true;btn.textContent='Procesando…';
+  const res=await setupOrUnlock(p1,p2);
+  if(!res.ok){showGateErr(res.msg||'No se pudo continuar.');btn.disabled=false;btn.textContent='Entrar'+(CRYPTO_OK?' y desbloquear':'');return;}
+  const gate=$('gate');if(gate)gate.remove();
+  initApp();
+}
+
+/* Botón Bloquear: recarga y vuelve a la pantalla de acceso (equipos compartidos). */
+{const lb=$('btn-lock');if(lb)lb.addEventListener('click',()=>location.reload());}
+
+buildGate();
+</script>
+</body>
+</html>

@@ -1,0 +1,60 @@
+VGI+ · Guías clínicas y referencias
+Fuentes en las que se apoyan las escalas y las recomendaciones del plan generado por la aplicación. Todas las referencias están incluidas tal cual en la herramienta.
+
+A. Referencias de los instrumentos (escalas)
+Mahoney FI, Barthel DW. Functional evaluation: the Barthel Index. Md State Med J. 1965;14:61-65.
+Lawton MP, Brody EM. Assessment of older people: ADL/IADL. Gerontologist. 1969;9:179-186.
+Katz S, et al. Studies of illness in the aged. The Index of ADL. JAMA. 1963;185:914-919. doi:10.1001/jama.1963.03060120024016.
+Charlson ME, et al. A new method of classifying prognostic comorbidity. J Chronic Dis. 1987;40:373-383. doi:10.1016/0021-9681(87)90171-8.
+Miller MD, et al. Rating chronic medical illness burden: the CIRS(G). Psychiatry Res. 1992;41:237-248. doi:10.1016/0165-1781(92)90005-n.
+Morley JE, et al. A simple frailty questionnaire (FRAIL). J Nutr Health Aging. 2012;16:601-608.
+Fried LP, et al. Frailty in older adults: evidence for a phenotype. J Gerontol A. 2001;56:M146-156. doi:10.1093/gerona/56.3.m146.
+Rockwood K, et al. A global clinical measure of fitness and frailty. CMAJ. 2005;173:489-495. doi:10.1503/cmaj.050051.
+Torné A, Amblàs-Novellas J, et al. Reliability, validity and feasibility of the Frail-VIG index. Int J Environ Res Public Health. 2021;18:5187. doi:10.3390/ijerph18105187.
+Shulman KI, et al. IPA survey of brief cognitive screening instruments. Int Psychogeriatr. 2006;18(2):281-294. doi:10.1017/S1041610205002693.
+Malmstrom TK, Morley JE. SARC-F: a simple questionnaire to rapidly diagnose sarcopenia. J Am Med Dir Assoc. 2013;14:531-532.
+Cruz-Jentoft AJ, et al. Sarcopenia: revised European consensus (EWGSOP2). Age Ageing. 2019;48:16-31.
+Cederholm T, et al. GLIM criteria for the diagnosis of malnutrition. Clin Nutr. 2019;38:1-9.
+Folstein MF, et al. Mini-mental state. J Psychiatr Res. 1975;12:189-198.
+Lobo A, et al. Revalidación del Mini-Examen Cognoscitivo. Med Clin (Barc). 1999;112:767-774.
+Pfeiffer E. SPMSQ. J Am Geriatr Soc. 1975;23:433-441.
+B. Guías que sustentan las recomendaciones del plan
+Fragilidad y ejercicio
+El SPPB define el pasaporte VIVIFRAIL (≤8: mayor riesgo de discapacidad).
+Ministerio de Sanidad. Consenso prevención de fragilidad y caídas en el SNS (VIVIFRAIL). 2022.
+Nutrición
+Objetivos calórico-proteicos y abordaje nutricional del anciano.
+Volkert D, et al. ESPEN guideline on clinical nutrition in geriatrics. Clin Nutr. 2019;38:10-47. doi:10.1016/j.clnu.2018.05.024.
+Volkert D, et al. ESPEN practical guideline: nutrition in geriatrics. Clin Nutr. 2022;41:958-989.
+Bauer J, et al. (PROT-AGE). Optimal dietary protein intake in older people. J Am Med Dir Assoc. 2013;14:542-559.
+Sarcopenia
+Cribado (SARC-F) y confirmación por fuerza/velocidad de marcha.
+Cruz-Jentoft AJ, et al. Sarcopenia: revised European consensus (EWGSOP2). Age Ageing. 2019;48:16-31.
+Malmstrom TK, Morley JE. SARC-F: a simple questionnaire to rapidly diagnose sarcopenia. J Am Med Dir Assoc. 2013;14:531-532.
+Caídas
+Valoración multifactorial y prevención de caídas.
+NICE. Falls: assessment and prevention (NG249). 2025.
+Neilson J, et al. Assessment and prevention of falls — updated NICE guidance. BMJ. 2026;392:s223. doi:10.1136/bmj.s223.
+Demencia / cognición
+Evaluación y manejo del deterioro cognitivo.
+NICE. Dementia: assessment, management and support (NG97). 2018.
+Shulman KI, et al. IPA survey of brief cognitive screening instruments. Int Psychogeriatr. 2006;18(2):281-294. doi:10.1017/S1041610205002693.
+Anemia
+Estudio de anemia y criterios transfusionales restrictivos.
+Camaschella C. Iron-deficiency anemia. N Engl J Med. 2015;372:1832-1843. doi:10.1056/NEJMra1401038.
+Carson JL, et al. Red blood cell transfusion: 2023 AABB international guidelines. JAMA. 2023;330:1892-1902. doi:10.1001/jama.2023.12914.
+Anemia — optimización preoperatoria (PBM)
+Se activa con el módulo de cirugía electiva.
+Moral V, Abad Motos A, Jericó C, et al. Management of peri-surgical anemia in elective surgery. Rev Esp Anestesiol Reanim. 2024;71(6):454-465. doi:10.1016/j.redare.2024.04.015.
+Muñoz M, Aragón S, et al. Executive summary of the consensus document on perioperative anemia in Spain. Rev Clin Esp. 2024;224(4):225-232. doi:10.1016/j.rceng.2024.02.012.
+Vitamina D
+Evaluación, tratamiento y prevención del déficit.
+Holick MF, et al. Evaluation, treatment and prevention of vitamin D deficiency: Endocrine Society guideline. J Clin Endocrinol Metab. 2011;96:1911-1930. doi:10.1210/jc.2011-0385.
+Demay MB, et al. Vitamin D for the prevention of disease: Endocrine Society guideline. J Clin Endocrinol Metab. 2024;109:1907-1947. doi:10.1210/clinem/dgae290.
+Control glucémico
+Objetivos de HbA1c por categoría funcional del anciano.
+ADA Professional Practice Committee. Older Adults: Standards of Care in Diabetes 2026. Diabetes Care. 2026;49(Suppl.1):S277-S296. doi:10.2337/dc26-S013.
+Medicación (adecuación)
+Criterios STOPP/START v3.
+O'Mahony D, et al. STOPP/START criteria version 3. Eur Geriatr Med. 2023;14:625-632. doi:10.1007/s41999-023-00777-y.
+Herramienta de apoyo a la decisión clínica. No sustituye el juicio clínico del médico responsable, que toma y firma toda decisión asistencial.

@@ -1,0 +1,223 @@
+VGI+ · Catálogo de escalas: ítems e interpretación
+Valoración Geriátrica Integral · Referencia de las 19 escalas implementadas en la aplicación, con sus ítems, puntuación e interpretación tal como las calcula la herramienta.
+
+1. Valoración funcional
+Barthel  ·  ABVD   /100
+Ítems (opción y puntuación):
+Comer: Incapaz (0)  ·  Ayuda (5)  ·  Independiente (10)
+Trasladarse silla-cama: Incapaz (0)  ·  Ayuda importante (5)  ·  Algo de ayuda (10)  ·  Independiente (15)
+Aseo personal: Ayuda (0)  ·  Independiente (5)
+Uso del retrete: Dependiente (0)  ·  Ayuda (5)  ·  Independiente (10)
+Bañarse / ducharse: Dependiente (0)  ·  Independiente (5)
+Desplazarse: Inmóvil (0)  ·  Silla 50 m (5)  ·  Anda con ayuda (10)  ·  Independiente ≥50 m (15)
+Subir escaleras: Incapaz (0)  ·  Con ayuda (5)  ·  Independiente (10)
+Vestirse: Dependiente (0)  ·  Ayuda ~mitad (5)  ·  Independiente (10)
+Control de heces: Incontinente (0)  ·  Ocasional (5)  ·  Continente (10)
+Control de orina: Incontinente (0)  ·  Ocasional (5)  ·  Continente (10)
+Interpretación: 0–19 → dependencia total   ·   20–35 → dependencia grave   ·   36–55 → dependencia moderada   ·   56–95 → dependencia leve   ·   96–100 → independencia
+Referencia: Mahoney FI, Barthel DW. Functional evaluation: the Barthel Index. Md State Med J. 1965;14:61-65.
+
+Lawton-Brody  ·  AIVD   /8
+Ítems (opción y puntuación):
+Uso del teléfono: Iniciativa propia (1)  ·  Marca conocidos (1)  ·  Solo contesta (1)  ·  No capaz (0)
+Hacer compras: Independiente (1)  ·  Solo pequeñas (0)  ·  Acompañado (0)  ·  Incapaz (0)
+Preparación comida: Organiza y sirve (1)  ·  Si le dan ingredientes (0)  ·  Calienta (0)  ·  Le preparan (0)
+Cuidado de la casa: Solo/ayuda ocasional (1)  ·  Tareas ligeras (1)  ·  Sin limpieza adecuada (1)  ·  Ayuda en todas (1)  ·  No participa (0)
+Lavado de ropa: Toda su ropa (1)  ·  Pequeñas prendas (1)  ·  Lo hace otro (0)
+Uso de transporte: Solo/conduce (1)  ·  Solo taxi (1)  ·  Público acompañado (1)  ·  Taxi con ayuda (0)  ·  No viaja (0)
+Responsabilidad medicación: A su hora y dosis (1)  ·  Si se la preparan (0)  ·  No capaz (0)
+Asuntos económicos: Solo (1)  ·  Diario sí, grandes no (1)  ·  Incapaz (0)
+Nota: En varones puede valorarse /5.
+Interpretación: 0–1 → dependencia total   ·   2–3 → dependencia grave   ·   4–5 → dependencia moderada   ·   6–7 → dependencia ligera   ·   8–8 → independiente
+Referencia: Lawton MP, Brody EM. Assessment of older people: ADL/IADL. Gerontologist. 1969;9:179-186.
+
+Katz  ·  ABVD (dependencias)   /6
+Ítems (opción y puntuación):
+Baño: Independiente (0)  ·  Dependiente (1)
+Vestido: Independiente (0)  ·  Dependiente (1)
+Uso del retrete: Independiente (0)  ·  Dependiente (1)
+Movilidad / transferencia: Independiente (0)  ·  Dependiente (1)
+Continencia: Continente (0)  ·  Incontinente (1)
+Alimentación: Independiente (0)  ·  Dependiente (1)
+Nota: Número de ABVD dependientes (0 = independiente en las 6).
+Interpretación: 0–0 → independiente   ·   1–2 → dependencia leve   ·   3–4 → dependencia moderada   ·   5–6 → dependencia grave
+Referencia: Katz S, et al. Studies of illness in the aged. The Index of ADL. JAMA. 1963;185:914-919. doi:10.1001/jama.1963.03060120024016.
+
+2. Comorbilidad
+Charlson  ·  comorbilidad
+Comorbilidades (peso en puntos):
+Infarto de miocardio — 1 pto
+Insuficiencia cardíaca — 1 pto
+Enf. vascular periférica — 1 pto
+Enf. cerebrovascular — 1 pto
+Demencia — 1 pto
+EPOC / enf. pulmonar crónica — 1 pto
+Enf. del tejido conectivo — 1 pto
+Úlcera péptica — 1 pto
+Hepatopatía leve — 1 pto
+Diabetes sin lesión orgánica — 1 pto
+Hemiplejía — 2 ptos
+ERC moderada-grave — 2 ptos
+Diabetes con lesión orgánica — 2 ptos
+Tumor sólido sin metástasis — 2 ptos
+Leucemia — 2 ptos
+Linfoma — 2 ptos
+Hepatopatía moderada-grave — 3 ptos
+Tumor sólido metastásico — 6 ptos
+SIDA — 6 ptos
+Nota: Ajuste por edad: +1 punto por década desde los 50 años (máximo +5).
+Interpretación: ≤1 → bajo riesgo   ·   2–3 → moderado   ·   4–5 → alto   ·   >5 → muy alto (índice de comorbilidad + edad).
+Referencia: Charlson ME, et al. A new method of classifying prognostic comorbidity. J Chronic Dis. 1987;40:373-383. doi:10.1016/0021-9681(87)90171-8.
+
+CIRS-G  ·  carga de enfermedad
+14 sistemas corporales, cada uno graduado 0–4:
+Cardíaco
+Vascular / HTA
+Hematopoyético
+Respiratorio
+Oftalmo-ORL
+GI superior
+GI inferior
+Hepatopancreático
+Renal
+Genitourinario
+Musculoesquelético / piel
+Neurológico
+Endocrino-metabólico / mama
+Psiquiátrico-conductual
+Nota: Gravedad por sistema: 0 ninguno · 1 leve · 2 moderado · 3 grave · 4 muy grave/incapacitante.
+Interpretación: Resultados: puntuación total, nº de categorías afectadas, índice de severidad (total/categorías) y nº de sistemas con grado ≥3. Señal de alarma si algún sistema en grado 4 o ≥2 sistemas en grado ≥3.
+Referencia: Miller MD, et al. Rating chronic medical illness burden: the CIRS(G). Psychiatry Res. 1992;41:237-248. doi:10.1016/0165-1781(92)90005-n.
+
+3. Fragilidad
+FRAIL  ·  cribado   /5
+Ítems (opción y puntuación):
+Fatigue: No (0)  ·  Sí (1)
+Resistance: No (0)  ·  Sí (1)
+Aerobic: No (0)  ·  Sí (1)
+Illnesses: No (0)  ·  Sí (1)
+Loss of weight: No (0)  ·  Sí (1)
+Interpretación: 0–0 → robusto   ·   1–2 → prefrágil   ·   3–5 → frágil
+Referencia: Morley JE, et al. A simple frailty questionnaire (FRAIL). J Nutr Health Aging. 2012;16:601-608.
+
+Fenotipo de Fried  ·  fragilidad física   /5
+Ítems (opción y puntuación):
+Pérdida de peso: No (0)  ·  Sí (1)
+Agotamiento: No (0)  ·  Sí (1)
+Debilidad: No (0)  ·  Sí (1)
+Lentitud de la marcha: No (0)  ·  Sí (1)
+Baja actividad física: No (0)  ·  Sí (1)
+Nota: Debilidad: usar Hand Grip. Lentitud: usar velocidad de marcha.
+Interpretación: 0–0 → robusto   ·   1–2 → prefrágil   ·   3–5 → frágil
+Referencia: Fried LP, et al. Frailty in older adults: evidence for a phenotype. J Gerontol A. 2001;56:M146-156. doi:10.1093/gerona/56.3.m146.
+
+Clinical Frailty Scale  ·  CFS 1-9
+Nivel de la escala (1–9):
+1 · Muy en forma
+2 · En forma
+3 · Controlado
+4 · Vulnerable
+5 · Fragilidad leve
+6 · Fragilidad moderada
+7 · Fragilidad grave
+8 · Fragilidad muy grave
+9 · Enfermo terminal
+Interpretación: 1–3 → robusto   ·   4 → vulnerable   ·   5–6 → fragilidad leve-moderada   ·   7–9 → fragilidad grave.
+Referencia: Rockwood K, et al. A global clinical measure of fitness and frailty. CMAJ. 2005;173:489-495. doi:10.1503/cmaj.050051.
+
+Índice Frágil-VIG (IF-VIG)  ·  índice 0-1
+Entrada: índice IF-VIG (0,00–1,00):
+Se introduce el índice resultante del cuestionario validado de 25 déficits (no lo calcula la app).
+Interpretación: <0,20 → sin fragilidad   ·   0,20–0,35 → leve   ·   0,36–0,50 → moderada   ·   >0,50 → avanzada.
+Referencia: Torné A, Amblàs-Novellas J, et al. Reliability, validity and feasibility of the Frail-VIG index. Int J Environ Res Public Health. 2021;18:5187. doi:10.3390/ijerph18105187.
+
+4. Pruebas funcionales (desempeño físico)
+Velocidad de la marcha  ·  m/s
+Entrada: velocidad de la marcha habitual (m/s), sobre 4–6 m:
+Se cronometra la marcha a paso habitual y se calcula la velocidad.
+Interpretación: >1,0 m/s → normal   ·   0,81–1,0 m/s → intermedia   ·   ≤0,8 m/s → lentitud (criterio EWGSOP2 de sarcopenia grave / fragilidad).
+
+Fuerza de prensión (Hand Grip)  ·  kg
+Entrada: fuerza de prensión máxima (kg), mejor de 3 intentos, mano dominante:
+Dinamometría manual.
+Interpretación: Fuerza baja (EWGSOP2): <27 kg en hombres · <16 kg en mujeres. El corte se aplica según el sexo introducido en la pestaña Paciente.
+
+TUG (Timed Up and Go)  ·  s
+Entrada: tiempo (s) en la prueba Timed Up and Go:
+Levantarse de la silla, caminar 3 m, girar y volver a sentarse.
+Interpretación: <10 s → normal   ·   10–13,4 s → movilidad reducida   ·   13,5–20 s → riesgo aumentado   ·   >20 s → alto riesgo de caídas.
+
+SPPB  ·  rendimiento físico   /12
+Ítems (opción y puntuación):
+Equilibrio: 0 (0)  ·  1 (1)  ·  2 (2)  ·  3 (3)  ·  4 (4)
+Velocidad marcha 4 m: 0 (0)  ·  1 (1)  ·  2 (2)  ·  3 (3)  ·  4 (4)
+Levantarse silla ×5: 0 (0)  ·  1 (1)  ·  2 (2)  ·  3 (3)  ·  4 (4)
+Nota: SPPB ≤8: fragilidad / mayor riesgo de discapacidad. Define pasaporte VIVIFRAIL.
+Interpretación: 0–3 → limitación grave   ·   4–6 → limitación moderada   ·   7–9 → limitación leve   ·   10–12 → sin limitación
+
+5. Nutrición y sarcopenia
+MNA  ·  Mini Nutritional Assessment
+MNA completo: cribado A–F (/14) + evaluación G–R (/16):
+Cribado A–F: apetito, pérdida de peso <3 m, movilidad, estrés/enfermedad aguda, problema neuropsicológico, IMC.
+Evaluación G–R: vida independiente, >3 fármacos/día, úlceras, nº comidas, ingesta proteica, fruta/verdura, líquidos, autonomía para comer, autopercepción nutricional, salud percibida vs edad, circunferencia braquial, circunferencia de pantorrilla.
+Interpretación: Cribado aislado: ≥12 normal · 8–11 riesgo · ≤7 malnutrición. Total /30: ≥24 normal · 17–23,5 riesgo de malnutrición · <17 malnutrición.
+
+GLIM  ·  criterios de desnutrición
+Criterios GLIM:
+FENOTÍPICOS (≥1): pérdida de peso (>5% en 6 m o >10% en >6 m) · IMC bajo (<20 si <70 a; <22 si ≥70 a) · reducción de masa muscular por técnica validada.
+ETIOLÓGICOS (≥1): reducción de ingesta/asimilación (≤50% >1 sem o enf. GI crónica) · carga inflamatoria (lesión aguda o enfermedad crónica).
+Interpretación: Diagnóstico de desnutrición: al menos 1 criterio fenotípico + al menos 1 etiológico.
+Referencia: Cederholm T, et al. GLIM criteria for the diagnosis of malnutrition. Clin Nutr. 2019;38:1-9.
+
+SARC-F  ·  cribado de sarcopenia   /10
+Ítems (opción y puntuación):
+Fuerza: Ninguna (0)  ·  Alguna (1)  ·  Mucha/incapaz (2)
+Ayuda para caminar: Ninguna (0)  ·  Alguna (1)  ·  Mucha/incapaz (2)
+Levantarse de silla: Ninguna (0)  ·  Alguna (1)  ·  Incapaz sin ayuda (2)
+Subir escaleras: Ninguna (0)  ·  Alguna (1)  ·  Mucha/incapaz (2)
+Caídas último año: Ninguna (0)  ·  1-3 (1)  ·  ≥4 (2)
+Nota: ≥4: confirmar con dinamometría / velocidad de la marcha (EWGSOP2).
+Interpretación: 0–3 → cribado negativo   ·   4–10 → sarcopenia probable
+Referencia: Malmstrom TK, Morley JE. SARC-F: a simple questionnaire to rapidly diagnose sarcopenia. J Am Med Dir Assoc. 2013;14:531-532.
+
+6. Cognición
+Mini-Mental (MMSE / MEC)  ·  cognición
+Dominios (puntuación máxima):
+Orientación temporal (5)
+Orientación espacial (5)
+Fijación (3)
+Atención y cálculo (5)
+Recuerdo diferido (3)
+Lenguaje y praxis (9)
+Interpretación: ≥27 → normal   ·   25–26 → dudoso   ·   13–24 → deterioro   ·   ≤12 → demencia (sobre 30).
+Referencia: Folstein MF, et al. Mini-mental state. J Psychiatr Res. 1975;12:189-198.
+
+Pfeiffer (SPMSQ)  ·  cognición
+10 preguntas (SPMSQ) — se cuentan ERRORES:
+¿Fecha de hoy?
+¿Día de la semana?
+¿Lugar?
+¿Teléfono o dirección?
+¿Cuántos años tiene?
+¿Dónde nació?
+¿Nombre del presidente?
+¿Presidente anterior?
+¿Apellido materno?
+Restar de 3 en 3 desde 20
+Nota: Ajuste por escolaridad: +1 error permitido si escolaridad baja; −1 si alta.
+Interpretación: Errores: 0–2 → normal   ·   3–4 → leve   ·   5–7 → moderado   ·   8–10 → severo.
+Referencia: Pfeiffer E. SPMSQ. J Am Geriatr Soc. 1975;23:433-441.
+
+Test del Reloj (CDT)  ·  función ejecutiva · Shulman
+Puntuación de Shulman (0–5):
+5 — Normal
+4 — Errores leves de espaciado
+3 — Errores moderados / números incorrectos
+2 — Solo 2 cuadrantes correctos
+1 — Sin semejanza con reloj
+0 — Sin intento o irreconocible
+Nota: Permite adjuntar (opcional) una imagen del dibujo, que queda solo en el dispositivo.
+Interpretación: ≥4 → normal   ·   ≤3 → alteración significativa de función ejecutiva y visuoespacial. Complementario al MMSE/Pfeiffer.
+Referencia: Shulman KI, et al. IPA survey of brief cognitive screening instruments. Int Psychogeriatr. 2006;18(2):281-294. doi:10.1017/S1041610205002693.
+
+Herramienta de apoyo a la decisión clínica. No sustituye el juicio clínico del médico responsable, que toma y firma toda decisión asistencial.
