@@ -19,7 +19,12 @@ const path = require('path');
 const crypto = require('crypto');
 const jsonStore = require('./jsonStore');
 
-const DATA_DIR = path.resolve(__dirname, '..', '..', 'data');
+// VGI_DATA_DIR permite apuntar a un directorio de datos distinto del real
+// (usado solo por tests/api.test.js para no tocar los datos de producción
+// al probar el servidor de verdad); si no se define, se usa data/ como siempre.
+const DATA_DIR = process.env.VGI_DATA_DIR
+  ? path.resolve(process.env.VGI_DATA_DIR)
+  : path.resolve(__dirname, '..', '..', 'data');
 
 function filePathFor(name) {
   return path.join(DATA_DIR, `${name}.json`);

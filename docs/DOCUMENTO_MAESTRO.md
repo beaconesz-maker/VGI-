@@ -46,13 +46,26 @@ Facilitar el registro e interpretación de las distintas escalas de la valoraci�
 
 ## 10. Estado del proyecto
 - [x] Documento maestro cerrado
-- [ ] Modelo de datos definido
-- [ ] Registro funcionando
-- [ ] Seguimiento funcionando
-- [ ] Cuadro de mando funcionando
-- [ ] Exportaciones
-- [ ] Probado con datos sintéticos
-- [ ] Desplegado en red local
+- [x] Modelo de datos definido (`docs/API_CONTRACT.md`, JSON hoy con capa
+      de acceso lista para SQLite)
+- [x] Registro funcionando (paciente, morfofuncional y las 20 escalas,
+      probado de punta a punta con datos sintéticos)
+- [x] Seguimiento funcionando (tabla fecha+usuario+valor y gráfica de
+      puntos, probado con 3 evaluaciones reales de un paciente sintético)
+- [ ] Cuadro de mando funcionando (no se ha construido una vista de
+      resumen multi-paciente/planta más allá del seguimiento por
+      paciente; no estaba detallado en el encargo v1 más allá de "tabla
+      de resultados agrupados", que sí está hecha — pendiente de
+      confirmar con Bea si hace falta algo más)
+- [~] Exportaciones — Word (informe + plan) funcionando y probado; PDF y
+      Excel/CSV agregados anonimizados quedan para v1.1 (ver
+      `docs/API_CONTRACT.md`)
+- [x] Probado con datos sintéticos (API con `curl`/`node --test` y UI real
+      con Chromium vía Playwright: login, alta de paciente, Barthel,
+      SPPB, MoCA con imágenes, plan con Vivifrail, validación, exportación
+      .docx, gráfica de seguimiento)
+- [ ] Desplegado en red local (pendiente: esto solo puede hacerse en un
+      PC real del hospital, no desde este entorno de desarrollo)
 
 ---
 

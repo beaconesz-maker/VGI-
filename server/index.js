@@ -27,8 +27,11 @@ const planRoutes = require('./routes/plan');
 const exportRoutes = require('./routes/export');
 
 const ROOT_DIR = path.resolve(__dirname, '..');
-const DATA_DIR = path.join(ROOT_DIR, 'data');
-const BACKUPS_DIR = path.join(ROOT_DIR, 'backups');
+// VGI_DATA_DIR: solo para tests/api.test.js, que arranca este mismo
+// servidor contra un directorio temporal en vez de data/ real. En
+// producción no se define y todo sigue igual que siempre.
+const DATA_DIR = process.env.VGI_DATA_DIR ? path.resolve(process.env.VGI_DATA_DIR) : path.join(ROOT_DIR, 'data');
+const BACKUPS_DIR = process.env.VGI_DATA_DIR ? path.join(DATA_DIR, 'backups') : path.join(ROOT_DIR, 'backups');
 const USERS_FILE = path.join(DATA_DIR, 'users.json');
 const PORT = process.env.PORT || 3000;
 const UNA_HORA_MS = 60 * 60 * 1000;

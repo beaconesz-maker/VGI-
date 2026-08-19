@@ -1,0 +1,125 @@
+# VGI+ — Valoración Geriátrica Integral
+
+Aplicación de uso interno para registrar, interpretar y hacer seguimiento
+de las escalas de la Valoración Geriátrica Integral (VGI), pensada para
+usarse a pie de cama y en consulta externa. **Todo funciona dentro de la
+red del centro: ningún dato de paciente sale del ordenador servidor ni de
+la red local.**
+
+> Herramienta de apoyo clínico. No sustituye el juicio clínico del
+> profesional responsable, que toma y firma toda decisión asistencial.
+
+## Qué hace
+
+- Registra los datos del paciente (NHC, fecha de nacimiento, sexo,
+  localización, peso y talla).
+- Ofrece las escalas geriátricas agrupadas por dominio (morfofuncional,
+  nutricional, comorbilidad, fragilidad, cognitivo), con el mismo aspecto
+  que tienen en papel — incluidas las que llevan dibujos, como el
+  MMSE/MEC y el MoCA.
+- Calcula la puntuación y la interpretación de cada escala automáticamente.
+- Genera un plan de recomendaciones (ejercicio, nutrición, caídas,
+  cognición, anemia, vitamina D, glucemia, revisión de medicación) basado
+  en guías clínicas, que **siempre debe revisar y validar un profesional**
+  antes de poder descargarse — ninguna recomendación tiene efecto por sí
+  sola.
+- Guarda un histórico por paciente y dibuja una gráfica de evolución de
+  cada variable.
+- Genera informes en Word (.docx) descargables, eligiendo la fecha del
+  registro que se quiere exportar.
+- Hace copia de seguridad automática, todos los días, en la carpeta
+  `backups/` del propio ordenador.
+
+## Cómo arrancar la aplicación (la primera vez)
+
+Hace falta un ordenador que actúe de "servidor" (puede ser cualquier PC
+del centro que se pueda dejar encendido y conectado a la red durante el
+horario de uso) con [Node.js](https://nodejs.org) instalado (versión 18 o
+más reciente). El resto de PCs de la red no necesitan instalar nada:
+acceden con un navegador normal (Chrome, Edge, Firefox...).
+
+1. Copia la carpeta del proyecto al ordenador que hará de servidor.
+2. Abre una terminal dentro de esa carpeta y ejecuta:
+   ```
+   npm install
+   ```
+   (esto instala, una sola vez, las piezas que necesita el programa; hace
+   falta conexión a internet solo este primer paso, nunca después).
+3. Da de alta el primer usuario administrador:
+   ```
+   npm run seed:admin
+   ```
+   Te pedirá un nombre de usuario, tu nombre completo, si eres
+   "admin" o "clinico", y una contraseña (mínimo 6 caracteres). Repite
+   este paso una vez por cada profesional que vaya a usar la app —
+   **son cuentas propias de la aplicación, no las del hospital**: cada
+   persona elige su propio usuario y contraseña la primera vez que se le
+   da de alta.
+4. Arranca el servidor:
+   ```
+   npm start
+   ```
+   Verás el mensaje `Servidor escuchando en http://localhost:3000`. Deja
+   esa ventana abierta mientras se esté usando la aplicación.
+
+## Cómo se usa en el día a día
+
+- **En el propio ordenador servidor**: abre un navegador y entra en
+  `http://localhost:3000`.
+- **Desde cualquier otro PC de la red del centro**: abre un navegador y
+  entra en `http://` seguido de la dirección IP del ordenador servidor y
+  `:3000` (por ejemplo `http://10.20.30.40:3000`). Pide esa dirección IP
+  al departamento de informática si no la conoces — no cambia salvo que
+  ellos la reasignen.
+- Inicia sesión con tu usuario y contraseña.
+- Pestaña **Paciente**: busca al paciente por NHC o date de alta uno
+  nuevo. Registra peso y talla si corresponde.
+- Pestaña **Escalas**: elige el dominio y la escala, rellénala igual que
+  en papel y guarda.
+- Pestaña **Plan**: añade los datos analíticos si los tienes, genera el
+  plan, revísalo y marca la casilla de validación antes de poder
+  descargarlo.
+- Pestaña **Seguimiento**: elige una variable para ver su tabla y su
+  gráfica de evolución en el tiempo.
+- Pestaña **Documentos**: descarga el informe VGI o el plan de
+  recomendaciones en Word, eligiendo la fecha del registro que interese.
+
+Para cerrar sesión (por ejemplo, en un equipo compartido entre varios
+profesionales), usa el botón "Salir" de la esquina superior derecha.
+
+## Copias de seguridad
+
+Se hace una copia automática, una vez al día, en la carpeta `backups/`
+del ordenador servidor (se conservan los últimos 30 días). También puedes
+forzar una copia manual en cualquier momento con:
+```
+npm run backup
+```
+
+## Apagar y volver a arrancar
+
+Para apagar el servidor, cierra la ventana de la terminal donde se
+ejecutó `npm start` (o pulsa Ctrl+C dentro de ella). Los datos quedan
+guardados en la carpeta `data/` del proyecto — no se pierde nada. Para
+volver a arrancarlo, repite el paso 4 (`npm start`); no hace falta
+repetir `npm install` ni dar de alta usuarios otra vez.
+
+## Estado actual / pendiente
+
+- El logo de San Juan Grande que se ve en la cabecera es un **marcador
+  provisional** (un círculo azul con una cruz) a la espera de que se
+  facilite el archivo oficial del logotipo; igual con los tonos de azul
+  exactos, que son una aproximación.
+- La exportación a PDF y la exportación a Excel/CSV de datos agregados
+  anonimizados quedan para una siguiente iteración (no bloquean el uso
+  del resto de la aplicación).
+- El inicio de sesión usa cuentas propias de la aplicación (no está
+  conectado al Active Directory del hospital); si el departamento de
+  informática lo facilita más adelante, se puede añadir esa integración
+  sin rehacer el resto de la app.
+
+## Para quien mantenga el código
+
+Ver `CLAUDE.md` y la carpeta `docs/` (documento maestro y contratos entre
+las distintas partes de la aplicación). Pruebas automáticas con
+`npm test`.
