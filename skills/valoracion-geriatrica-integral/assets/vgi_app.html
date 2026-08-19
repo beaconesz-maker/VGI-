@@ -1,0 +1,428 @@
+<div id="vgi-root"></div>
+<style>
+  #vgi-root, #vgi-root * { box-sizing: border-box; }
+  #vgi-root {
+    font-family: -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    color: #1f2933; max-width: 920px; margin: 0 auto; line-height: 1.45;
+    --azul: #1c5d8c; --azul-claro: #e8f1f8; --borde: #d6dee6; --gris: #5b6b7b;
+    --ok: #1a7a4b; --okbg: #e3f4ea; --warn: #9a6700; --warnbg: #fcf3dd;
+    --alert: #b1402e; --alertbg: #fbe6e1; --neutro:#475569; --neutrobg:#eef2f6;
+  }
+  #vgi-root h1 { font-size: 21px; color: var(--azul); margin: 0 0 2px; }
+  #vgi-root .sub { color: var(--gris); font-size: 13px; margin-bottom: 14px; }
+  #vgi-root .pac { display:flex; gap:10px; flex-wrap:wrap; margin-bottom:16px; }
+  #vgi-root .pac label { font-size:12px; color:var(--gris); display:block; margin-bottom:3px; }
+  #vgi-root .pac input { padding:7px 9px; border:1px solid var(--borde); border-radius:7px; font-size:14px; min-width:180px; }
+  #vgi-root .dominio { margin: 18px 0 8px; font-size: 12px; font-weight: 700; letter-spacing:.08em;
+    text-transform: uppercase; color: var(--azul); border-bottom: 2px solid var(--azul-claro); padding-bottom:5px; }
+  #vgi-root .escala { border:1px solid var(--borde); border-radius:11px; margin-bottom:11px; overflow:hidden; background:#fff; }
+  #vgi-root .escala-h { display:flex; align-items:center; gap:10px; padding:11px 14px; cursor:pointer; user-select:none; background:#fbfcfd; }
+  #vgi-root .escala-h:hover { background:#f4f8fb; }
+  #vgi-root .escala-h .nom { font-weight:650; font-size:15px; flex:1; }
+  #vgi-root .chev { color:var(--gris); transition:transform .15s; font-size:12px; }
+  #vgi-root .escala.open .chev { transform:rotate(90deg); }
+  #vgi-root .badge { font-size:12.5px; font-weight:700; padding:3px 10px; border-radius:20px; white-space:nowrap; }
+  #vgi-root .badge.na { background:var(--neutrobg); color:var(--neutro); font-weight:600; }
+  #vgi-root .b-ok{background:var(--okbg);color:var(--ok);} #vgi-root .b-warn{background:var(--warnbg);color:var(--warn);}
+  #vgi-root .b-alert{background:var(--alertbg);color:var(--alert);} #vgi-root .b-neutro{background:var(--neutrobg);color:var(--neutro);}
+  #vgi-root .escala-body { display:none; padding:6px 14px 14px; border-top:1px solid var(--borde); }
+  #vgi-root .escala.open .escala-body { display:block; }
+  #vgi-root .na-row { display:flex; align-items:center; gap:7px; font-size:12.5px; color:var(--gris); margin:8px 0 4px; }
+  #vgi-root .item { padding:9px 0; border-bottom:1px dashed #e7edf2; }
+  #vgi-root .item:last-child { border-bottom:none; }
+  #vgi-root .item-q { font-size:13.5px; font-weight:600; margin-bottom:6px; }
+  #vgi-root .item-q small { font-weight:400; color:var(--gris); }
+  #vgi-root .opts { display:flex; flex-wrap:wrap; gap:6px; }
+  #vgi-root .opt { font-size:12.5px; border:1px solid var(--borde); border-radius:7px; padding:6px 10px; cursor:pointer; background:#fff; transition:all .1s; }
+  #vgi-root .opt:hover { border-color:var(--azul); }
+  #vgi-root .opt.sel { background:var(--azul); color:#fff; border-color:var(--azul); }
+  #vgi-root .opt .v { font-weight:700; opacity:.8; margin-left:4px; }
+  #vgi-root .opt.sel .v { opacity:1; }
+  #vgi-root .num { padding:7px 9px; border:1px solid var(--borde); border-radius:7px; width:90px; font-size:14px; }
+  #vgi-root .step { display:flex; align-items:center; gap:8px; }
+  #vgi-root .step button { width:30px;height:30px;border:1px solid var(--borde);background:#fff;border-radius:7px;font-size:16px;cursor:pointer; }
+  #vgi-root .step button:hover{border-color:var(--azul);} #vgi-root .step .val{min-width:26px;text-align:center;font-weight:700;}
+  #vgi-root .res { margin-top:10px; padding:9px 11px; border-radius:8px; font-size:13.5px; }
+  #vgi-root .legend { font-size:11.5px; color:var(--gris); margin-top:8px; }
+  #vgi-root .edu { font-size:12.5px; margin:4px 0 6px; }
+  #vgi-root .edu select{padding:5px 7px;border:1px solid var(--borde);border-radius:6px;}
+  #vgi-root .actions { display:flex; gap:10px; flex-wrap:wrap; margin-top:18px; }
+  #vgi-root .btn { border:none; border-radius:9px; padding:11px 18px; font-size:14px; font-weight:650; cursor:pointer; }
+  #vgi-root .btn-primary { background:var(--azul); color:#fff; }
+  #vgi-root .btn-primary:hover { background:#16496e; }
+  #vgi-root .btn-ghost { background:#fff; color:var(--azul); border:1px solid var(--azul); }
+  #vgi-root .resumen { margin-top:14px; }
+  #vgi-root textarea { width:100%; min-height:150px; font-family:ui-monospace,Menlo,Consolas,monospace; font-size:12px;
+    border:1px solid var(--borde); border-radius:9px; padding:11px; }
+  #vgi-root .hint{font-size:12px;color:var(--gris);margin-top:6px;}
+  #vgi-root .glim-grp{font-size:12px;font-weight:700;color:var(--azul);margin:8px 0 4px;}
+  #vgi-root .chk{display:flex;align-items:flex-start;gap:8px;padding:5px 0;font-size:13px;cursor:pointer;}
+  #vgi-root .chk input{margin-top:3px;}
+</style>
+<script>
+(function(){
+  // ---------- Definición de escalas ----------
+  const ESCALAS = {
+    funcional: [
+      { id:'barthel', nom:'Barthel — ABVD', tipo:'suma', max:100,
+        items:[
+          {q:'Comer', o:[['Incapaz',0],['Necesita ayuda (cortar, untar…)',5],['Independiente',10]]},
+          {q:'Trasladarse silla-cama', o:[['Incapaz, no se mantiene sentado',0],['Ayuda importante (1-2 personas)',5],['Algo de ayuda',10],['Independiente',15]]},
+          {q:'Aseo personal', o:[['Necesita ayuda',0],['Independiente (cara, manos, dientes…)',5]]},
+          {q:'Uso del retrete', o:[['Dependiente',0],['Alguna ayuda',5],['Independiente',10]]},
+          {q:'Bañarse / ducharse', o:[['Dependiente',0],['Independiente',5]]},
+          {q:'Desplazarse', o:[['Inmóvil',0],['Independiente en silla 50 m',5],['Anda con ayuda de 1 persona',10],['Independiente ≥50 m (muleta, no andador)',15]]},
+          {q:'Subir y bajar escaleras', o:[['Incapaz',0],['Ayuda física/verbal',5],['Independiente',10]]},
+          {q:'Vestirse', o:[['Dependiente',0],['Ayuda, hace ~la mitad',5],['Independiente (botones, cremalleras…)',10]]},
+          {q:'Control de heces', o:[['Incontinente / enema',0],['Accidente excepcional (1/sem)',5],['Continente',10]]},
+          {q:'Control de orina', o:[['Incontinente / sondado dependiente',0],['Accidente excepcional (1/24 h)',5],['Continente ≥7 días',10]]},
+        ],
+        interpreta:(s)=> s<20?['dependencia total','b-alert'] : s<=35?['dependencia grave','b-alert'] : s<=55?['dependencia moderada','b-warn'] : s<=95?['dependencia leve','b-warn'] : ['independencia','b-ok'],
+        unidad:'/100' },
+
+      { id:'lawton', nom:'Lawton-Brody — AIVD', tipo:'suma', max:8,
+        items:[
+          {q:'Uso del teléfono', o:[['Por iniciativa propia',1],['Marca números conocidos',1],['Contesta pero no marca',1],['No capaz',0]]},
+          {q:'Hacer compras', o:[['Independiente todas',1],['Solo pequeñas compras',0],['Necesita ir acompañado',0],['Incapaz',0]]},
+          {q:'Preparación de la comida', o:[['Organiza, prepara y sirve solo',1],['Prepara si le dan ingredientes',0],['Calienta, dieta inadecuada',0],['Necesita que le preparen',0]]},
+          {q:'Cuidado de la casa', o:[['Solo o ayuda ocasional',1],['Tareas ligeras (platos, camas)',1],['Tareas ligeras, limpieza no adecuada',1],['Necesita ayuda en todas',1],['No participa',0]]},
+          {q:'Lavado de la ropa', o:[['Lava toda su ropa',1],['Lava pequeñas prendas',1],['Lo hace otra persona',0]]},
+          {q:'Uso de transporte', o:[['Viaja solo / conduce',1],['Coge taxi, no otro medio',1],['Transporte público acompañado',1],['Solo taxi/auto con ayuda',0],['No viaja',0]]},
+          {q:'Responsabilidad medicación', o:[['A su hora y dosis correcta',1],['Si se la preparan',0],['No capaz',0]]},
+          {q:'Asuntos económicos', o:[['Se encarga solo',1],['Diario sí, ayuda en grandes',1],['Incapaz de manejar dinero',0]]},
+        ],
+        interpreta:(s)=> s<=1?['dependencia total','b-alert'] : s<=3?['dependencia grave','b-alert'] : s<=5?['dependencia moderada','b-warn'] : s<=7?['dependencia ligera','b-warn'] : ['independiente','b-ok'],
+        unidad:'/8', nota:'En varones puede valorarse /5 según contexto.' },
+
+      { id:'sppb', nom:'SPPB — Rendimiento físico', tipo:'suma', max:12,
+        items:[
+          {q:'Equilibrio', sub:'Pies juntos, semi-tándem y tándem (suma de las 3 posiciones)', o:[['0',0],['1',1],['2',2],['3',3],['4',4]]},
+          {q:'Velocidad de la marcha (4 m)', sub:'>8.70 s=1 · 6.21-8.70=2 · 4.82-6.20=3 · <4.82=4 · incapaz=0', o:[['0',0],['1',1],['2',2],['3',3],['4',4]]},
+          {q:'Levantarse de la silla ×5', sub:'>60 s/incapaz=0 · 16.7-59.9=1 · 13.7-16.69=2 · 11.2-13.69=3 · <11.19=4', o:[['0',0],['1',1],['2',2],['3',3],['4',4]]},
+        ],
+        interpreta:(s)=> s<=3?['limitación grave','b-alert'] : s<=6?['limitación moderada','b-warn'] : s<=9?['limitación leve','b-warn'] : ['sin limitación','b-ok'],
+        unidad:'/12', nota:'SPPB ≤8: fragilidad / mayor riesgo de discapacidad.' },
+
+      { id:'frail', nom:'FRAIL — Cribado de fragilidad', tipo:'suma', max:5,
+        items:[
+          {q:'Fatigue', sub:'¿Está cansado la mayor parte del tiempo?', o:[['No',0],['Sí',1]]},
+          {q:'Resistance', sub:'¿Es incapaz de subir un piso de escaleras?', o:[['No',0],['Sí',1]]},
+          {q:'Aerobic', sub:'¿Es incapaz de caminar una manzana?', o:[['No',0],['Sí',1]]},
+          {q:'Illnesses', sub:'¿Tiene más de 5 enfermedades?', o:[['No',0],['Sí',1]]},
+          {q:'Loss of weight', sub:'¿Ha perdido >5% de peso en 6 meses?', o:[['No',0],['Sí',1]]},
+        ],
+        interpreta:(s)=> s===0?['robusto','b-ok'] : s<=2?['prefrágil','b-warn'] : ['frágil','b-alert'],
+        unidad:'/5' },
+    ],
+    nutricional: [
+      { id:'mna', nom:'MNA — Mini Nutritional Assessment', tipo:'mna' },
+      { id:'glim', nom:'GLIM — Criterios de desnutrición', tipo:'glim' },
+    ],
+    cognitivo: [
+      { id:'mmse', nom:'Mini-Mental (MMSE / MEC)', tipo:'mmse' },
+      { id:'pfeiffer', nom:'Pfeiffer (SPMSQ)', tipo:'pfeiffer' },
+    ],
+    marcha: [
+      { id:'tug', nom:'TUG — Timed Up and Go', tipo:'tug' },
+      { id:'sarcf', nom:'SARC-F — Cribado de sarcopenia', tipo:'suma', max:10,
+        items:[
+          {q:'Fuerza', sub:'Dificultad para cargar 4.5 kg', o:[['Ninguna',0],['Alguna',1],['Mucha o incapaz',2]]},
+          {q:'Asistencia para caminar', sub:'Cruzar caminando un cuarto', o:[['Ninguna',0],['Alguna',1],['Mucha / auxiliares / incapaz',2]]},
+          {q:'Levantarse de una silla', sub:'De una silla o cama', o:[['Ninguna',0],['Alguna',1],['Mucha / incapaz sin ayuda',2]]},
+          {q:'Subir escaleras', sub:'Subir 10 escalones', o:[['Ninguna',0],['Alguna',1],['Mucha o incapaz',2]]},
+          {q:'Caídas', sub:'En el último año', o:[['Ninguna',0],['1 a 3 caídas',1],['4 o más',2]]},
+        ],
+        interpreta:(s)=> s>=4?['cribado positivo (sarcopenia probable)','b-alert'] : ['cribado negativo','b-ok'],
+        unidad:'/10', nota:'≥4: confirmar con dinamometría / velocidad de la marcha (EWGSOP2).' },
+    ],
+  };
+  const DOMINIOS = [
+    ['funcional','Dominio funcional'],
+    ['nutricional','Dominio nutricional'],
+    ['cognitivo','Dominio cognitivo'],
+    ['marcha','Marcha y sarcopenia'],
+  ];
+
+  const state = {}; // id -> {na, sel:{}, ...}
+  const root = document.getElementById('vgi-root');
+
+  function el(tag, cls, html){ const e=document.createElement(tag); if(cls)e.className=cls; if(html!=null)e.innerHTML=html; return e; }
+
+  // ---------- Render ----------
+  root.appendChild(el('h1','','Valoración Geriátrica Integral'));
+  root.appendChild(el('div','sub','Marca la puntuación de cada ítem; el total y la interpretación se calculan solos. Despliega solo las escalas que vayas a usar.'));
+
+  const pac = el('div','pac');
+  pac.innerHTML = `<div><label>Nombre</label><input id="vgi-nombre" placeholder="Nombre del paciente"></div>
+    <div><label>Fecha de nacimiento</label><input id="vgi-fnac" placeholder="dd/mm/aaaa"></div>`;
+  root.appendChild(pac);
+
+  DOMINIOS.forEach(([key,titulo])=>{
+    root.appendChild(el('div','dominio',titulo));
+    ESCALAS[key].forEach(esc=> root.appendChild(buildEscala(esc)));
+  });
+
+  // Actions
+  const actions = el('div','actions');
+  const bGen = el('button','btn btn-primary','Generar informe VGI');
+  const bCopy = el('button','btn btn-ghost','Copiar resumen');
+  actions.appendChild(bGen); actions.appendChild(bCopy);
+  root.appendChild(actions);
+  const resumenWrap = el('div','resumen'); root.appendChild(resumenWrap);
+
+  bGen.addEventListener('click', ()=>{
+    const txt = buildResumen(true);
+    showResumen(txt);
+    if (typeof window.sendPrompt === 'function') { window.sendPrompt(txt); }
+    else { resumenWrap.querySelector('.hint').textContent = 'Copia este resumen y pégalo en el chat para que genere el .docx.'; }
+  });
+  bCopy.addEventListener('click', ()=>{
+    const txt = buildResumen(false); showResumen(txt);
+    const ta = resumenWrap.querySelector('textarea'); ta.select();
+    try{ document.execCommand('copy'); }catch(e){}
+  });
+
+  function buildEscala(esc){
+    state[esc.id] = { na:false, def:esc, sel:{}, num:null, glim:{}, mmse:{}, mna:{} };
+    const wrap = el('div','escala'); wrap.dataset.id = esc.id;
+    const h = el('div','escala-h');
+    h.innerHTML = `<span class="chev">▶</span><span class="nom">${esc.nom}</span>`;
+    const badge = el('span','badge b-neutro','—'); h.appendChild(badge);
+    h.addEventListener('click',()=> wrap.classList.toggle('open'));
+    wrap.appendChild(h);
+
+    const body = el('div','escala-body');
+    const naRow = el('label','na-row');
+    naRow.innerHTML = `<input type="checkbox"> No realizada / no procede`;
+    naRow.querySelector('input').addEventListener('change',(e)=>{ state[esc.id].na=e.target.checked; update(esc.id); });
+    body.appendChild(naRow);
+
+    const content = el('div','content'); body.appendChild(content);
+    wrap.appendChild(body);
+
+    if(esc.tipo==='suma') renderSuma(esc, content);
+    else if(esc.tipo==='glim') renderGlim(esc, content);
+    else if(esc.tipo==='mmse') renderMmse(esc, content);
+    else if(esc.tipo==='pfeiffer') renderPfeiffer(esc, content);
+    else if(esc.tipo==='tug') renderTug(esc, content);
+    else if(esc.tipo==='mna') renderMna(esc, content);
+
+    state[esc.id].badge = badge; state[esc.id].content = content;
+    return wrap;
+  }
+
+  function renderSuma(esc, c){
+    esc.items.forEach((it,idx)=>{
+      const row = el('div','item');
+      row.appendChild(el('div','item-q', it.q + (it.sub?` <small>· ${it.sub}</small>`:'')));
+      const opts = el('div','opts');
+      it.o.forEach(([lab,val])=>{
+        const o = el('div','opt', `${lab}<span class="v">${val}</span>`);
+        o.addEventListener('click',()=>{
+          state[esc.id].sel[idx]=val;
+          opts.querySelectorAll('.opt').forEach(x=>x.classList.remove('sel'));
+          o.classList.add('sel'); update(esc.id);
+        });
+        opts.appendChild(o);
+      });
+      row.appendChild(opts); c.appendChild(row);
+    });
+    if(esc.nota) c.appendChild(el('div','legend', esc.nota));
+    const res = el('div','res b-neutro','Sin puntuar'); res.dataset.role='res'; c.appendChild(res);
+  }
+
+  function renderTug(esc, c){
+    const row = el('div','item');
+    row.innerHTML = `<div class="item-q">Tiempo (segundos) <small>· levantarse, caminar 3 m, girar y sentarse</small></div>`;
+    const inp = el('input','num'); inp.type='number'; inp.min='0'; inp.step='0.1'; inp.placeholder='s';
+    inp.addEventListener('input',()=>{ state[esc.id].num = inp.value===''?null:parseFloat(inp.value); update(esc.id); });
+    row.appendChild(inp); c.appendChild(row);
+    c.appendChild(el('div','legend','<10 s normal · 10-20 s movilidad reducida/fragilidad · >20 s alto riesgo de caídas (≥13.5 s ↑ riesgo).'));
+    const res = el('div','res b-neutro','Sin medir'); res.dataset.role='res'; c.appendChild(res);
+  }
+
+  function renderMmse(esc, c){
+    const subs=[['ot','Orientación temporal',5],['oe','Orientación espacial',5],['fij','Fijación / recuerdo inmediato',3],['ac','Atención-cálculo',5],['rd','Recuerdo diferido',3],['len','Lenguaje',9]];
+    subs.forEach(([k,lab,mx])=>{
+      state[esc.id].mmse[k]=0;
+      const row=el('div','item');
+      row.appendChild(el('div','item-q', `${lab} <small>· máx ${mx}</small>`));
+      const step=el('div','step');
+      const minus=el('button',null,'−'), val=el('span','val','0'), plus=el('button',null,'+');
+      const setv=(v)=>{ v=Math.max(0,Math.min(mx,v)); state[esc.id].mmse[k]=v; val.textContent=v; update(esc.id); };
+      minus.addEventListener('click',()=>setv(state[esc.id].mmse[k]-1));
+      plus.addEventListener('click',()=>setv(state[esc.id].mmse[k]+1));
+      step.appendChild(minus); step.appendChild(val); step.appendChild(plus);
+      row.appendChild(step); c.appendChild(row);
+    });
+    c.appendChild(el('div','legend','≥27 normal · 25-26 dudoso · 13-24 deterioro · ≤12 demencia. Interpretar según edad y escolaridad.'));
+    const res=el('div','res b-neutro','0/30'); res.dataset.role='res'; c.appendChild(res);
+  }
+
+  function renderPfeiffer(esc, c){
+    const qs=['¿Fecha de hoy? (día, mes y año)','¿Qué día de la semana?','¿En qué lugar estamos?','¿Su número de teléfono? (o dirección)','¿Cuántos años tiene?','¿Dónde nació?','¿Nombre del presidente?','¿Nombre del presidente anterior?','¿Nombre de soltera de su madre?','Restar de 3 en 3 desde 20'];
+    const edu=el('div','edu'); edu.innerHTML=`Escolaridad: <select><option value="0">Media</option><option value="1">Baja (estudios elementales)</option><option value="-1">Alta (universitaria)</option></select>`;
+    state[esc.id].edu=0;
+    edu.querySelector('select').addEventListener('change',e=>{ state[esc.id].edu=parseInt(e.target.value); update(esc.id); });
+    c.appendChild(edu);
+    qs.forEach((q,idx)=>{
+      state[esc.id].sel[idx]=0;
+      const row=el('div','item'); row.appendChild(el('div','item-q',`${idx+1}. ${q}`));
+      const opts=el('div','opts');
+      [['Correcto',0],['Error',1]].forEach(([lab,val])=>{
+        const o=el('div','opt',lab);
+        if(val===0) o.classList.add('sel');
+        o.addEventListener('click',()=>{ state[esc.id].sel[idx]=val; opts.querySelectorAll('.opt').forEach(x=>x.classList.remove('sel')); o.classList.add('sel'); update(esc.id); });
+        opts.appendChild(o);
+      });
+      row.appendChild(opts); c.appendChild(row);
+    });
+    c.appendChild(el('div','legend','Se cuentan ERRORES: 0-2 normal · 3-4 leve · 5-7 moderado · 8-10 severo (±1 por escolaridad).'));
+    const res=el('div','res b-neutro','0 errores'); res.dataset.role='res'; c.appendChild(res);
+  }
+
+  function renderGlim(esc, c){
+    const fen=[['fpeso','Pérdida de peso involuntaria (>5% en 6 m o >10% en >6 m)'],['fimc','IMC bajo (<20 si <70 a; <22 si ≥70 a)'],['fmasa','Reducción de masa muscular (técnica validada)']];
+    const eti=[['eing','↓ ingesta/asimilación (≤50% >1 sem, reducción >2 sem o enf. GI crónica)'],['einf','Carga inflamatoria (lesión/inflamación aguda o enf. crónica)']];
+    c.appendChild(el('div','glim-grp','Criterios fenotípicos (≥1)'));
+    fen.concat(eti).forEach((row,i)=>{
+      if(i===fen.length) c.appendChild(el('div','glim-grp','Criterios etiológicos (≥1)'));
+      const [k,lab]=row; state[esc.id].glim[k]=false;
+      const l=el('label','chk'); l.innerHTML=`<input type="checkbox"><span>${lab}</span>`;
+      l.querySelector('input').addEventListener('change',e=>{ state[esc.id].glim[k]=e.target.checked; update(esc.id); });
+      c.appendChild(l);
+    });
+    c.appendChild(el('div','legend','Diagnóstico: al menos 1 criterio fenotípico + 1 etiológico.'));
+    const res=el('div','res b-neutro','Sin valorar'); res.dataset.role='res'; c.appendChild(res);
+  }
+
+  function renderMna(esc, c){
+    const crib=[
+      ['A','Apetito / ingesta últimos 3 meses',[['Ha comido mucho menos',0],['Ha comido menos',1],['Ha comido igual',2]]],
+      ['B','Pérdida de peso reciente (<3 meses)',[['>3 kg',0],['No lo sabe',1],['1-3 kg',2],['Sin pérdida',3]]],
+      ['C','Movilidad',[['De la cama al sillón',0],['Autonomía en el interior',1],['Sale del domicilio',2]]],
+      ['D','Enfermedad aguda / estrés (3 meses)',[['Sí',0],['No',2]]],
+      ['E','Problemas neuropsicológicos',[['Demencia/depresión grave',0],['Demencia leve',1],['Sin problemas',2]]],
+      ['F','IMC',[['<19',0],['19 a <21',1],['21 a <23',2],['≥23',3]]],
+    ];
+    const evalu=[
+      ['G','¿Vive independiente en domicilio?',[['No',0],['Sí',1]]],
+      ['H','¿Toma >3 fármacos/día?',[['Sí',0],['No',1]]],
+      ['I','¿Úlceras o lesiones cutáneas?',[['Sí',0],['No',1]]],
+      ['J','Comidas completas al día',[['1',0],['2',1],['3',2]]],
+      ['K','Marcadores proteicos (lácteos/huevos-legumbres/carne)',[['0-1 síes',0],['2 síes',0.5],['3 síes',1]]],
+      ['L','¿Frutas o verduras ≥2/día?',[['No',0],['Sí',1]]],
+      ['M','Líquidos al día',[['<3 vasos',0],['3-5 vasos',0.5],['>5 vasos',1]]],
+      ['N','Forma de alimentarse',[['Necesita ayuda',0],['Solo con dificultad',1],['Solo sin dificultad',2]]],
+      ['O','Autopercepción del estado nutricional',[['Malnutrición grave',0],['No sabe/moderada',1],['Sin problemas',2]]],
+      ['P','Estado de salud vs. su edad',[['Peor',0],['No sabe',0.5],['Igual',1],['Mejor',2]]],
+      ['Q','Circunferencia braquial (CB, cm)',[['<21',0],['21-22',0.5],['>22',1]]],
+      ['R','Circunferencia de pantorrilla (CP, cm)',[['<31',0],['≥31',1]]],
+    ];
+    const mkBlock=(arr,titulo)=>{
+      c.appendChild(el('div','glim-grp',titulo));
+      arr.forEach(([letter,q,opts])=>{
+        const key=letter; state[esc.id].mna[key]=null;
+        const row=el('div','item'); row.appendChild(el('div','item-q',`${letter}. ${q}`));
+        const od=el('div','opts');
+        opts.forEach(([lab,val])=>{
+          const o=el('div','opt',`${lab}<span class="v">${val}</span>`);
+          o.addEventListener('click',()=>{ state[esc.id].mna[key]=val; od.querySelectorAll('.opt').forEach(x=>x.classList.remove('sel')); o.classList.add('sel'); update(esc.id); });
+          od.appendChild(o);
+        });
+        row.appendChild(od); c.appendChild(row);
+      });
+    };
+    mkBlock(crib,'Cribado (A-F) · subtotal /14');
+    mkBlock(evalu,'Evaluación (G-R) · subtotal /16  ·  completar solo si cribado ≤11');
+    const res=el('div','res b-neutro','Sin puntuar'); res.dataset.role='res'; c.appendChild(res);
+  }
+
+  // ---------- Cálculo / actualización ----------
+  function update(id){
+    const st=state[id], esc=st.def, badge=st.badge, res=st.content.querySelector('[data-role=res]');
+    if(st.na){ badge.textContent='No realizada'; badge.className='badge na'; if(res){res.textContent='No realizada'; res.className='res b-neutro';} return; }
+    let scoreText, badgeText, cls;
+
+    if(esc.tipo==='suma'){
+      const vals=Object.values(st.sel); const done=vals.length===esc.items.length;
+      const s=vals.reduce((a,b)=>a+b,0);
+      const [interp,c2]=esc.interpreta(s); cls=c2;
+      scoreText=`${s}${esc.unidad} — ${interp}`+(done?'':' (incompleto)');
+      badgeText=`${s}${esc.unidad}`;
+    } else if(esc.tipo==='tug'){
+      if(st.num==null){ badge.textContent='—'; badge.className='badge b-neutro'; res.textContent='Sin medir'; res.className='res b-neutro'; return; }
+      const t=st.num; let interp;
+      if(t<10){interp='normal';cls='b-ok';} else if(t<=20){interp='movilidad reducida / fragilidad';cls='b-warn';} else {interp='alto riesgo de caídas';cls='b-alert';}
+      scoreText=`${t} s — ${interp}`; badgeText=`${t} s`;
+    } else if(esc.tipo==='mmse'){
+      const s=Object.values(st.mmse).reduce((a,b)=>a+b,0);
+      let interp; if(s>=27){interp='normal';cls='b-ok';} else if(s>=25){interp='dudoso';cls='b-warn';} else if(s>=13){interp='deterioro';cls='b-warn';} else {interp='demencia';cls='b-alert';}
+      scoreText=`${s}/30 — ${interp}`; badgeText=`${s}/30`;
+    } else if(esc.tipo==='pfeiffer'){
+      const e=Object.values(st.sel).reduce((a,b)=>a+b,0);
+      const adj=st.edu; // 1 baja (+1 permitido), -1 alta
+      const eff=e - adj; // baja: resta 1; alta: suma 1
+      let interp; if(eff<=2){interp='normal';cls='b-ok';} else if(eff<=4){interp='deterioro leve';cls='b-warn';} else if(eff<=7){interp='deterioro moderado';cls='b-alert';} else {interp='deterioro severo';cls='b-alert';}
+      scoreText=`${e} errores — ${interp}`; badgeText=`${e} err`;
+    } else if(esc.tipo==='glim'){
+      const g=st.glim; const fen=g.fpeso||g.fimc||g.fmasa; const eti=g.eing||g.einf;
+      const cumple=fen&&eti;
+      if(!fen&&!eti){ badge.textContent='—'; badge.className='badge b-neutro'; res.textContent='Sin valorar'; res.className='res b-neutro'; return; }
+      cls=cumple?'b-alert':'b-ok';
+      scoreText=cumple?'Cumple criterios de desnutrición (≥1 fenotípico + ≥1 etiológico)':'No cumple (faltan criterios)';
+      badgeText=cumple?'Desnutrición':'No cumple';
+    } else if(esc.tipo==='mna'){
+      const m=st.mna; const crib=['A','B','C','D','E','F']; const ev=['G','H','I','J','K','L','M','N','O','P','Q','R'];
+      const sub=(keys)=>keys.reduce((a,k)=> a+(m[k]==null?0:m[k]),0);
+      const cDone=crib.every(k=>m[k]!=null); const cS=sub(crib);
+      const eAny=ev.some(k=>m[k]!=null); const eDone=ev.every(k=>m[k]!=null); const eS=sub(ev);
+      let cCat = cS>=12?'normal':(cS>=8?'riesgo':'malnutrición');
+      let part=`Cribado ${cS}/14 (${cCat})`+(cDone?'':' [incompleto]');
+      if(eAny){ const tot=cS+eS; let tCat=tot>=24?'normal':(tot>=17?'riesgo':'malnutrición'); part+=` · Total ${tot}/30 (${tCat})`+(eDone?'':' [incompleto]'); cls=tCat==='normal'?'b-ok':(tCat==='riesgo'?'b-warn':'b-alert'); badgeText=`${tot}/30`; }
+      else { cls=cCat==='normal'?'b-ok':(cCat==='riesgo'?'b-warn':'b-alert'); badgeText=`${cS}/14`; }
+      scoreText=part;
+    }
+    badge.textContent=badgeText; badge.className='badge '+cls;
+    if(res){ res.textContent=scoreText; res.className='res '+cls; }
+  }
+
+  // ---------- Resumen para Claude ----------
+  function buildResumen(forClaude){
+    const nombre=(document.getElementById('vgi-nombre').value||'').trim();
+    const fnac=(document.getElementById('vgi-fnac').value||'').trim();
+    const L=['=== RESULTADOS VGI ==='];
+    L.push(`PACIENTE: ${nombre||'(sin nombre)'} | F. NAC: ${fnac||'(sin fecha)'}`);
+    DOMINIOS.forEach(([key,titulo])=>{
+      const lines=[];
+      ESCALAS[key].forEach(esc=>{
+        const st=state[esc.id]; if(st.na){ lines.push(`${esc.nom}: NO REALIZADA`); return; }
+        const r=resumenEscala(esc,st); if(r) lines.push(r);
+      });
+      if(lines.length){ L.push(`[${titulo.toUpperCase()}]`); lines.forEach(x=>L.push(x)); }
+    });
+    L.push('=== FIN ===');
+    if(forClaude) L.push('Genera el informe VGI en Word siguiendo mi plantilla, con la conclusión de cada test según la base de evidencia (PMID). Pregúntame los apartados de texto libre que falten.');
+    return L.join('\n');
+  }
+  function resumenEscala(esc,st){
+    if(esc.tipo==='suma'){
+      const vals=Object.values(st.sel); if(vals.length===0) return null;
+      const s=vals.reduce((a,b)=>a+b,0); const [i]=esc.interpreta(s);
+      const inc=vals.length<esc.items.length?' (incompleto)':'';
+      return `${esc.nom.split(' — ')[0]}: ${s}${esc.unidad} | ${i}${inc}`;
+    }
+    if(esc.tipo==='tug'){ if(st.num==null) return null; const t=st.num; const i=t<10?'normal':(t<=20?'movilidad reducida/fragilidad':'alto riesgo de caídas'); return `TUG: ${t} s | ${i}`; }
+    if(esc.tipo==='mmse'){ const s=Object.values(st.mmse).reduce((a,b)=>a+b,0); if(s===0) return null; const i=s>=27?'normal':(s>=25?'dudoso':(s>=13?'deterioro':'demencia')); return `MMSE/MEC: ${s}/30 | ${i}`; }
+    if(esc.tipo==='pfeiffer'){ const e=Object.values(st.sel).reduce((a,b)=>a+b,0); const eff=e-st.edu; const i=eff<=2?'normal':(eff<=4?'deterioro leve':(eff<=7?'deterioro moderado':'deterioro severo')); const edu=st.edu===1?'esc. baja':(st.edu===-1?'esc. alta':'esc. media'); return `Pfeiffer: ${e} errores | ${i} (${edu})`; }
+    if(esc.tipo==='glim'){ const g=st.glim; const fen=g.fpeso||g.fimc||g.fmasa; const eti=g.eing||g.einf; if(!fen&&!eti) return null; const ft=[g.fpeso&&'pérdida peso',g.fimc&&'IMC bajo',g.fmasa&&'↓masa muscular'].filter(Boolean).join('+'); const et=[g.eing&&'↓ingesta/asimilación',g.einf&&'inflamación'].filter(Boolean).join('+'); return `GLIM: ${(fen&&eti)?'CUMPLE desnutrición':'no cumple'} | fenotípico[${ft||'-'}] etiológico[${et||'-'}]`; }
+    if(esc.tipo==='mna'){ const m=st.mna; const crib=['A','B','C','D','E','F']; const ev=['G','H','I','J','K','L','M','N','O','P','Q','R']; const any=crib.concat(ev).some(k=>m[k]!=null); if(!any) return null; const cS=crib.reduce((a,k)=>a+(m[k]||0),0); const eAny=ev.some(k=>m[k]!=null); const eS=ev.reduce((a,k)=>a+(m[k]||0),0); const cCat=cS>=12?'normal':(cS>=8?'riesgo':'malnutrición'); if(eAny){ const tot=cS+eS; const tCat=tot>=24?'normal':(tot>=17?'riesgo':'malnutrición'); return `MNA: cribado ${cS}/14 (${cCat}) · total ${tot}/30 (${tCat})`; } return `MNA: cribado ${cS}/14 (${cCat})`; }
+    return null;
+  }
+  function showResumen(txt){
+    resumenWrap.innerHTML='';
+    const ta=el('textarea'); ta.value=txt; resumenWrap.appendChild(ta);
+    resumenWrap.appendChild(el('div','hint','Resumen estructurado de la VGI.'));
+  }
+})();
+</script>
