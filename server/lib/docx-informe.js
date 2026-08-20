@@ -4,6 +4,7 @@
 'use strict';
 
 const { Document, Paragraph, TextRun, HeadingLevel, BorderStyle } = require('docx');
+const { itemsFallidos } = require('./items-fallidos');
 
 const DISCLAIMER =
   'Herramienta de apoyo a la decisión clínica. No sustituye el juicio ' +
@@ -107,6 +108,26 @@ function construirInformeDocx({ patient, fecha, edad, vigentesPorEscala, scalesC
           children: [new TextRun({ text: resultado.texto || resultado.label || '(sin interpretación)' })],
         })
       );
+      const fallos = esc ? itemsFallidos(esc, record.valores) : [];
+      if (fallos.length) {
+        children.push(
+          new Paragraph({
+            spacing: { before: 60 },
+            children: [new TextRun({ text: 'Ítems con dificultad:', bold: true, size: 20 })],
+          })
+        );
+        fallos.forEach((f) => {
+          children.push(
+            new Paragraph({
+              bullet: { level: 0 },
+              children: [
+                new TextRun({ text: f.pregunta + ': ', bold: true, size: 20 }),
+                new TextRun({ text: f.etiqueta, size: 20 }),
+              ],
+            })
+          );
+        });
+      }
       if (esc && esc.referencia && esc.referencia.texto) {
         children.push(
           new Paragraph({

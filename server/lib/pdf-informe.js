@@ -9,6 +9,7 @@
 'use strict';
 
 const PDFDocument = require('pdfkit');
+const { itemsFallidos } = require('./items-fallidos');
 
 const AZUL = '#0B4C73';
 const GRIS = '#555555';
@@ -111,6 +112,16 @@ async function construirInformePdf({ patient, fecha, edad, vigentesPorEscala, sc
       doc.font('Helvetica').fontSize(10);
       doc.text(`Fecha del registro: ${record.fecha}    Registrado por: ${record.userCodigo || '—'}`);
       doc.fontSize(11).text(resultado.texto || resultado.label || '(sin interpretación)');
+      const fallos = esc ? itemsFallidos(esc, record.valores) : [];
+      if (fallos.length) {
+        if (doc.y > doc.page.height - 100) doc.addPage();
+        doc.fontSize(10).font('Helvetica-Bold').text('Ítems con dificultad:');
+        doc.font('Helvetica');
+        fallos.forEach((f) => {
+          if (doc.y > doc.page.height - 80) doc.addPage();
+          doc.text('•  ' + f.pregunta + ': ' + f.etiqueta, { indent: 10 });
+        });
+      }
       if (esc && esc.referencia && esc.referencia.texto) {
         doc.fontSize(9).fillColor(GRIS).font('Helvetica-Oblique').text('Referencia: ' + esc.referencia.texto);
         doc.font('Helvetica').fillColor('#000');
