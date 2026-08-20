@@ -1,0 +1,248 @@
+<div id="vgil-root"></div>
+<style>
+  #vgil-root, #vgil-root * { box-sizing: border-box; }
+  #vgil-root {
+    font-family: -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    color: #1f2933; max-width: 920px; margin: 0 auto; line-height: 1.45;
+    --azul: #1c5d8c; --azul-claro: #e8f1f8; --borde: #d6dee6; --gris: #5b6b7b;
+    --ok: #1a7a4b; --okbg: #e3f4ea; --warn: #9a6700; --warnbg: #fcf3dd;
+    --alert: #b1402e; --alertbg: #fbe6e1; --neutro:#475569; --neutrobg:#eef2f6;
+  }
+  #vgil-root h1 { font-size: 21px; color: var(--azul); margin: 0 0 2px; }
+  #vgil-root .sub { color: var(--gris); font-size: 13px; margin-bottom: 14px; }
+  #vgil-root .pac { display:flex; gap:10px; flex-wrap:wrap; margin-bottom:16px; }
+  #vgil-root .pac label { font-size:12px; color:var(--gris); display:block; margin-bottom:3px; }
+  #vgil-root .pac input { padding:7px 9px; border:1px solid var(--borde); border-radius:7px; font-size:14px; min-width:180px; }
+  #vgil-root .escala { border:1px solid var(--borde); border-radius:11px; margin-bottom:11px; overflow:hidden; background:#fff; }
+  #vgil-root .escala-h { display:flex; align-items:center; gap:10px; padding:11px 14px; cursor:pointer; user-select:none; background:#fbfcfd; }
+  #vgil-root .escala-h:hover { background:#f4f8fb; }
+  #vgil-root .escala-h .nom { font-weight:650; font-size:15px; flex:1; }
+  #vgil-root .chev { color:var(--gris); transition:transform .15s; font-size:12px; }
+  #vgil-root .escala.open .chev { transform:rotate(90deg); }
+  #vgil-root .badge { font-size:12.5px; font-weight:700; padding:3px 10px; border-radius:20px; white-space:nowrap; }
+  #vgil-root .badge.na { background:var(--neutrobg); color:var(--neutro); font-weight:600; }
+  #vgil-root .b-ok{background:var(--okbg);color:var(--ok);} #vgil-root .b-warn{background:var(--warnbg);color:var(--warn);}
+  #vgil-root .b-alert{background:var(--alertbg);color:var(--alert);} #vgil-root .b-neutro{background:var(--neutrobg);color:var(--neutro);}
+  #vgil-root .escala-body { display:none; padding:6px 14px 14px; border-top:1px solid var(--borde); }
+  #vgil-root .escala.open .escala-body { display:block; }
+  #vgil-root .na-row { display:flex; align-items:center; gap:7px; font-size:12.5px; color:var(--gris); margin:8px 0 4px; }
+  #vgil-root .item { padding:9px 0; border-bottom:1px dashed #e7edf2; }
+  #vgil-root .item:last-child { border-bottom:none; }
+  #vgil-root .item-q { font-size:13.5px; font-weight:600; margin-bottom:6px; }
+  #vgil-root .item-q small { font-weight:400; color:var(--gris); }
+  #vgil-root .opts { display:flex; flex-wrap:wrap; gap:6px; }
+  #vgil-root .opt { font-size:12.5px; border:1px solid var(--borde); border-radius:7px; padding:6px 10px; cursor:pointer; background:#fff; transition:all .1s; }
+  #vgil-root .opt:hover { border-color:var(--azul); }
+  #vgil-root .opt.sel { background:var(--azul); color:#fff; border-color:var(--azul); }
+  #vgil-root .opt .v { font-weight:700; opacity:.8; margin-left:4px; }
+  #vgil-root .opt.sel .v { opacity:1; }
+  #vgil-root .res { margin-top:10px; padding:9px 11px; border-radius:8px; font-size:13.5px; }
+  #vgil-root .legend { font-size:11.5px; color:var(--gris); margin-top:8px; }
+  #vgil-root .actions { display:flex; gap:10px; flex-wrap:wrap; margin-top:18px; }
+  #vgil-root .btn { border:none; border-radius:9px; padding:11px 18px; font-size:14px; font-weight:650; cursor:pointer; }
+  #vgil-root .btn-primary { background:var(--azul); color:#fff; }
+  #vgil-root .btn-primary:hover { background:#16496e; }
+  #vgil-root .btn-ghost { background:#fff; color:var(--azul); border:1px solid var(--azul); }
+  #vgil-root .btn-ghost:disabled { opacity:.45; cursor:not-allowed; }
+  #vgil-root .informe { margin-top:18px; border:1px solid var(--borde); border-radius:11px; background:#fff; }
+  #vgil-root .informe-h { padding:12px 16px; border-bottom:1px solid var(--borde); font-weight:700; color:var(--azul); font-size:14px;
+    display:flex; align-items:center; justify-content:space-between; gap:10px; }
+  #vgil-root .informe-body { padding:14px 16px; }
+  #vgil-root .informe pre { white-space:pre-wrap; font-family:ui-monospace,Menlo,Consolas,monospace; font-size:12.5px;
+    background:var(--azul-claro); border-radius:9px; padding:12px 14px; margin:0; }
+  #vgil-root .copy-ok { color:var(--ok); font-size:12.5px; font-weight:600; margin-left:8px; }
+  #vgil-root .hint{font-size:12px;color:var(--gris);margin-top:8px;}
+</style>
+<script>
+(function(){
+  // ---------- Definición de escalas (VGI Lite: Barthel, Lawton, SPPB, 4AT) ----------
+  const ESCALAS = [
+    { id:'barthel', nom:'Índice de Barthel — ABVD', tipo:'suma', max:100,
+      items:[
+        {q:'Comer', o:[['Incapaz',0],['Necesita ayuda (cortar, untar…)',5],['Independiente',10]]},
+        {q:'Trasladarse silla-cama', o:[['Incapaz, no se mantiene sentado',0],['Ayuda importante (1-2 personas)',5],['Algo de ayuda',10],['Independiente',15]]},
+        {q:'Aseo personal', o:[['Necesita ayuda',0],['Independiente (cara, manos, dientes…)',5]]},
+        {q:'Uso del retrete', o:[['Dependiente',0],['Alguna ayuda',5],['Independiente',10]]},
+        {q:'Bañarse / ducharse', o:[['Dependiente',0],['Independiente',5]]},
+        {q:'Desplazarse', o:[['Inmóvil',0],['Independiente en silla 50 m',5],['Anda con ayuda de 1 persona',10],['Independiente ≥50 m (muleta, no andador)',15]]},
+        {q:'Subir y bajar escaleras', o:[['Incapaz',0],['Ayuda física/verbal',5],['Independiente',10]]},
+        {q:'Vestirse', o:[['Dependiente',0],['Ayuda, hace ~la mitad',5],['Independiente (botones, cremalleras…)',10]]},
+        {q:'Control de heces', o:[['Incontinente / enema',0],['Accidente excepcional (1/sem)',5],['Continente',10]]},
+        {q:'Control de orina', o:[['Incontinente / sondado dependiente',0],['Accidente excepcional (1/24 h)',5],['Continente ≥7 días',10]]},
+      ],
+      interpreta:(s)=> s<20?['dependencia total','b-alert'] : s<=35?['dependencia grave','b-alert'] : s<=55?['dependencia moderada','b-warn'] : s<=95?['dependencia leve','b-warn'] : ['independencia','b-ok'],
+      unidad:'/100' },
+
+    { id:'lawton', nom:'Escala de Lawton-Brody — AIVD', tipo:'suma', max:8,
+      items:[
+        {q:'Uso del teléfono', o:[['Por iniciativa propia',1],['Marca números conocidos',1],['Contesta pero no marca',1],['No capaz',0]]},
+        {q:'Hacer compras', o:[['Independiente todas',1],['Solo pequeñas compras',0],['Necesita ir acompañado',0],['Incapaz',0]]},
+        {q:'Preparación de la comida', o:[['Organiza, prepara y sirve solo',1],['Prepara si le dan ingredientes',0],['Calienta, dieta inadecuada',0],['Necesita que le preparen',0]]},
+        {q:'Cuidado de la casa', o:[['Solo o ayuda ocasional',1],['Tareas ligeras (platos, camas)',1],['Tareas ligeras, limpieza no adecuada',1],['Necesita ayuda en todas',1],['No participa',0]]},
+        {q:'Lavado de la ropa', o:[['Lava toda su ropa',1],['Lava pequeñas prendas',1],['Lo hace otra persona',0]]},
+        {q:'Uso de transporte', o:[['Viaja solo / conduce',1],['Coge taxi, no otro medio',1],['Transporte público acompañado',1],['Solo taxi/auto con ayuda',0],['No viaja',0]]},
+        {q:'Responsabilidad medicación', o:[['A su hora y dosis correcta',1],['Si se la preparan',0],['No capaz',0]]},
+        {q:'Asuntos económicos', o:[['Se encarga solo',1],['Diario sí, ayuda en grandes',1],['Incapaz de manejar dinero',0]]},
+      ],
+      interpreta:(s)=> s<=1?['dependencia total','b-alert'] : s<=3?['dependencia grave','b-alert'] : s<=5?['dependencia moderada','b-warn'] : s<=7?['dependencia ligera','b-warn'] : ['independiente','b-ok'],
+      unidad:'/8', nota:'En varones puede valorarse /5 según contexto.' },
+
+    { id:'sppb', nom:'SPPB — Rendimiento físico', tipo:'suma', max:12,
+      items:[
+        {q:'Equilibrio', sub:'Pies juntos, semi-tándem y tándem (suma de las 3 posiciones)', o:[['0',0],['1',1],['2',2],['3',3],['4',4]]},
+        {q:'Velocidad de la marcha (4 m)', sub:'>8.70 s=1 · 6.21-8.70=2 · 4.82-6.20=3 · <4.82=4 · incapaz=0', o:[['0',0],['1',1],['2',2],['3',3],['4',4]]},
+        {q:'Levantarse de la silla ×5', sub:'>60 s/incapaz=0 · 16.7-59.9=1 · 13.7-16.69=2 · 11.2-13.69=3 · <11.19=4', o:[['0',0],['1',1],['2',2],['3',3],['4',4]]},
+      ],
+      interpreta:(s)=> s<=3?['limitación grave','b-alert'] : s<=6?['limitación moderada','b-warn'] : s<=9?['limitación leve','b-warn'] : ['sin limitación','b-ok'],
+      unidad:'/12', nota:'SPPB ≤8: fragilidad / mayor riesgo de discapacidad.' },
+
+    { id:'4at', nom:'4AT — Cribado de delirium', tipo:'suma', max:12,
+      items:[
+        {q:'Nivel de alerta', sub:'Normal / somnolencia leve <10 s tras despertar y luego normal = 0 · claramente anormal = 4',
+          o:[['Normal',0],['Claramente anormal',4]]},
+        {q:'AMT4', sub:'Edad, fecha de nacimiento, lugar actual, año actual',
+          o:[['Sin errores',0],['1 error',1],['≥2 errores / no explorable',2]]},
+        {q:'Atención', sub:'Decir los meses del año en orden inverso desde diciembre',
+          o:[['Logra ≥7 meses correctos',0],['Empieza pero <7 meses / rehúsa',1],['No explorable (no puede empezar)',2]]},
+        {q:'Cambio agudo o curso fluctuante', sub:'Alteración de conducta/cognición en últimas 2 semanas y aún presente, con fluctuación en 24 h',
+          o:[['No',0],['Sí',4]]},
+      ],
+      interpreta:(s)=> s>=4?['posible delirium ± deterioro cognitivo','b-alert'] : s>=1?['posible deterioro cognitivo (sin delirium)','b-warn'] : ['delirium improbable','b-ok'],
+      unidad:'/12', nota:'Una puntuación de 0 no excluye delirium si la información es incompleta.' },
+  ];
+
+  const state = {};
+  const root = document.getElementById('vgil-root');
+
+  function el(tag, cls, html){ const e=document.createElement(tag); if(cls)e.className=cls; if(html!=null)e.innerHTML=html; return e; }
+
+  // ---------- Render ----------
+  root.appendChild(el('h1','','VGI Lite'));
+  root.appendChild(el('div','sub','Versión simplificada de la Valoración Geriátrica Integral: Barthel, Lawton, SPPB y 4AT. Marca la puntuación de cada ítem; el total y la interpretación se calculan solos.'));
+
+  const pac = el('div','pac');
+  pac.innerHTML = `<div><label>Nombre</label><input id="vgil-nombre" placeholder="Nombre del paciente"></div>
+    <div><label>Fecha de nacimiento</label><input id="vgil-fnac" placeholder="dd/mm/aaaa"></div>`;
+  root.appendChild(pac);
+
+  ESCALAS.forEach(esc=> root.appendChild(buildEscala(esc)));
+
+  // Informe final
+  const informe = el('div','informe');
+  const informeH = el('div','informe-h');
+  informeH.innerHTML = `<span>Informe de valoración</span>`;
+  const bGen = el('button','btn btn-primary','Generar informe');
+  informeH.appendChild(bGen);
+  informe.appendChild(informeH);
+  const informeBody = el('div','informe-body');
+  informeBody.appendChild(el('div','hint','Pulsa "Generar informe" para componer el texto con la puntuación e interpretación de cada escala.'));
+  informe.appendChild(informeBody);
+  root.appendChild(informe);
+
+  bGen.addEventListener('click', ()=>{
+    const txt = buildInforme();
+    informeBody.innerHTML = '';
+    const pre = document.createElement('pre'); pre.textContent = txt; informeBody.appendChild(pre);
+    const actions = el('div','actions');
+    const bCopy = el('button','btn btn-ghost','Copiar informe');
+    actions.appendChild(bCopy);
+    informeBody.appendChild(actions);
+    bCopy.addEventListener('click', async ()=>{
+      let ok = false;
+      try{
+        if(navigator.clipboard && navigator.clipboard.writeText){ await navigator.clipboard.writeText(txt); ok = true; }
+      }catch(e){}
+      if(!ok){
+        try{
+          const ta = document.createElement('textarea'); ta.value = txt; ta.style.position='fixed'; ta.style.opacity='0';
+          document.body.appendChild(ta); ta.select(); ok = document.execCommand('copy'); document.body.removeChild(ta);
+        }catch(e){}
+      }
+      let msg = actions.querySelector('.copy-ok');
+      if(!msg){ msg = el('span','copy-ok'); actions.appendChild(msg); }
+      msg.textContent = ok ? '✓ Copiado' : 'No se pudo copiar automáticamente; selecciona el texto manualmente.';
+    });
+  });
+
+  function buildEscala(esc){
+    state[esc.id] = { na:false, def:esc, sel:{} };
+    const wrap = el('div','escala'); wrap.dataset.id = esc.id;
+    const h = el('div','escala-h');
+    h.innerHTML = `<span class="chev">▶</span><span class="nom">${esc.nom}</span>`;
+    const badge = el('span','badge b-neutro','—'); h.appendChild(badge);
+    h.addEventListener('click',()=> wrap.classList.toggle('open'));
+    wrap.appendChild(h);
+
+    const body = el('div','escala-body');
+    const naRow = el('label','na-row');
+    naRow.innerHTML = `<input type="checkbox"> No realizada / no procede`;
+    naRow.querySelector('input').addEventListener('change',(e)=>{ state[esc.id].na=e.target.checked; update(esc.id); });
+    body.appendChild(naRow);
+
+    const content = el('div','content'); body.appendChild(content);
+    wrap.appendChild(body);
+
+    renderSuma(esc, content);
+
+    state[esc.id].badge = badge; state[esc.id].content = content;
+    return wrap;
+  }
+
+  function renderSuma(esc, c){
+    esc.items.forEach((it,idx)=>{
+      const row = el('div','item');
+      row.appendChild(el('div','item-q', it.q + (it.sub?` <small>· ${it.sub}</small>`:'')));
+      const opts = el('div','opts');
+      it.o.forEach(([lab,val])=>{
+        const o = el('div','opt', `${lab}<span class="v">${val}</span>`);
+        o.addEventListener('click',()=>{
+          state[esc.id].sel[idx]=val;
+          opts.querySelectorAll('.opt').forEach(x=>x.classList.remove('sel'));
+          o.classList.add('sel'); update(esc.id);
+        });
+        opts.appendChild(o);
+      });
+      row.appendChild(opts); c.appendChild(row);
+    });
+    if(esc.nota) c.appendChild(el('div','legend', esc.nota));
+    const res = el('div','res b-neutro','Sin puntuar'); res.dataset.role='res'; c.appendChild(res);
+  }
+
+  // ---------- Cálculo / actualización ----------
+  function update(id){
+    const st=state[id], esc=st.def, badge=st.badge, res=st.content.querySelector('[data-role=res]');
+    if(st.na){ badge.textContent='No realizada'; badge.className='badge na'; if(res){res.textContent='No realizada'; res.className='res b-neutro';} return; }
+    const vals=Object.values(st.sel); const done=vals.length===esc.items.length;
+    const s=vals.reduce((a,b)=>a+b,0);
+    const [interp,cls]=esc.interpreta(s);
+    const scoreText=`${s}${esc.unidad} — ${interp}`+(done?'':' (incompleto)');
+    badge.textContent=`${s}${esc.unidad}`; badge.className='badge '+cls;
+    if(res){ res.textContent=scoreText; res.className='res '+cls; }
+  }
+
+  // ---------- Informe ----------
+  function buildInforme(){
+    const nombre=(document.getElementById('vgil-nombre').value||'').trim();
+    const fnac=(document.getElementById('vgil-fnac').value||'').trim();
+    const hoy = new Date();
+    const fecha = `${String(hoy.getDate()).padStart(2,'0')}/${String(hoy.getMonth()+1).padStart(2,'0')}/${hoy.getFullYear()}`;
+    const L=[];
+    L.push('INFORME DE VALORACIÓN GERIÁTRICA (VGI Lite)');
+    L.push(`Paciente: ${nombre||'(sin nombre)'}    F. nacimiento: ${fnac||'(sin fecha)'}    Fecha valoración: ${fecha}`);
+    L.push('');
+    ESCALAS.forEach(esc=>{
+      const st=state[esc.id];
+      if(st.na){ L.push(`- ${esc.nom}: no realizada / no procede`); return; }
+      const vals=Object.values(st.sel);
+      if(vals.length===0){ L.push(`- ${esc.nom}: sin puntuar`); return; }
+      const s=vals.reduce((a,b)=>a+b,0);
+      const [interp]=esc.interpreta(s);
+      const inc = vals.length<esc.items.length ? ' (incompleto)' : '';
+      L.push(`- ${esc.nom}: ${s}${esc.unidad} — ${interp}${inc}`);
+    });
+    L.push('');
+    L.push('Interpretación global: valoración funcional (Barthel/Lawton), física (SPPB) y cribado de delirium (4AT) según los puntos de corte estándar indicados en cada escala.');
+    return L.join('\n');
+  }
+})();
+</script>

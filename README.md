@@ -38,3 +38,14 @@ Mini-Mental (MMSE/MEC), Pfeiffer (cognitivo).
 
 Las bases de evidencia curadas están en `references/escalas_evidencia.md` (ambas skills) y
 `references/guias_recomendaciones.md` (plan de recomendaciones).
+
+## VGI Lite
+
+- **`vgi_lite_app.html`** — versión simplificada e independiente, pensada como alternativa
+  más ágil a VGI+. Mismo concepto (app autoescoreable, uso local, sin nube, sin base de
+  datos externa), pero reducida a 4 escalas: **Barthel, Lawton, SPPB y 4AT**. No incluye
+  recomendaciones ni genera documento Word: al pulsar "Generar informe" compone directamente
+  en la propia app un informe de texto con la puntuación e interpretación de cada escala, con
+  un botón "Copiar informe" para copiarlo al portapapeles sin salir de la app.
+- No modifica ni depende de `vgi_app.html` ni de las skills anteriores; es un fichero
+  autocontenido aparte.
