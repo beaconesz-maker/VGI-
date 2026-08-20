@@ -66,18 +66,59 @@ const TabEscalas = (() => {
     pintarEscalasDelDominio();
   }
 
-  function renderFormulario() {
+  // A igualdad de fecha, gana el creado más tarde — mismo criterio que
+  // server/lib/vigente.js:masRecienteHasta(), reimplementado aquí porque
+  // ese archivo es solo de servidor (usa require de Node).
+  function masRecienteHasta(regs, fecha) {
+    const candidatos = regs.filter((r) => !fecha || r.fecha <= fecha);
+    if (!candidatos.length) return null;
+    return candidatos.reduce((mejor, actual) => {
+      if (!mejor) return actual;
+      if (actual.fecha > mejor.fecha) return actual;
+      if (actual.fecha === mejor.fecha && (actual.createdAt || '') > (mejor.createdAt || '')) return actual;
+      return mejor;
+    }, null);
+  }
+
+  async function renderFormulario() {
     const box = $('esc-form-box');
     if (!box || !escActual) return;
     const esc = VGIScales.ESCALAS[escActual];
+    const fecha = $('esc-fecha') ? $('esc-fecha').value : APP.fechaTrabajo;
     valores = {};
     escolaridadBajaMoca = false;
-    box.innerHTML = '';
+    box.innerHTML = '<div class="empty">Cargando…</div>';
 
+    // Recupera el último registro de esta escala hasta la fecha elegida
+    // (misma regla que "vigente a fecha" del plan) para partir de esos
+    // valores en vez de un formulario en blanco: al hacer seguimiento de
+    // un paciente ya valorado antes, se ve lo que se contestó la vez
+    // anterior y solo hay que corregir lo que haya cambiado.
+    let previo = null;
+    try {
+      const regs = await Api.listarRecords(APP.patient.id, { escalaId: escActual });
+      previo = masRecienteHasta(regs || [], fecha);
+    } catch (e) {
+      previo = null; // si falla la carga, se sigue con el formulario en blanco
+    }
+    // Si mientras se cargaba el usuario cambió de escala, de paciente, o
+    // navegó a otra pestaña, no pintar sobre un formulario que ya no
+    // corresponde a lo que se ve en pantalla.
+    if ($('esc-form-box') !== box || escActual !== escSelActual()) return;
+    if (previo) {
+      valores = Object.assign({}, previo.valores);
+      escolaridadBajaMoca = !!valores.escolaridadBaja;
+    }
+
+    box.innerHTML = '';
     const card = el('div', 'card');
     card.innerHTML = `<div class="card-h">${escapeHtml(esc.nombre)}<span class="b">${escapeHtml(esc.sub || '')}</span></div><div class="card-b" id="esc-cuerpo"></div>`;
     box.appendChild(card);
     const cuerpo = card.querySelector('#esc-cuerpo');
+
+    if (previo) {
+      cuerpo.appendChild(el('div', 'leg', 'Cargados los valores del registro de ' + fmtFechaES(previo.fecha) + (previo.fecha === fecha ? ' (mismo día — al guardar se sustituye este registro).' : ' — revísalos y corrige lo que haya cambiado.')));
+    }
 
     if (esc.entrada) {
       cuerpo.appendChild(renderEntradaNumerica(esc));
@@ -104,6 +145,11 @@ const TabEscalas = (() => {
     actualizarPreview();
   }
 
+  function escSelActual() {
+    const sel = $('esc-esc');
+    return sel ? sel.value : escActual;
+  }
+
   function renderEntradaNumerica(esc) {
     const ent = esc.entrada;
     const row = el('div', 'itm');
@@ -112,6 +158,7 @@ const TabEscalas = (() => {
     if (ent.min != null) inp.min = ent.min;
     if (ent.max != null) inp.max = ent.max;
     if (ent.paso != null) inp.step = ent.paso;
+    if (valores.valor != null) inp.value = valores.valor;
     inp.addEventListener('input', () => { valores.valor = inp.value === '' ? null : parseFloat(inp.value); actualizarPreview(); });
     row.appendChild(inp);
     return row;
@@ -134,6 +181,7 @@ const TabEscalas = (() => {
       // distinta de la etiqueta (p. ej. "Independiente" + 10).
       const badge = String(op.etiqueta).trim() === String(op.valor) ? '' : `<span class="v">${op.valor}</span>`;
       const btn = el('div', 'opt', `${escapeHtml(op.etiqueta)}${badge}`);
+      if (valores[it.id] === op.valor) btn.classList.add('sel');
       btn.addEventListener('click', () => {
         valores[it.id] = op.valor;
         opts.querySelectorAll('.opt').forEach((x) => x.classList.remove('sel'));
@@ -164,7 +212,7 @@ const TabEscalas = (() => {
     const opts = el('div', 'opts');
     [['No', false], ['Sí', true]].forEach(([lab, v]) => {
       const btn = el('div', 'opt', lab);
-      if (v === false) btn.classList.add('sel');
+      if (v === escolaridadBajaMoca) btn.classList.add('sel');
       btn.addEventListener('click', () => {
         escolaridadBajaMoca = v;
         opts.querySelectorAll('.opt').forEach((x) => x.classList.remove('sel'));

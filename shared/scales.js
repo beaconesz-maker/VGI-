@@ -345,11 +345,11 @@
     tipo: 'suma', unidad: '/5',
     cortes: [[1, 'robusto', 'ok'], [3, 'prefrágil', 'warn'], [Infinity, 'frágil', 'alert']],
     items: [
-      { id: 'fatigue', pregunta: 'Fatigue', ayuda: '¿Cansado la mayor parte del tiempo?', opciones: [{ etiqueta: 'No', valor: 0 }, { etiqueta: 'Sí', valor: 1 }] },
-      { id: 'resistance', pregunta: 'Resistance', ayuda: '¿Incapaz de subir un piso de escaleras?', opciones: [{ etiqueta: 'No', valor: 0 }, { etiqueta: 'Sí', valor: 1 }] },
-      { id: 'aerobic', pregunta: 'Aerobic', ayuda: '¿Incapaz de caminar una manzana?', opciones: [{ etiqueta: 'No', valor: 0 }, { etiqueta: 'Sí', valor: 1 }] },
-      { id: 'illnesses', pregunta: 'Illnesses', ayuda: '¿Más de 5 enfermedades?', opciones: [{ etiqueta: 'No', valor: 0 }, { etiqueta: 'Sí', valor: 1 }] },
-      { id: 'lossweight', pregunta: 'Loss of weight', ayuda: '¿Pérdida >5% del peso en 6 meses?', opciones: [{ etiqueta: 'No', valor: 0 }, { etiqueta: 'Sí', valor: 1 }] }
+      { id: 'fatigue', pregunta: 'Fatiga', ayuda: '¿Cansado la mayor parte del tiempo?', opciones: [{ etiqueta: 'No', valor: 0 }, { etiqueta: 'Sí', valor: 1 }] },
+      { id: 'resistance', pregunta: 'Resistencia', ayuda: '¿Incapaz de subir un piso de escaleras?', opciones: [{ etiqueta: 'No', valor: 0 }, { etiqueta: 'Sí', valor: 1 }] },
+      { id: 'aerobic', pregunta: 'Ambulación', ayuda: '¿Incapaz de caminar una manzana?', opciones: [{ etiqueta: 'No', valor: 0 }, { etiqueta: 'Sí', valor: 1 }] },
+      { id: 'illnesses', pregunta: 'Enfermedades', ayuda: '¿Más de 5 enfermedades?', opciones: [{ etiqueta: 'No', valor: 0 }, { etiqueta: 'Sí', valor: 1 }] },
+      { id: 'lossweight', pregunta: 'Pérdida de peso', ayuda: '¿Pérdida >5% del peso en 6 meses?', opciones: [{ etiqueta: 'No', valor: 0 }, { etiqueta: 'Sí', valor: 1 }] }
     ],
     referencia: { texto: 'Morley JE, Malmstrom TK, Miller DK. A simple frailty questionnaire (FRAIL) predicts outcomes in middle aged African Americans. J Nutr Health Aging. 2012;16:601-608.', doi: '10.1007/s12603-012-0084-2', pmid: '22836700' }
   });
