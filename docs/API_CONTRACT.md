@@ -87,6 +87,10 @@ GET    /api/patients/:id/plan?fecha=       calcula el plan con shared/plan-engin
 POST   /api/patients/:id/plan/validate {fecha} → sello de validación
 
 GET    /api/patients/:id/export/informe.docx?fecha=
+       (además de puntuación e interpretación, incluye por escala los
+       ítems en los que el paciente no obtuvo la mejor respuesta posible
+       — ver server/lib/items-fallidos.js — cuando la escala tiene ese
+       desglose)
 GET    /api/patients/:id/export/plan.docx?fecha=   → 403 plan_no_validado si falta el sello
 GET    /api/patients/:id/export/informe.pdf?fecha=   mismo contenido que el .docx, generado con pdfkit (server/lib/pdf-informe.js)
 GET    /api/patients/:id/export/plan.pdf?fecha=      mismo gate 403 plan_no_validado que el .docx (server/lib/pdf-plan.js)

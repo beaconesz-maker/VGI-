@@ -25,8 +25,14 @@ la red local.**
   sola.
 - Guarda un histórico por paciente y dibuja una gráfica de evolución de
   cada variable.
-- Genera informes en Word (.docx) descargables, eligiendo la fecha del
-  registro que se quiere exportar.
+- Genera informes en Word (.docx) y PDF descargables, eligiendo la fecha
+  del registro que se quiere exportar. Además de la puntuación y la
+  interpretación de cada escala, el informe detalla en qué ítems concretos
+  falla el paciente (por ejemplo, qué actividades básicas del Barthel
+  necesitan ayuda, o qué preguntas del Pfeiffer se fallaron).
+- Al volver a pasar una escala ya registrada antes a un paciente (por
+  ejemplo, en una visita de seguimiento), el formulario se precarga con
+  los valores del último registro en vez de partir en blanco.
 - Hace copia de seguridad automática, todos los días, en la carpeta
   `backups/` del propio ordenador.
 
@@ -119,6 +125,14 @@ repetir `npm install` ni dar de alta usuarios otra vez.
 - No hay todavía un cuadro de mando multi-paciente/planta (más allá del
   seguimiento por paciente, que sí está hecho) — pendiente de confirmar
   si hace falta.
+
+## Para el departamento de informática
+
+Si vais a instalar VGI+ en un ordenador del hospital para que lo use todo
+el equipo por red local, `docs/REQUISITOS_SISTEMA.md` tiene todo lo que
+necesitáis: requisitos de hardware/software, cómo dejarlo arrancado como
+servicio, copias de seguridad, puertos de red y recomendaciones de
+seguridad.
 
 ## Para quien mantenga el código
 

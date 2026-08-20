@@ -66,7 +66,21 @@ Facilitar el registro e interpretación de las distintas escalas de la valoraci�
       SPPB, MoCA con imágenes, 4AT, plan con Vivifrail, validación,
       exportación .docx/.pdf/.csv/.xlsx, gráfica de seguimiento)
 - [ ] Desplegado en red local (pendiente: esto solo puede hacerse en un
-      PC real del hospital, no desde este entorno de desarrollo)
+      PC real del hospital, no desde este entorno de desarrollo — ver
+      `docs/REQUISITOS_SISTEMA.md`, el documento preparado para que
+      informática del hospital pueda instalarlo)
+- [x] Informe Word/PDF detallado ítem a ítem: además de la puntuación y la
+      interpretación de cada escala, se listan los ítems concretos en los
+      que el paciente no obtuvo la mejor respuesta posible (petición
+      explícita de Bea), en las escalas que tienen ese desglose
+      (`server/lib/items-fallidos.js`)
+- [x] Dos correcciones tras la primera prueba de Bea: el FRAIL tenía sus
+      5 preguntas en inglés (traducidas a Fatiga/Resistencia/Ambulación/
+      Enfermedades/Pérdida de peso); y al abrir una escala para el
+      seguimiento de un paciente ya valorado antes, el formulario
+      arrancaba en blanco en vez de partir de lo último registrado — ahora
+      precarga el último registro vigente a la fecha elegida
+      (`public/js/tab-escalas.js`)
 
 ## 11. Cabos sueltos para revisión de Bea
 
