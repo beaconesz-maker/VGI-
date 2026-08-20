@@ -86,8 +86,9 @@ const TabPaciente = (() => {
       </div>
       <div class="btn-row">
         <button class="btn btn-p" id="pac-guardar">${editando ? 'Guardar cambios' : 'Dar de alta'}</button>
-        ${editando ? '<button class="btn btn-d" id="pac-nuevo">Nuevo paciente</button>' : ''}
+        <button type="button" class="btn btn-g" id="pac-nuevo">＋ Paciente nuevo</button>
       </div>
+      ${editando ? '<div class="help">Estás editando a ' + escapeHtml(p.nombre || p.nhc || '') + '. Pulsa "＋ Paciente nuevo" antes de escribir los datos de otro paciente, o "Guardar cambios" sobrescribirá los suyos.</div>' : ''}
       <div id="pac-status" class="status"></div>
     </div>`;
 
@@ -98,8 +99,12 @@ const TabPaciente = (() => {
     });
     c.querySelector('#pac-fecha').addEventListener('change', (e) => { APP.fechaTrabajo = e.target.value; });
     c.querySelector('#pac-guardar').addEventListener('click', guardarPaciente);
-    const btnNuevo = c.querySelector('#pac-nuevo');
-    if (btnNuevo) btnNuevo.addEventListener('click', () => { editando = null; App.setPacienteActivo(null); build(); });
+    c.querySelector('#pac-nuevo').addEventListener('click', () => {
+      editando = null;
+      resultados = [];
+      App.setPacienteActivo(null);
+      build();
+    });
     return c;
   }
 
