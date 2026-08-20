@@ -220,4 +220,14 @@ Nota: Permite adjuntar (opcional) una imagen del dibujo, que queda solo en el di
 Interpretación: ≥4 → normal   ·   ≤3 → alteración significativa de función ejecutiva y visuoespacial. Complementario al MMSE/Pfeiffer.
 Referencia: Shulman KI, et al. IPA survey of brief cognitive screening instruments. Int Psychogeriatr. 2006;18(2):281-294. doi:10.1017/S1041610205002693.
 
+4AT  ·  cribado de delirium y deterioro cognitivo   /12
+Ítems (opción y puntuación):
+Estado de consciencia: Normal / somnolencia leve <10s tras despertar (0)  ·  Claramente anormal (4)
+AMT4 (edad, fecha nacimiento, lugar, año actual): Sin errores (0)  ·  1 error (1)  ·  2 o más errores / no valorable (2)
+Atención (meses del año hacia atrás desde diciembre): Acierta ≥7 (0)  ·  Inicia pero acierta <7 / se niega (1)  ·  No valorable (2)
+Cambio agudo o curso fluctuante (últimas 2 semanas, evidente en 24h, requiere informante): No (0)  ·  Sí (4)
+Interpretación: 0 → delirium o deterioro cognitivo severo poco probable   ·   1–3 → posible deterioro cognitivo   ·   ≥4 → posible delirium ± deterioro cognitivo
+Referencia: Bellelli G, Morandi A, Davis DH, et al. Validation of the 4AT, a new instrument for rapid delirium screening: a study in 234 hospitalised older people. Age Ageing. 2014;43(4):496-502. doi:10.1093/ageing/afu021. PMID:24590568.
+Versión española: Sander R, Corretge M, Dorrian M. 4AT Spanish version 1.0 (2016). © 2011-2014 MacLullich, Ryan, Cash. www.the4AT.com.
+
 Herramienta de apoyo a la decisión clínica. No sustituye el juicio clínico del médico responsable, que toma y firma toda decisión asistencial.

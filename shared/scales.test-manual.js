@@ -31,9 +31,9 @@ function eq(actual, expected, msg) {
 /* ────────────────────────────────────────────────────────────────
  * Catálogo básico
  * ──────────────────────────────────────────────────────────────── */
-check('catálogo expone las 20 escalas', function () {
+check('catálogo expone las 21 escalas', function () {
   var ids = Object.keys(Scales.ESCALAS);
-  eq(ids.length, 20, 'se esperaban 20 escalas, hay ' + ids.length);
+  eq(ids.length, 21, 'se esperaban 21 escalas, hay ' + ids.length);
 });
 
 check('catalogo() agrupa por los 5 dominios del contrato', function () {

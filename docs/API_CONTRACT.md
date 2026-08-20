@@ -60,7 +60,7 @@ que pide Bea ("tabla con fecha y código del usuario que registró el
 dato") — usar `username`, no el nombre completo, para no repetir un dato
 identificativo innecesariamente.
 
-## Rutas — v1 (esto es lo que se construye primero)
+## Rutas
 
 ```
 POST   /api/auth/login          {username, password} → {user}
@@ -88,15 +88,11 @@ POST   /api/patients/:id/plan/validate {fecha} → sello de validación
 
 GET    /api/patients/:id/export/informe.docx?fecha=
 GET    /api/patients/:id/export/plan.docx?fecha=   → 403 plan_no_validado si falta el sello
-```
+GET    /api/patients/:id/export/informe.pdf?fecha=   mismo contenido que el .docx, generado con pdfkit (server/lib/pdf-informe.js)
+GET    /api/patients/:id/export/plan.pdf?fecha=      mismo gate 403 plan_no_validado que el .docx (server/lib/pdf-plan.js)
 
-## Rutas — v1.1 (siguiente iteración, no bloquean el primer despliegue)
-
-```
-GET    /api/patients/:id/export/informe.pdf?fecha=
-GET    /api/patients/:id/export/plan.pdf?fecha=
-GET    /api/export/aggregate.csv      datos agregados anonimizados (sin NHC ni nombre, solo id interno)
-GET    /api/export/aggregate.xlsx
+GET    /api/export/aggregate.csv      datos agregados anonimizados (sin NHC ni nombre, solo id interno del paciente) — requiere rol admin, 403 permiso_denegado si no
+GET    /api/export/aggregate.xlsx     igual, en Excel (exceljs)
 ```
 
 ## Notas de implementación (server/, ajustes menores sobre este contrato)

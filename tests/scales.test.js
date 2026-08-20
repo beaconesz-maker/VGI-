@@ -12,8 +12,8 @@ const test = require('node:test');
 const assert = require('node:assert/strict');
 const Scales = require('../shared/scales.js');
 
-test('catálogo expone las 20 escalas en 5 dominios', () => {
-  assert.equal(Object.keys(Scales.ESCALAS).length, 20);
+test('catálogo expone las 21 escalas en 5 dominios', () => {
+  assert.equal(Object.keys(Scales.ESCALAS).length, 21);
   const cat = Scales.catalogo();
   assert.equal(cat.length, 5);
   assert.deepEqual(cat.map((d) => d.id).sort(), ['cognitivo', 'comorbilidad', 'fragilidad', 'morfofuncional', 'nutricional'].sort());
@@ -61,4 +61,20 @@ test('Hand Grip: corte distinto por sexo, y neutro si no hay sexo', () => {
 test('Charlson: ajuste por edad se suma a la comorbilidad', () => {
   const sinComorbilidad = Scales.interpretar('charlson', {}, { edadAnios: 80 });
   assert.equal(sinComorbilidad.raw, 4, '80 años sin comorbilidad = +4 (una década por encima de 40, tope 5)');
+});
+
+test('4AT: cortes 0 / 1-3 / >=4 (Bellelli et al. Age Ageing 2014, PMID 24590568)', () => {
+  const normal = { consciencia: 0, amt4: 0, atencion: 0, cambio_agudo: 0 };
+  assert.equal(Scales.interpretar('4at', normal, {}).raw, 0);
+  assert.equal(Scales.interpretar('4at', normal, {}).label, 'delirium o deterioro cognitivo severo poco probable');
+
+  const deterioro = { consciencia: 0, amt4: 1, atencion: 1, cambio_agudo: 0 };
+  assert.equal(Scales.interpretar('4at', deterioro, {}).raw, 2);
+  assert.equal(Scales.interpretar('4at', deterioro, {}).label, 'posible deterioro cognitivo');
+
+  const cambioAgudoSolo = { consciencia: 0, amt4: 0, atencion: 0, cambio_agudo: 4 };
+  assert.equal(Scales.interpretar('4at', cambioAgudoSolo, {}).label, 'posible delirium ± deterioro cognitivo', 'el ítem 4 por sí solo (cambio agudo/fluctuante = 4) ya da posible delirium');
+
+  const conscienciaAnormal = { consciencia: 4, amt4: 0, atencion: 0, cambio_agudo: 0 };
+  assert.equal(Scales.interpretar('4at', conscienciaAnormal, {}).label, 'posible delirium ± deterioro cognitivo', 'estado de consciencia claramente anormal por sí solo ya da posible delirium');
 });

@@ -48,7 +48,7 @@ Facilitar el registro e interpretación de las distintas escalas de la valoraci�
 - [x] Documento maestro cerrado
 - [x] Modelo de datos definido (`docs/API_CONTRACT.md`, JSON hoy con capa
       de acceso lista para SQLite)
-- [x] Registro funcionando (paciente, morfofuncional y las 20 escalas,
+- [x] Registro funcionando (paciente, morfofuncional y las 21 escalas,
       probado de punta a punta con datos sintéticos)
 - [x] Seguimiento funcionando (tabla fecha+usuario+valor y gráfica de
       puntos, probado con 3 evaluaciones reales de un paciente sintético)
@@ -57,15 +57,34 @@ Facilitar el registro e interpretación de las distintas escalas de la valoraci�
       paciente; no estaba detallado en el encargo v1 más allá de "tabla
       de resultados agrupados", que sí está hecha — pendiente de
       confirmar con Bea si hace falta algo más)
-- [~] Exportaciones — Word (informe + plan) funcionando y probado; PDF y
-      Excel/CSV agregados anonimizados quedan para v1.1 (ver
-      `docs/API_CONTRACT.md`)
+- [x] Exportaciones — Word y PDF del informe y del plan (con el mismo
+      gate de validación humana en ambos formatos), y Excel/CSV agregado
+      anonimizado (solo rol admin) — las cuatro probadas con datos
+      sintéticos
 - [x] Probado con datos sintéticos (API con `curl`/`node --test` y UI real
       con Chromium vía Playwright: login, alta de paciente, Barthel,
-      SPPB, MoCA con imágenes, plan con Vivifrail, validación, exportación
-      .docx, gráfica de seguimiento)
+      SPPB, MoCA con imágenes, 4AT, plan con Vivifrail, validación,
+      exportación .docx/.pdf/.csv/.xlsx, gráfica de seguimiento)
 - [ ] Desplegado en red local (pendiente: esto solo puede hacerse en un
       PC real del hospital, no desde este entorno de desarrollo)
+
+## 11. Cabos sueltos para revisión de Bea
+
+- **Logo y paleta**: el logo oficial de San Juan Grande ya está integrado
+  (`public/assets/marca/`) y la paleta usa el azul exacto muestreado del
+  logo (`#00A0DF`). El azul oscuro de los textos (`#0B4C73`) es una
+  variante más oscura de ese mismo tono, elegida para que se lea bien
+  sobre blanco — el logo en sí no tiene un tono "oscuro" propio. Si Bea
+  prefiere otro azul oscuro concreto, es un cambio de una línea en
+  `public/css/app.css`.
+- **4AT**: escala nueva, añadida a petición de Bea (cribado de delirium),
+  con la interpretación tal cual el documento que facilitó. **No está
+  todavía conectada al plan de recomendaciones** (`shared/plan-engine.js`)
+  — un 4AT positivo no dispara hoy ninguna recomendación en la pestaña
+  Plan, solo se puntúa e interpreta como escala suelta. Añadir un eje de
+  manejo del delirium (p. ej. según NICE CG103) es una decisión de
+  contenido clínico que debe confirmar Bea antes de implementarla, no
+  algo que se pueda inferir del encargo.
 
 ---
 

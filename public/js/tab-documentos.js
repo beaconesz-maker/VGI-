@@ -13,18 +13,40 @@ const TabDocumentos = (() => {
     c.innerHTML = `<div class="card-h">Generar documentos</div><div class="card-b">
       <p class="help">Elige la fecha del registro que quieres exportar (puede haber más de una valoración guardada para este paciente).</p>
       <div class="fg" style="max-width:260px"><label>Fecha del registro</label><select id="doc-fecha"></select></div>
+      <div class="gg">Informe VGI</div>
       <div class="btn-row">
-        <button class="btn btn-p btn-big" id="doc-informe">Descargar informe VGI (.docx)</button>
-        <button class="btn btn-g btn-big" id="doc-plan">Descargar plan de recomendaciones (.docx)</button>
+        <button class="btn btn-p btn-big" id="doc-informe-docx">Descargar informe VGI (.docx)</button>
+        <button class="btn btn-g btn-big" id="doc-informe-pdf">Descargar informe VGI (.pdf)</button>
+      </div>
+      <div class="gg">Plan de recomendaciones</div>
+      <div class="btn-row">
+        <button class="btn btn-p btn-big" id="doc-plan-docx">Descargar plan de recomendaciones (.docx)</button>
+        <button class="btn btn-g btn-big" id="doc-plan-pdf">Descargar plan de recomendaciones (.pdf)</button>
       </div>
       <div id="doc-status" class="status"></div>
       <div class="note">El plan de recomendaciones solo puede descargarse si la hoja de ruta de esa fecha ya ha sido validada en la pestaña Plan.</div>
     </div>`;
     root.appendChild(c);
 
+    if (APP.user && APP.user.rol === 'admin') root.appendChild(cardAgregado());
+
     cargarFechas();
-    c.querySelector('#doc-informe').addEventListener('click', () => descargar('informe'));
-    c.querySelector('#doc-plan').addEventListener('click', () => descargar('plan'));
+    c.querySelector('#doc-informe-docx').addEventListener('click', () => descargar('informe', 'docx'));
+    c.querySelector('#doc-informe-pdf').addEventListener('click', () => descargar('informe', 'pdf'));
+    c.querySelector('#doc-plan-docx').addEventListener('click', () => descargar('plan', 'docx'));
+    c.querySelector('#doc-plan-pdf').addEventListener('click', () => descargar('plan', 'pdf'));
+  }
+
+  function cardAgregado() {
+    const c = el('div', 'card');
+    c.innerHTML = `<div class="card-h">Datos agregados anonimizados<span class="b">solo administrador</span></div><div class="card-b">
+      <p class="help">Volcado de todos los registros de escalas de todos los pacientes, sin NHC ni nombre (solo el identificador interno del paciente). Pensado para análisis o auditoría, no para el seguimiento clínico individual.</p>
+      <div class="btn-row">
+        <a class="btn btn-g btn-big" href="${Api.urlAgregadoCsv()}">Descargar CSV</a>
+        <a class="btn btn-g btn-big" href="${Api.urlAgregadoXlsx()}">Descargar Excel (.xlsx)</a>
+      </div>
+    </div>`;
+    return c;
   }
 
   async function cargarFechas() {
@@ -43,11 +65,11 @@ const TabDocumentos = (() => {
     });
   }
 
-  async function descargar(tipo) {
+  async function descargar(tipo, formato) {
     const fecha = $('doc-fecha').value;
     limpiarEstado('doc-status');
-    const url = tipo === 'informe' ? Api.urlInforme(APP.patient.id, fecha) : Api.urlPlanDoc(APP.patient.id, fecha);
-    const nombreArchivo = (tipo === 'informe' ? 'informe_vgi_' : 'plan_recomendaciones_') + (APP.patient.nhc || APP.patient.id) + '_' + fecha + '.docx';
+    const url = tipo === 'informe' ? Api.urlInforme(APP.patient.id, fecha, formato) : Api.urlPlanDoc(APP.patient.id, fecha, formato);
+    const nombreArchivo = (tipo === 'informe' ? 'informe_vgi_' : 'plan_recomendaciones_') + (APP.patient.nhc || APP.patient.id) + '_' + fecha + '.' + formato;
     try {
       const res = await fetch(url, { credentials: 'same-origin' });
       if (!res.ok) {

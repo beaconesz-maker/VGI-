@@ -13,20 +13,15 @@ const APP = {
   fechaTrabajo: hoyISO() // fecha por defecto para nuevos registros (regla de negocio 1)
 };
 
-// Placeholder sencillo del logo del hospital: monograma "SJG" sobre una
-// cruz azul. NO es el logotipo real — sustituir en cuanto Bea facilite el
-// archivo oficial (ver también la nota de paleta en app.css).
-// TODO: sustituir por el logo oficial de San Juan Grande cuando Bea lo facilite.
-const LOGO_PLACEHOLDER = `<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-  <circle cx="50" cy="50" r="48" fill="#0B3D63"/>
-  <rect x="43" y="20" width="14" height="60" rx="3" fill="#ffffff"/>
-  <rect x="20" y="43" width="60" height="14" rx="3" fill="#ffffff"/>
-  <text x="50" y="93" text-anchor="middle" font-family="sans-serif" font-size="11" font-weight="700" fill="#1C6FB0">SJG</text>
-</svg>`;
+// Logo oficial del Hospital San Juan Grande (San Juan de Dios), facilitado
+// por Bea. Archivo en public/assets/marca/logo-san-juan-grande.png (el
+// icono recortado del lockup completo, que también se guarda aparte por
+// si se necesita en algún documento a tamaño completo).
+const LOGO_HTML = `<img src="/assets/marca/logo-san-juan-grande.png" alt="Hospital San Juan Grande · San Juan de Dios">`;
 
 const App = {
   async init() {
-    $('gate-logo').innerHTML = LOGO_PLACEHOLDER;
+    $('gate-logo').innerHTML = LOGO_HTML;
     Auth.render();
     const yaAutenticado = await Auth.comprobarSesion();
     if (yaAutenticado) Auth.entrarEnApp();
@@ -34,7 +29,7 @@ const App = {
 
   // Se llama una vez, justo después de iniciar sesión.
   iniciar() {
-    $('hdr-logo').innerHTML = LOGO_PLACEHOLDER;
+    $('hdr-logo').innerHTML = LOGO_HTML;
     $('btn-logout').addEventListener('click', Auth.salir);
     document.querySelectorAll('.tab').forEach((tab) => {
       tab.addEventListener('click', () => this.mostrarPestana(tab.dataset.tab));

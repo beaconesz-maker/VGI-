@@ -102,9 +102,45 @@ test('flujo completo: login -> paciente -> escalas -> plan -> validar -> exporta
   const informe = await req('GET', `/api/patients/${pid}/export/informe.docx?fecha=2026-08-19`);
   assert.equal(informe.status, 200);
 
+  const informePdf = await req('GET', `/api/patients/${pid}/export/informe.pdf?fecha=2026-08-19`);
+  assert.equal(informePdf.status, 200);
+  assert.ok(informePdf.buffer && informePdf.buffer.slice(0, 4).toString() === '%PDF', 'informe.pdf debe ser un PDF válido');
+
+  const planPdf = await req('GET', `/api/patients/${pid}/export/plan.pdf?fecha=2026-08-19`);
+  assert.equal(planPdf.status, 200);
+  assert.ok(planPdf.buffer && planPdf.buffer.slice(0, 4).toString() === '%PDF', 'plan.pdf debe ser un PDF válido');
+
+  // Datos agregados anonimizados (el usuario sembrado en before() es admin)
+  const csv = await req('GET', '/api/export/aggregate.csv');
+  assert.equal(csv.status, 200);
+  const csvTexto = csv.buffer.toString('utf-8');
+  assert.match(csvTexto, /pacienteId,localizacion,fecha,escalaId/, 'cabecera del CSV agregado');
+  assert.doesNotMatch(csvTexto, /TEST-0001/, 'el CSV agregado no debe llevar el NHC del paciente');
+  assert.match(csvTexto, new RegExp(pid), 'el CSV agregado sí lleva el id interno del paciente');
+
+  const xlsx = await req('GET', '/api/export/aggregate.xlsx');
+  assert.equal(xlsx.status, 200);
+  assert.ok(xlsx.buffer && xlsx.buffer.length > 1000, 'el .xlsx agregado debe tener contenido');
+
   await req('POST', '/api/auth/logout');
   const meDespuesLogout = await req('GET', '/api/auth/me');
   assert.equal(meDespuesLogout.status, 401, 'tras logout no debe quedar sesión activa');
+});
+
+test('la exportación agregada requiere rol admin', async () => {
+  const passwordHash = await bcrypt.hash('OtraClaveDePrueba123', 10);
+  await fs.promises.readFile(path.join(dataDir, 'users.json'), 'utf-8').then(async (raw) => {
+    const users = JSON.parse(raw);
+    users.push({ id: 'u-clinico', username: 'clinico-test', passwordHash, nombre: 'Clínico de pruebas', rol: 'clinico', activo: true, createdAt: new Date().toISOString() });
+    await fs.promises.writeFile(path.join(dataDir, 'users.json'), JSON.stringify(users));
+  });
+
+  const login = await req('POST', '/api/auth/login', { username: 'clinico-test', password: 'OtraClaveDePrueba123' });
+  assert.equal(login.status, 200);
+
+  const csv = await req('GET', '/api/export/aggregate.csv');
+  assert.equal(csv.status, 403, 'un rol "clinico" no debe poder exportar los datos agregados');
+  assert.equal(csv.json.error, 'permiso_denegado');
 });
 
 test('rutas /api/* sin sesión devuelven 401', async () => {

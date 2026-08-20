@@ -16,7 +16,9 @@
   "dependencies": {
     "bcryptjs": "^2.4.3",
     "docx": "^9.0.2",
+    "exceljs": "^4.4.0",
     "express": "^4.19.2",
-    "express-session": "^1.18.0"
+    "express-session": "^1.18.0",
+    "pdfkit": "^0.19.1"
   }
 }

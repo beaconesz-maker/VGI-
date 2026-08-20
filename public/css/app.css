@@ -3,9 +3,11 @@
  *
  * Paleta: fondo blanco, texto azul oscuro, pestañas azules, tomada del
  * logotipo del hospital (regla de negocio 2 de docs/DOCUMENTO_MAESTRO.md).
- * NOTA: --azul-oscuro y --azul son APROXIMADOS. Pendiente el hex exacto
- * del logotipo oficial de San Juan Grande — sustituir aquí cuando Bea lo
- * facilite (ver también el placeholder de logo en app.js).
+ * --azul es el azul EXACTO del logotipo oficial (muestreado del PNG que
+ * facilitó Bea: rgb(0,160,223) = #00A0DF), usado en pestañas y acentos.
+ * El logo en sí no tiene un tono "oscuro" propio (icono y texto son ese
+ * mismo azul) — --azul-oscuro es una variante más oscura de ese mismo
+ * tono, elegida para que el texto largo sea legible sobre blanco.
  *
  * Patrones de UI (tarjetas .card, pestañas, opciones .opt tipo botón,
  * escalas en acordeón) inspirados en docs/VGI_prototipo_generico_referencia.html,
@@ -14,11 +16,11 @@
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 :root {
-  --azul-oscuro: #0B3D63;
-  --azul: #1C6FB0;
-  --azul-claro: #E6F0F8;
-  --azul-media: #4A93C9;
-  --ink: #0B3D63;
+  --azul-oscuro: #0B4C73;
+  --azul: #00A0DF;
+  --azul-claro: #E3F4FC;
+  --azul-media: #4DBEEA;
+  --ink: #0B4C73;
   --grey: #5b6472;
   --greyl: #f4f6f8;
   --bd: #d7e1ea;
@@ -53,7 +55,7 @@ body {
 .hdr-right { display: flex; align-items: center; gap: .6rem; }
 .hdr-user { font-size: .78rem; color: var(--grey); white-space: nowrap; }
 .hdr .logo { width: 46px; height: 46px; flex-shrink: 0; }
-.hdr .logo svg { width: 100%; height: 100%; }
+.hdr .logo img { width: 100%; height: 100%; object-fit: contain; }
 
 /* ── Pestañas principales ── */
 .tabs { display: flex; gap: 2px; background: var(--azul-claro); position: sticky; top: 0; z-index: 40; border-bottom: 1px solid var(--bd); overflow-x: auto; }
@@ -181,7 +183,7 @@ table.snap tr.snap-row:hover td { background: #f2f8fc; }
 .gate-card { background: #fff; border-radius: 16px; max-width: 440px; width: 100%; box-shadow: 0 12px 40px rgba(0,0,0,.35); overflow: hidden; }
 .gate-top { background: var(--azul-oscuro); color: #fff; padding: 1.1rem 1.3rem; display: flex; align-items: center; gap: .8rem; }
 .gate-top .glogo { width: 44px; height: 44px; flex-shrink: 0; }
-.gate-top .glogo svg { width: 100%; height: 100%; }
+.gate-top .glogo img { width: 100%; height: 100%; object-fit: contain; }
 .gate-top h2 { font-size: 1.15rem; font-weight: 800; }
 .gate-top p { font-size: .72rem; opacity: .9; margin-top: 1px; }
 .gate-body { padding: 1.2rem 1.3rem; }

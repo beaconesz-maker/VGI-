@@ -25,6 +25,7 @@ const morfoRoutes = require('./routes/morfo');
 const clinicalRoutes = require('./routes/clinical');
 const planRoutes = require('./routes/plan');
 const exportRoutes = require('./routes/export');
+const aggregateRoutes = require('./routes/aggregate');
 
 const ROOT_DIR = path.resolve(__dirname, '..');
 // VGI_DATA_DIR: solo para tests/api.test.js, que arranca este mismo
@@ -76,6 +77,7 @@ app.use('/api/patients/:id/plan', planRoutes);
 app.use('/api/patients/:id/export', exportRoutes);
 app.use('/api/patients', patientsRoutes);
 app.use('/api/scales', scalesRoutes);
+app.use('/api/export', aggregateRoutes);
 
 // 404 uniforme para cualquier /api/* no reconocida
 app.use('/api', (req, res) => {

@@ -460,6 +460,52 @@
     referenciaAdicional: { texto: 'Shulman KI. Clock-drawing: is it the ideal cognitive screening test? Int J Geriatr Psychiatry. 2000;15:548-561.', doi: '10.1002/1099-1166(200006)15:6<548::AID-GPS242>3.0.CO;2-U', pmid: '10861923' }
   });
 
+  reg({
+    id: '4at', nombre: '4AT', sub: 'cribado de delirium y deterioro cognitivo', dominio: 'cognitivo',
+    tipo: 'suma', unidad: '/12',
+    cortes: [[1, 'delirium o deterioro cognitivo severo poco probable', 'ok'], [4, 'posible deterioro cognitivo', 'warn'], [Infinity, 'posible delirium ± deterioro cognitivo', 'alert']],
+    items: [
+      {
+        id: 'consciencia', pregunta: 'Estado de consciencia',
+        ayuda: 'Incluye somnolencia (difícil de despertar, obviamente somnoliento durante la evaluación) o agitación/hiperactividad. Si está dormido, intente despertarle hablándole o tocando el hombro; pídale su nombre y dirección para puntuar.',
+        opciones: [
+          { etiqueta: 'Normal (alerta, no agitado, durante toda la evaluación)', valor: 0 },
+          { etiqueta: 'Somnolencia leve <10 s tras despertar, luego normal', valor: 0 },
+          { etiqueta: 'Claramente anormal', valor: 4 },
+        ],
+      },
+      {
+        id: 'amt4', pregunta: 'AMT4 (Test Mental Abreviado-4)',
+        ayuda: 'Edad, fecha de nacimiento, lugar (nombre del hospital o edificio), año actual.',
+        opciones: [
+          { etiqueta: 'Sin errores', valor: 0 },
+          { etiqueta: '1 error', valor: 1 },
+          { etiqueta: '2 o más errores / no valorable', valor: 2 },
+        ],
+      },
+      {
+        id: 'atencion', pregunta: 'Atención — meses del año hacia atrás',
+        ayuda: '"Dígame por favor los meses del año hacia atrás en orden, comenzando por diciembre." Se permite ayudar con "¿Cuál es el mes antes de diciembre?".',
+        opciones: [
+          { etiqueta: 'Acierta 7 meses o más correctamente', valor: 0 },
+          { etiqueta: 'Inicia pero acierta <7 meses / se niega a iniciar', valor: 1 },
+          { etiqueta: 'No valorable (malestar, somnolencia, falta de atención)', valor: 2 },
+        ],
+      },
+      {
+        id: 'cambio_agudo', pregunta: 'Cambio agudo o curso fluctuante',
+        ayuda: 'Evidencia de cambio significativo o fluctuación en alerta, cognición u otra función mental (p. ej. paranoia, alucinaciones) en las últimas 2 semanas, todavía evidente en las últimas 24 horas. Requiere información de algún informante (familiar, cuidador, enfermería, notas previas), no solo observación directa.',
+        opciones: [
+          { etiqueta: 'No', valor: 0 },
+          { etiqueta: 'Sí', valor: 4 },
+        ],
+      },
+    ],
+    nota: 'Cribado rápido de delirium; no sustituye una evaluación diagnóstica completa (DSM). Los ítems 1-3 se valoran solo con la observación directa del paciente; el ítem 4 requiere información de un informante. Una puntuación de 0 no excluye delirium si el ítem 4 está incompleto.',
+    referencia: { texto: 'Bellelli G, Morandi A, Davis DH, et al. Validation of the 4AT, a new instrument for rapid delirium screening: a study in 234 hospitalised older people. Age Ageing. 2014;43(4):496-502.', doi: '10.1093/ageing/afu021', pmid: '24590568' },
+    referenciaAdicional: { texto: 'Sander R, Corretge M, Dorrian M. 4AT Spanish version 1.0 (2016). © 2011-2014 MacLullich, Ryan, Cash. www.the4AT.com' },
+  });
+
   /* ────────────────────────────────────────────────────────────────
    * Funciones de interpretación
    * ──────────────────────────────────────────────────────────────── */

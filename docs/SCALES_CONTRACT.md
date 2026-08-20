@@ -39,7 +39,7 @@ cognitivo y así lo hacía ya el prototipo de referencia. Si Bea prefiere
 fusionarlo dentro de morfofuncional, es un cambio de una línea en
 `DOMINIOS`.)
 
-### Catálogo completo a implementar (20 escalas)
+### Catálogo completo a implementar (21 escalas)
 
 Los ítems, opciones, puntuaciones y cortes de interpretación **ya están
 verificados y listos para copiar tal cual** en

@@ -80,8 +80,12 @@ const Api = (() => {
     validarPlan: (patientId, fecha) => apiFetch(`/patients/${patientId}/plan/validate`, { method: 'POST', body: { fecha } }),
 
     // Exportación (descarga de fichero, no JSON — ver tab-documentos.js)
-    urlInforme: (patientId, fecha) => `/api/patients/${patientId}/export/informe.docx` + qs({ fecha }),
-    urlPlanDoc: (patientId, fecha) => `/api/patients/${patientId}/export/plan.docx` + qs({ fecha })
+    urlInforme: (patientId, fecha, formato) => `/api/patients/${patientId}/export/informe.${formato || 'docx'}` + qs({ fecha }),
+    urlPlanDoc: (patientId, fecha, formato) => `/api/patients/${patientId}/export/plan.${formato || 'docx'}` + qs({ fecha }),
+
+    // Exportación agregada anonimizada (solo admin)
+    urlAgregadoCsv: () => '/api/export/aggregate.csv',
+    urlAgregadoXlsx: () => '/api/export/aggregate.xlsx'
   };
 
   function qs(params) {
