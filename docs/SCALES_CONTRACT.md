@@ -125,7 +125,7 @@ STOPP/START), cada una con su lista de medidas y su referencia
 bibliográfica. Firma:
 
 ```js
-generarPlan({ records, morfo, clinical, paciente }) → { clasificacion: [...], recomendaciones: { ejercicio, nutricion, caidas, demencia, anemia, vitd, glucemia, stopstart } }
+generarPlan({ records, morfo, clinical, paciente }) → { clasificacion: [...], recomendaciones: { ejercicio, nutricion, caidas, delirium, demencia, anemia, vitd, glucemia, stopstart } }
 ```
 
 Vivifrail: el corte de pasaporte por SPPB y la variante "+" (por

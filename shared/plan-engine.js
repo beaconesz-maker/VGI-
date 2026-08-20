@@ -18,7 +18,7 @@
  * -----
  * generarPlan({records, morfo, clinical, paciente}) →
  *   { clasificacion: [...], recomendaciones: {ejercicio, nutricion, caidas,
- *     demencia, anemia, vitd, glucemia, stopstart} }
+ *     delirium, demencia, anemia, vitd, glucemia, stopstart} }
  *
  * Forma esperada de los parámetros de entrada
  * --------------------------------------------
@@ -77,7 +77,8 @@
     ['barthel', 'Barthel'], ['lawton', 'Lawton'], ['katz', 'Katz dep'], ['charlson', 'Charlson'],
     ['cirsg', 'CIRS-G'], ['frail', 'FRAIL'], ['fried', 'Fried'], ['cfs', 'CFS'], ['frailvig', 'IF-VIG'],
     ['reloj', 'T.Reloj'], ['gait', 'Marcha m/s'], ['grip', 'Grip kg'], ['tug', 'TUG s'], ['sppb', 'SPPB'],
-    ['sarcf', 'SARC-F'], ['mna', 'MNA'], ['mmse', 'MMSE'], ['moca', 'MoCA'], ['pfeiffer', 'Pfeiffer']
+    ['sarcf', 'SARC-F'], ['mna', 'MNA'], ['mmse', 'MMSE'], ['moca', 'MoCA'], ['pfeiffer', 'Pfeiffer'],
+    ['4at', '4AT']
   ];
 
   /* ────────────────────────────────────────────────────────────────
@@ -125,7 +126,7 @@
       mna: 'nutricional', glim: 'nutricional', sarcf: 'nutricional',
       charlson: 'comorbilidad', cirsg: 'comorbilidad',
       frail: 'fragilidad', fried: 'fragilidad', cfs: 'fragilidad', frailvig: 'fragilidad',
-      mmse: 'cognitivo', moca: 'cognitivo', pfeiffer: 'cognitivo', reloj: 'cognitivo'
+      mmse: 'cognitivo', moca: 'cognitivo', pfeiffer: 'cognitivo', reloj: 'cognitivo', '4at': 'cognitivo'
     };
     Object.keys(records).forEach(function (id) {
       var r = records[id];
@@ -212,7 +213,25 @@
       };
     }
 
-    /* EJE 4 — DETERIORO COGNITIVO */
+    /* EJE 4 — DELIRIUM (4AT) */
+    var at4 = RAW(records, '4at');
+    var delirioActivo = at4 != null && at4 >= 4;
+    if (delirioActivo) {
+      rec.delirium = {
+        t: 'Manejo del delirium (NICE CG103)',
+        l: [
+          '4AT ' + at4 + '/12 → posible delirium. Confirmar con evaluación clínica (p. ej. CAM) y no demorar el estudio de causas por esperar a otras pruebas.',
+          'Buscar y tratar causas precipitantes: infección, dolor no controlado, retención urinaria/estreñimiento, hipoxia, alteraciones metabólicas (glucosa, sodio, calcio), deshidratación, fármacos de reciente introducción o polifarmacia.',
+          'Revisar la medicación: retirar o ajustar anticolinérgicos, benzodiacepinas, opioides y otros psicofármacos de riesgo (ver módulo STOPP/START).',
+          'Medidas no farmacológicas de primera línea: reorientación con reloj/calendario visibles, presencia de familiares o cuidador habitual, favorecer el sueño nocturno y la movilización precoz, corregir déficits sensoriales (gafas, audífonos), asegurar hidratación y nutrición, evitar cambios innecesarios de habitación.',
+          'Tratamiento farmacológico solo si hay riesgo para el paciente o terceros y las medidas no farmacológicas no bastan: antipsicótico a la dosis eficaz más baja, evitar en parkinsonismo o demencia por cuerpos de Lewy, duración más corta posible y reevaluar a diario.',
+          'Informar al paciente y a la familia del diagnóstico, su naturaleza fluctuante y el pronóstico. Reevaluación clínica frecuente hasta la resolución.'
+        ],
+        f: 'NICE. Delirium: prevention, diagnosis and management (Clinical Guideline CG103), 2010, actualizada 2023; Marcantonio ER. Delirium in Hospitalized Older Adults. N Engl J Med. 2017;377(15):1456-1466. doi:10.1056/NEJMcp1605501. PMID 29020579'
+      };
+    }
+
+    /* EJE 5 — DETERIORO COGNITIVO */
     var pfeifferR = RAW(records, 'pfeiffer'), mmseR = RAW(records, 'mmse'), relojR = RAW(records, 'reloj'), mocaR = RAW(records, 'moca');
     var cogPos = (pfeifferR != null && pfeifferR >= 3) || (mmseR != null && mmseR <= 24) ||
       (relojR != null && relojR <= 3) || (mocaR != null && mocaR < 26);
@@ -223,20 +242,23 @@
       if (mocaR != null) partes.push(' · MoCA ' + mocaR + '/30');
       if (pfeifferR != null) partes.push(' · Pfeiffer ' + pfeifferR + ' errores');
       if (relojR != null && relojR <= 3) partes.push(' · Test del Reloj ' + relojR + '/5');
+      var lDem = [];
+      if (delirioActivo) lDem.push('4AT compatible con delirium activo: priorizar el estudio y tratamiento del delirium (ver eje "Manejo del delirium") antes de atribuir el déficit cognitivo a una demencia de base; reevaluar la cognición una vez resuelto el cuadro agudo.');
+      lDem.push(
+        partes.join('') + '. Indicado estudio diagnóstico completo.',
+        'Anamnesis estructurada con informante fiable: cronología, repercusión funcional en ABVD y AIVD, síntomas conductuales y psicológicos (SCPD).',
+        'Neuroimagen estructural (TC o RM preferible) para apoyar diagnóstico y excluir causas estructurales.',
+        'Analítica de causas reversibles: hemograma, VSG/PCR, glucosa/HbA1c, función renal y hepática, iones (calcio), TSH, vitamina B12 y ácido fólico.',
+        'Filiar subtipo de demencia. Derivar a unidad de memoria / geriatría / neurología. Si demencia establecida: valorar IACE' + (gr ? ' (estadio ' + gr + ')' : '') + ' y memantina en fases moderada-grave, junto a medidas no farmacológicas y apoyo al cuidador.'
+      );
       rec.demencia = {
         t: 'Estudio del deterioro cognitivo (NICE NG97)',
-        l: [
-          partes.join('') + '. Indicado estudio diagnóstico completo.',
-          'Anamnesis estructurada con informante fiable: cronología, repercusión funcional en ABVD y AIVD, síntomas conductuales y psicológicos (SCPD).',
-          'Neuroimagen estructural (TC o RM preferible) para apoyar diagnóstico y excluir causas estructurales.',
-          'Analítica de causas reversibles: hemograma, VSG/PCR, glucosa/HbA1c, función renal y hepática, iones (calcio), TSH, vitamina B12 y ácido fólico.',
-          'Filiar subtipo de demencia. Derivar a unidad de memoria / geriatría / neurología. Si demencia establecida: valorar IACE' + (gr ? ' (estadio ' + gr + ')' : '') + ' y memantina en fases moderada-grave, junto a medidas no farmacológicas y apoyo al cuidador.'
-        ],
+        l: lDem,
         f: 'NICE NG97, 2018; Shulman KI et al. Int Psychogeriatr 2006;18:281-294'
       };
     }
 
-    /* EJE 5 — ANEMIA */
+    /* EJE 6 — ANEMIA */
     var hb = clinical.hb;
     if (hb != null) {
       var sx = paciente.sexo, lim = sx === 'M' ? 12 : 13, anem = hb < lim, sev = hb < 8 ? 'grave' : hb < 11 ? 'moderada' : 'leve';
@@ -266,7 +288,7 @@
       };
     }
 
-    /* EJE 6 — VITAMINA D */
+    /* EJE 7 — VITAMINA D */
     if (clinical.vitd != null) {
       var vd = clinical.vitd, cat6, l6;
       if (vd < 20) { cat6 = 'deficiencia'; l6 = ['Deficiencia (<20 ng/mL): colecalciferol en carga (p. ej. 50.000 UI/semana 6-8 semanas o equivalente diario) y mantenimiento posterior 1.500-2.000 UI/día.']; }
@@ -276,7 +298,7 @@
       rec.vitd = { t: 'Vitamina D — ' + cat6 + ' (25-OH-D ' + vd + ' ng/mL)', l: l6, f: 'Holick MF et al. Endocrine Society 2011 (PMID 21646368); Demay MB et al. 2024 (PMID 38828931)' };
     }
 
-    /* EJE 7 — GLUCEMIA */
+    /* EJE 8 — GLUCEMIA */
     if (clinical.dm || clinical.hba1c != null) {
       var cat7 = adaCat(records, clinical), a1c = clinical.hba1c;
       var objs = { healthy: '<7,0-7,5 %', complex: '<8,0 %', poor: 'evitar hipoglucemia e hiperglucemia sintomática (no depender de HbA1c)' };
@@ -288,7 +310,7 @@
       rec.glucemia = { t: 'Control glucémico individualizado (ADA 2026)', l: l7, f: 'ADA. Diabetes Care 2026;49(Suppl.1):S277-S296. doi:10.2337/dc26-S013' };
     }
 
-    /* EJE 8 — STOPP/START */
+    /* EJE 9 — STOPP/START */
     var ssOn = SS.filter(function (s) { return ss[s[0]]; });
     if (ssOn.length) {
       rec.stopstart = { t: 'Optimización de la medicación (STOPP/START v3)', l: ssOn.map(function (s) { return s[1]; }), f: "O'Mahony D et al. Eur Geriatr Med 2023;14:625-632. doi:10.1007/s41999-023-00777-y" };

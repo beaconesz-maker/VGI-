@@ -77,14 +77,19 @@ Facilitar el registro e interpretación de las distintas escalas de la valoraci�
   sobre blanco — el logo en sí no tiene un tono "oscuro" propio. Si Bea
   prefiere otro azul oscuro concreto, es un cambio de una línea en
   `public/css/app.css`.
-- **4AT**: escala nueva, añadida a petición de Bea (cribado de delirium),
-  con la interpretación tal cual el documento que facilitó. **No está
-  todavía conectada al plan de recomendaciones** (`shared/plan-engine.js`)
-  — un 4AT positivo no dispara hoy ninguna recomendación en la pestaña
-  Plan, solo se puntúa e interpreta como escala suelta. Añadir un eje de
-  manejo del delirium (p. ej. según NICE CG103) es una decisión de
-  contenido clínico que debe confirmar Bea antes de implementarla, no
-  algo que se pueda inferir del encargo.
+- **4AT**: escala nueva (cribado de delirium), con la interpretación tal
+  cual el documento que facilitó Bea. Un 4AT ≥4 dispara ahora un eje
+  "Manejo del delirium" en el plan de recomendaciones (identificar y
+  tratar causas precipitantes, revisión de medicación, medidas no
+  farmacológicas de primera línea, antipsicóticos solo si hay riesgo y a
+  la dosis eficaz más baja), referenciado a NICE Clinical Guideline
+  CG103 (2010, actualizada 2023) y Marcantonio ER, N Engl J Med.
+  2017;377(15):1456-1466, PMID 29020579 (verificado en PubMed). Si el
+  4AT es ≥4 a la vez que hay cribado cognitivo positivo (MMSE/MoCA/
+  Pfeiffer/Reloj), el eje de demencia avisa de priorizar primero el
+  estudio del delirium — el 4AT no distingue delirium de deterioro
+  cognitivo de base, y la práctica geriátrica habitual es reevaluar la
+  cognición una vez resuelto el cuadro agudo.
 
 ---
 

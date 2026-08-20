@@ -8,7 +8,7 @@ const { cabeceraPaciente, piePagina, docToBuffer, crearPdf } = require('./pdf-in
 
 const AZUL = '#0B4C73';
 const GRIS = '#555555';
-const ORDEN_EJES = ['ejercicio', 'nutricion', 'caidas', 'demencia', 'anemia', 'vitd', 'glucemia', 'stopstart'];
+const ORDEN_EJES = ['ejercicio', 'nutricion', 'caidas', 'delirium', 'demencia', 'anemia', 'vitd', 'glucemia', 'stopstart'];
 
 async function construirPlanPdf({ patient, fecha, edad, plan, validacion }) {
   const doc = crearPdf({ margin: 50, bufferPages: true });

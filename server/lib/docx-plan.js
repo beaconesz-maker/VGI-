@@ -6,7 +6,7 @@
 const { Document, Paragraph, TextRun, HeadingLevel } = require('docx');
 const { cabeceraPaciente, piePagina } = require('./docx-informe');
 
-const ORDEN_EJES = ['ejercicio', 'nutricion', 'caidas', 'demencia', 'anemia', 'vitd', 'glucemia', 'stopstart'];
+const ORDEN_EJES = ['ejercicio', 'nutricion', 'caidas', 'delirium', 'demencia', 'anemia', 'vitd', 'glucemia', 'stopstart'];
 
 function construirPlanDocx({ patient, fecha, edad, plan, validacion }) {
   const children = cabeceraPaciente(patient, fecha, edad);

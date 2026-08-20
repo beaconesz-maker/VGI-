@@ -113,11 +113,9 @@ repetir `npm install` ni dar de alta usuarios otra vez.
   conectado al Active Directory del hospital); si el departamento de
   informática lo facilita más adelante, se puede añadir esa integración
   sin rehacer el resto de la app.
-- El 4AT (cribado de delirium) se puntúa e interpreta como cualquier otra
-  escala, pero todavía no dispara recomendaciones propias en la pestaña
-  Plan (sí lo hacen, por ejemplo, el SPPB para ejercicio o el MMSE para
-  estudio de deterioro cognitivo). Añadir un eje de manejo del delirium
-  al plan es una decisión de contenido clínico pendiente de confirmar.
+- El 4AT (cribado de delirium) dispara, cuando la puntuación es ≥4, un
+  eje de "Manejo del delirium" en el plan de recomendaciones, según NICE
+  CG103.
 - No hay todavía un cuadro de mando multi-paciente/planta (más allá del
   seguimiento por paciente, que sí está hecho) — pendiente de confirmar
   si hace falta.

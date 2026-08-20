@@ -99,8 +99,8 @@ const TabPlan = (() => {
     return c;
   }
 
-  const ICONOS = { ejercicio: '🏃', nutricion: '🥗', caidas: '⚕️', demencia: '🧠', anemia: '🩸', vitd: '☀️', glucemia: '🍬', stopstart: '💊' };
-  const ORDEN_EJES = ['ejercicio', 'nutricion', 'caidas', 'demencia', 'anemia', 'vitd', 'glucemia', 'stopstart'];
+  const ICONOS = { ejercicio: '🏃', nutricion: '🥗', caidas: '⚕️', delirium: '🌀', demencia: '🧠', anemia: '🩸', vitd: '☀️', glucemia: '🍬', stopstart: '💊' };
+  const ORDEN_EJES = ['ejercicio', 'nutricion', 'caidas', 'delirium', 'demencia', 'anemia', 'vitd', 'glucemia', 'stopstart'];
 
   async function generarPlan() {
     const fecha = $('pl-fecha').value || APP.fechaTrabajo;
