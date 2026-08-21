@@ -73,6 +73,12 @@ router.get('/', async (req, res) => {
     clinical: entrada.clinical,
     paciente: entrada.paciente,
   });
+  // Se incluye el sello de validación humana (o null si no existe) para que
+  // el frontend pueda mostrar "Copiar recomendaciones" con el mismo aviso
+  // de "sin validar" que ya usa la exportación a Word/PDF, sin tener que
+  // llamar a otro endpoint aparte (ver public/js/tab-documentos.js).
+  const validaciones = await store.planValidations.list();
+  plan.validacion = validaciones.find((v) => v.patientId === req.patient.id && v.fecha === fecha) || null;
   res.json(plan);
 });
 
